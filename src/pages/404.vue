@@ -22,11 +22,17 @@
 
 <style>
   img {
-    width: 200px;
+    width: 500px;
   }
 
   .queue {
     justify-content: center;
     align-content: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    img {
+      width: 200px;
+    }
   }
 </style>

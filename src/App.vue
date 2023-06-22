@@ -4,7 +4,7 @@
     <h1 v-if="id">hello {{ username }}, welcome to the gaehive website.</h1>
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
-    <router-link class='sidelinks' to="/news">news</router-link>
+    <router-link class='sidelinks' to="/bulletin">bulletin</router-link>
     <router-link class='sidelinks' to="/host-queue">host queue</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <a class='sidelinks' style="cursor: pointer" href="https://auth2.jupitersleo.repl.co/login" v-if="!this.id">sign in</a>
@@ -94,7 +94,8 @@ textarea {
 .sidebar {
   background-color: oldlace;
   padding: 50px;
-  width: 30%;
+  width: 25%;
+  flex-shrink: 0;
   display: grid;
   justify-content: center;
   align-content: center;
@@ -106,12 +107,8 @@ textarea {
 }
 
 .page {
-  width: 70%;
-}
-
-.user img {  
-  border-radius: 50%;
-  margin-right: 10px;
+  width: 75%;
+  overflow: scroll;
 }
 
 .nextlist img {
@@ -155,6 +152,11 @@ textarea {
   margin: 0px;
 }
 
+.user img {  
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
 .currnext .user {
   font-size: 25px;
   font-weight: bold;
@@ -184,38 +186,10 @@ textarea {
   animation: rotation 1s ease-in-out infinite;
 }
 
-.settings {
-  width: 50px;
-  height: 50px;
-  background-color: #444;
-  border-radius: 50%;
-  box-shadow: 0 5px 10px 5px #3332;
-}
-
-.menu {
-  display: grid;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  background-color: #444c;
-  backdrop-filter: blur(5px);
-  color: var(--bgc);
-  padding: 30px;
-  margin: 70px 20px;
-  border-radius: 22.5px;
-  box-shadow: 0 5px 10px 5px #3332; 
-}
-
-.login-popup {
-  background-color: #fcfcfc;
-  display: grid;
-  padding: 10px;
-  margin: 30px;
-  position: absolute;
-  z-index: 1;
-  justify-self: center;
-  align-self: center;
+.break {
+  width: 40%;
+  border-bottom: 4px dotted #0006 ;
+  margin: 15px
 }
 
 @keyframes rotation {
@@ -243,6 +217,9 @@ textarea {
   }
   .sidebar {
     height: 50vh;
+  }
+  .page {
+    overflow: initial;
   }
 }
 </style>

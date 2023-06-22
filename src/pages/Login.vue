@@ -1,18 +1,15 @@
  <template>
   <LoginProcess v-if="phase == 'process'" />
-  <LoginSuccess v-if="phase == 'success'" />
 </template>
 
 <script>
   import LoginProcess from '../models/LoginProcess.vue'
-  import LoginSuccess from '../models/LoginSuccess.vue'
   
   export default {
     mounted() {
       
       const params = new URLSearchParams(window.location.search);
       const privateCode = params.get("privateCode")
-      const success = params.get("success")
       const logout = params.get("logout")
 
       if (privateCode) {
@@ -32,14 +29,9 @@
             localStorage['user'] = JSON.stringify({'username': res.username, 'id': res.id, 'manager': res.manager})
 
             localStorage.setItem("token", res.token)
-
-
             
-            location.href = "/?login=true"
+            location.href = "/"
           })
-      }
-      if (success) {
-        this.phase = "success"
       }
     },
     data() {
@@ -49,8 +41,7 @@
       }
     },
     components: {
-      LoginProcess,
-      LoginSuccess
+      LoginProcess
     }
   }
   
