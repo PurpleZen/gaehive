@@ -106,6 +106,17 @@ textarea {
   font-size: 20px;
 }
 
+.credits {
+  font-family: 'Vollkorn';
+  font-size: 12px;
+  color: #a98030;
+  margin-top: 30px;
+}
+
+.credits a {
+  color: #a98030;
+}
+
 .page {
   width: 75%;
   overflow: scroll;
