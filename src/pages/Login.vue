@@ -15,7 +15,7 @@
       if (privateCode) {
         this.phase = "process"
 
-        fetch(`https://auth2.fizzyizzy.repl.co/login`, {
+        fetch(`https://gaehivecloset.fizzyizzy.repl.co/login`, {
           headers: {
             "Content-Type": "application/json"
           },

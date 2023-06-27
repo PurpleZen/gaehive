@@ -7,7 +7,7 @@
     <router-link class='sidelinks' to="/bulletin">bulletin</router-link>
     <router-link class='sidelinks' to="/host-queue">host queue</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
-    <a class='sidelinks' style="cursor: pointer" href="https://auth2.jupitersleo.repl.co/login" v-if="!this.id">sign in</a>
+    <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
   </div>
   <router-view />

@@ -61,10 +61,10 @@
       if (!this.val1) {
         this.loading = true
 
-        const usersdata = await fetch('https://auth2.fizzyizzy.repl.co/db/managers')
+        const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
         const managers = await usersdata.json()
 
-        const cloud = await fetch('https://auth2.fizzyizzy.repl.co/db/queue');
+        const cloud = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/queue');
         const queue = await cloud.json();
 
         for ( var i = 0; i < queue.data.length; i++ ) {
@@ -103,7 +103,7 @@
           const id = data.id;
 
 
-   fetch(`https://auth2.fizzyizzy.repl.co/db/managers/add`, {
+   fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/add`, {
           headers: {
             "Content-Type": "application/json"
           },
@@ -123,7 +123,7 @@
       async removeManagers() {
         let username = document.getElementById("username").value;
 
-        fetch(`https://auth2.fizzyizzy.repl.co/db/managers/remove`, {
+        fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/remove`, {
           headers: {
             "Content-Type": "application/json"
           },
