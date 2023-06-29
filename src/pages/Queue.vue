@@ -71,7 +71,7 @@
           var item = queue.data[i]
           const para = document.createElement("p");
           para.classList.add("user");
-          const image = "<img src='https://uploads.scratch.mit.edu/get_image/user/" + managers[item].id + "_500x500.png'>";
+          const image = "<img src='https://uploads.scratch.mit.edu/get_image/user/" + managers[item].id + "_500x500.png' alt='" + managers[item].name + "&#39;s profile picture'>";
           const username = "<a class='user' href='https://scratch.mit.edu/users/" + managers[item].name + "'>" + managers[item].name + '</a>';
           para.innerHTML = image + username;
           if (i == 0) {

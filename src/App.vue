@@ -58,7 +58,6 @@
 html, body {
   background-color: #f6b93c;
   margin: 0;
-  color: #365a35;
   font-family: "Abril Fatface";
   display: flex;
   height: 100vh;
@@ -66,17 +65,18 @@ html, body {
 }
 
 h1 {
+  color: #365a35;
   border-left: solid 3.5px #f6b93c;
   padding-left: 5px;
 }
 
 a {
-  color: olive;
+  color: #676700;
   text-decoration: underline;
 }
 
 a:hover {
-  color: darkolivegreen;
+  color: #484800;
 }
 
 textarea {
@@ -109,17 +109,24 @@ textarea {
 .credits {
   font-family: 'Vollkorn';
   font-size: 12px;
-  color: #a98030;
   margin-top: 30px;
-}
-
-.credits a {
-  color: #a98030;
 }
 
 .page {
   width: 75%;
   overflow: scroll;
+}
+
+.page h1 {
+  color: #483248
+}
+  
+.page a {
+  color: #573c57;
+}
+
+.page a:hover {
+  color: #392839;
 }
 
 .nextlist img {
@@ -134,7 +141,6 @@ textarea {
 
 .container {
   display: grid;
-  color: var(--bgc);
 }
   
 .queue {
