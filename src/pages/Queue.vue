@@ -93,7 +93,7 @@
     },
     methods: {
       async addManagers() { 
-                let useradd = document.getElementById("username").value;
+        let useradd = document.getElementById("username").value;
 
         
       const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + useradd);
@@ -110,13 +110,17 @@
           method: "PUT",
           body: JSON.stringify({
             username: document.getElementById("username").value,
-            id: id
+            id: id,
+            token: localStorage['token']
           })
         })
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
             location.href = "/host-queue"
+          }
+          if (res.error) {
+            location.href = "/unauthorized"
           }
         })
       },
@@ -130,12 +134,16 @@
           method: "PUT",
           body: JSON.stringify({
             username: document.getElementById("username").value,
+            token: localStorage['token']
           })
         })
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
             location.href = "/host-queue"
+          }
+          if (res.error) {
+            location.href = "/unauthorized"
           }
         })
       }

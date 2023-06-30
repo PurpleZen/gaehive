@@ -113,6 +113,7 @@ textarea {
 }
 
 .page {
+  display: grid;
   width: 75%;
   overflow: scroll;
 }

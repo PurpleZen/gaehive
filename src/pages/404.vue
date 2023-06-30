@@ -1,10 +1,12 @@
 <template>
-  <div class="queue">
-    <img v-if="gif == 1" src="/1404.webp"/>
-    <img v-if="gif == 2" src="/2404.webp"/>
-    <img v-if="gif == 3" src="/3404.webp"/>
-    <span>404 page not found lol</span>
-  </div>
+  <div class="page">
+    <div class="queue">
+      <img v-if="gif == 1" src="/1404.webp"/>
+      <img v-if="gif == 2" src="/2404.webp"/>
+      <img v-if="gif == 3" src="/3404.webp"/>
+      <span>404 page not found lol</span>
+    </div>
+  </div>  
 </template>
 
 <script>
