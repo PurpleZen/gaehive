@@ -1,7 +1,7 @@
 <template>
-  <div class="page">
+  <div class="page" id="page">
   <div id="hostqueue" class="container">
-  <div id="q" class="queue">
+  <div class="queue">
     
     <div v-show="!loading" id="currnext" class="currnext">
       <div v-show="!loading" id="host" class="host">
@@ -15,7 +15,7 @@
   </div>
 
   <div id="listqueue" class="container">
-  <div id="q" class="queue">
+  <div class="queue">
     <div v-show="!loading" id="nextlist" class="nextlist">
     </div>
     <div v-if="error"><h3>Error :/</h3></div>
@@ -23,24 +23,25 @@
     
   </div>
   </div>
-  </div>
 
-
-<div v-show="username && manager == 'true'" class="login">
-      <div class="row center-align">
-        <h5>Add Managers</h5>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="username" name="username" type="text" class="validate">
-          <label for="username" id="username">Username</label>
-        </div>
-        <div class="input-field col s12">
-          <a @click="addManagers()" id="add" class="waves-effect waves-light btn">Add</a>
-          <a @click="removeManagers()" id="remove" type="submit" value="remove" class="waves-effect waves-light btn">Remove</a>
-        </div>
-      </div>
+  <div v-show="username && manager == 'true'" class="queue" id="manage-area">
+  <div class="manage" id="manage">
+  <h2 class="greeting">Manage</h2>
+  <input id="username" class="input" placeholder="username">
+    <div>
+      <span @click="addManagers()" id="add" class="button">Add</span>
+      <span @click="removeManagers()" id="remove" class="button">Remove</span>
     </div>
+    <div v-if="request == 'sending'" class="loader"></div>
+    <div v-if="request == null" class="loader-placehold"></div>
+    <div v-if="request == 'unauthorized'">
+      <h4>Uh oh!</h4>
+      <span>Looks like you don't have permission to do that.</span>
+    </div>
+  </div>
+  </div>
+    
+  </div>
 </template>
 
 <script>
@@ -48,6 +49,7 @@
     data() {
       return {
         loading: null,
+        request: null,
         error: null,
         val1: null,
         val2: null,
@@ -71,7 +73,7 @@
           var item = queue.data[i]
           const para = document.createElement("p");
           para.classList.add("user");
-          const image = "<img src='https://uploads.scratch.mit.edu/get_image/user/" + managers[item].id + "_500x500.png' alt='" + managers[item].name + "&#39;s profile picture'>";
+          const image = "<img src='https://uploads.scratch.mit.edu/get_image/user/" + managers[item].id + "_500x500.png'>";
           const username = "<a class='user' href='https://scratch.mit.edu/users/" + managers[item].name + "'>" + managers[item].name + '</a>';
           para.innerHTML = image + username;
           if (i == 0) {
@@ -90,9 +92,14 @@
 	    }
       this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       this.manager = JSON.parse(localStorage['user']).manager
+
+      if (this.manager == "true") {
+        document.getElementById("page").style["grid-template-columns"] = "none"
+      }
     },
     methods: {
       async addManagers() { 
+        this.request = 'sending';
         let useradd = document.getElementById("username").value;
 
         
@@ -120,11 +127,12 @@
             location.href = "/host-queue"
           }
           if (res.error) {
-            location.href = "/unauthorized"
+            this.request = "unauthorized"
           }
         })
       },
       async removeManagers() {
+        this.request = 'sending';
         let username = document.getElementById("username").value;
 
         fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/remove`, {
@@ -143,7 +151,7 @@
             location.href = "/host-queue"
           }
           if (res.error) {
-            location.href = "/unauthorized"
+            this.request = "unauthorized"
           }
         })
       }
@@ -154,8 +162,8 @@
 <style scoped>
 .page {
   display: grid;
-  grid-template:
-    'currnext nextlist';
+  grid-template-areas:
+    'currnext nextlist manage';
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -165,6 +173,17 @@
 
 #listqueue {
   grid-area: nextlist;
+}
+
+#manage {
+  width: min-content;
+  grid-area: manage;
+  text-align: center;
+}
+
+#manage-area {
+  background-color: oldlace;
+  border-radius: 20px;
 }
 
 @media screen and (max-width: 800px) {

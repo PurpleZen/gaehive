@@ -3,8 +3,6 @@ import Queue from './pages/Queue.vue'
 import Resources from './pages/Resources.vue'
 import Login from './pages/Login.vue'
 import NotFound from './pages/404.vue'
-import Unauthorized from './pages/401.vue'
-
 
 export const routes = [
   { 
@@ -23,10 +21,6 @@ export const routes = [
   {
     path: '/login',
     component: Login,
-  },
-  {
-    path: '/unauthorized',
-    component: Unauthorized,
   },
   { path: '/:path(.*)', component: NotFound },
 ]

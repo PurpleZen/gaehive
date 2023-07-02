@@ -1,4 +1,4 @@
-<template>
+template>
   <div class="page">
     <div class="queue">
       <h1>401 Unauthorized, uh oh!</h1>

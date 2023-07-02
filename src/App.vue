@@ -147,7 +147,6 @@ textarea {
 .queue {
   color: #444;
   font-family: 'Vollkorn';
-  border-radius: 1px 1px 5px 5px;
   display: grid;
   justify-items: center;
   align-items: center;
@@ -156,6 +155,7 @@ textarea {
 
 .greeting {
   font-family: 'Abril Fatface';
+  color: #483248;
 }
 
 .user {
@@ -194,6 +194,28 @@ textarea {
   font-size: 20px;
   font-weight: normal;
 }
+
+.input {
+  background-color: #f6b93c;
+  color: #573c57;
+  padding: 5px;
+  border: none;
+  border-radius: 20px;
+  font-family: inherit;
+}
+
+.button {
+  display: inline-block;
+  background-color: #365a35;
+  color: white;
+  cursor: pointer;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 2px;
+  margin-top: 5px;
+  border-radius: 10px;
+}
   
 .loader {
   width: 48px;
@@ -202,6 +224,14 @@ textarea {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s ease-in-out infinite;
+}
+
+.loader-placehold {
+  width: 48px; 
+  height: 48px; 
+  border: 7px transparent solid;
+  display: inline-block;
+  box-sizing: border-box;
 }
 
 .break {
