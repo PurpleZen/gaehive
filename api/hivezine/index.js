@@ -3,7 +3,7 @@ const fetch = require('cross-fetch');
 
 app.get('/api/hivezine', (req, res) => {
   fetch(
-    `https://api.scratch.mit.edu/studios/5842709/comments?limit=1`,
+    `https://api.scratch.mit.edu/studios/33586934/comments?limit=1`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
