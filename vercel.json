@@ -1,11 +1,12 @@
 {
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "status": 404, "dest": "index.html" }
+    { "src": "/(.*)", "status": 404, "dest": "index.html" },
+    { "source": "/api/(.*)", "destination": "/api" }
   ],
   "headers": [
     {
-      "source": "/api/hivezine",
+      "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
