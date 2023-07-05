@@ -15,7 +15,6 @@ app.get('/api/hivezine', (req, res) => {
 
     res.json(comments)
   })
-  })
 });
 
 module.exports = app;
