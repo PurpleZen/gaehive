@@ -36,7 +36,7 @@
     <div v-if="request == null" class="loader-placehold"></div>
     <div v-if="request == 'unauthorized'">
       <h4>Uh oh!</h4>
-      <span>Looks like you don't have permission to do that.</span>
+      <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
     </div>
   </div>
   </div>
@@ -102,14 +102,6 @@
         this.request = 'sending';
         let useradd = document.getElementById("username").value;
 
-        
-      const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + useradd);
-
-        const data = await userinfo.json();
-
-          const id = data.id;
-
-
    fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/add`, {
           headers: {
             "Content-Type": "application/json"
@@ -117,7 +109,6 @@
           method: "PUT",
           body: JSON.stringify({
             username: document.getElementById("username").value,
-            id: id,
             token: localStorage['token']
           })
         })

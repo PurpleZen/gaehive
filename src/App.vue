@@ -4,7 +4,7 @@
     <h1 v-if="id">hello {{ username }}, welcome to the gaehive website.</h1>
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
-    <router-link class='sidelinks' to="/bulletin">bulletin</router-link>
+    <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
     <router-link class='sidelinks' to="/host-queue">host queue</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
@@ -202,6 +202,7 @@ textarea {
   border: none;
   border-radius: 20px;
   font-family: inherit;
+  text-align: center;
 }
 
 .button {
