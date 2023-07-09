@@ -9,8 +9,8 @@
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme == 'light'">theme</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme == null">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme(null)" v-if="this.theme == 'dark'">theme</a>
   </div>
   <router-view />
 </template>
@@ -53,7 +53,7 @@
         username: null,
         manager: null,
         login: null,
-        theme: 'light'
+        theme: null
   	  }
     }
   }
