@@ -9,6 +9,8 @@
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme == 'light'">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
   </div>
   <router-view />
 </template>
@@ -23,9 +25,16 @@
       },
       loginOK() {
         this.login = null
+      },
+      changeTheme(theme) {
+        localStorage.setItem("theme", theme);
+        document.documentElement.setAttribute('data-theme', localStorage["theme"]);
+        this.theme = localStorage["theme"];
       }
     },
     mounted() {
+      document.documentElement.setAttribute('data-theme', localStorage["theme"]);
+      this.theme = localStorage["theme"];
       const params = new URLSearchParams(window.location.search);
       const loggedin = params.get("login")
       if (loggedin) {
@@ -43,7 +52,8 @@
         id: null,
         username: null,
         manager: null,
-        login: null
+        login: null,
+        theme: 'light'
   	  }
     }
   }
@@ -55,31 +65,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=block');
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=block');
 
+:root {
+  --bg: #f6b93c;
+  --sb: oldlace;
+  --acc: #365a35;
+  --acc2: #483248;
+  --brk: #0006;
+  --txt: #444;
+  --btxt: white;
+  --slnk: #676700;
+  --slnkh: #484800;
+  --plnk: #573c57;
+  --plnkh: #392839;
+}
+
+[data-theme="dark"] {
+  --bg: #221f1b;
+  --sb: #483232;
+  --acc: #FF9900;
+  --acc2: #FF9900;
+  --brk: #ffb30094;
+  --txt: #E7B148;
+  --btxt: black;
+  --slnk: #F8DE7E;
+  --slnkh: #C6B164;
+  --plnk: #FF9900;
+  --plnkh: #CC7A00;
+}
+  
 html, body {
-  background-color: #f6b93c;
+  color: var(--txt);
+  background-color: var(--bg);
   margin: 0;
-  font-family: "Abril Fatface";
+  font-family: 'Vollkorn';
   display: flex;
   height: 100vh;
   width: 100vw;
 }
-
-h1 {
-  color: #365a35;
-  border-left: solid 3.5px #f6b93c;
-  padding-left: 5px;
-}
-
-a {
-  color: #676700;
-  text-decoration: underline;
-}
-
-a:hover {
-  color: #484800;
-}
-
-textarea {
+  
+textarea, .preview {
   width: 100%;
   resize: none;
   outline: none;
@@ -88,11 +112,12 @@ textarea {
   padding: 10px;
   margin: 3px;
   scrollbar-width: none;
-  background-color: #fcfcfc;
+  color: var(--plnk);
+  background-color: var(--sb);
 }
 
 .sidebar {
-  background-color: oldlace;
+  background-color: var(--sb);
   padding: 50px;
   width: 25%;
   flex-shrink: 0;
@@ -101,9 +126,22 @@ textarea {
   align-content: center;
 }
 
+.sidebar h1 {
+  font-family: "Abril Fatface";
+  color: var(--acc);
+  border-left: solid 3.5px var(--bg);
+  padding-left: 5px;
+}
+
 .sidelinks {
+  color: var(--slnk);
+  text-decoration: underline;
   font-family: 'Vollkorn';
   font-size: 20px;
+}
+
+.sidelinks:hover {
+  color: var(--slnkh);
 }
 
 .credits {
@@ -119,15 +157,15 @@ textarea {
 }
 
 .page h1 {
-  color: #483248
+  color: var(--acc2)
 }
   
 .page a {
-  color: #573c57;
+  color: var(--plnk);
 }
 
 .page a:hover {
-  color: #392839;
+  color: var(--plnkh);
 }
 
 .nextlist img {
@@ -145,8 +183,7 @@ textarea {
 }
   
 .queue {
-  color: #444;
-  font-family: 'Vollkorn';
+  
   display: grid;
   justify-items: center;
   align-items: center;
@@ -155,7 +192,7 @@ textarea {
 
 .greeting {
   font-family: 'Abril Fatface';
-  color: #483248;
+  color: var(--acc2);
 }
 
 .user {
@@ -196,8 +233,8 @@ textarea {
 }
 
 .input {
-  background-color: #f6b93c;
-  color: #573c57;
+  background-color: var(--bg);
+  color: var(--plnk);
   padding: 5px;
   border: none;
   border-radius: 20px;
@@ -207,8 +244,8 @@ textarea {
 
 .button {
   display: inline-block;
-  background-color: #365a35;
-  color: white;
+  background-color: var(--acc);
+  color: var(--btxt);
   cursor: pointer;
   padding: 5px;
   padding-left: 15px;
@@ -221,7 +258,7 @@ textarea {
 .loader {
   width: 48px;
   height: 48px;
-  border: solid 7px #365a35;
+  border: solid 7px var(--acc);
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s ease-in-out infinite;
@@ -236,8 +273,9 @@ textarea {
 }
 
 .break {
+  display: inline-block;
   width: 40%;
-  border-bottom: 4px dotted #0006 ;
+  border-bottom: 4px dotted var(--brk);
   margin: 15px
 }
 
@@ -268,6 +306,9 @@ textarea {
     height: 50vh;
   }
   .page {
+    overflow: initial;
+  }
+  .nextlist {
     overflow: initial;
   }
 }

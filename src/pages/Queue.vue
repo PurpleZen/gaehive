@@ -29,6 +29,11 @@
   <h2 class="greeting">Manage</h2>
   <input id="username" class="input" placeholder="username">
     <div>
+      <span @click="makeHost()" id="add" class="button">Host</span>
+      <span @click="nextHost()" id="add" class="button">Next Host</span>
+    </div>
+    <div class="break"></div>
+    <div>
       <span @click="addManagers()" id="add" class="button">Add</span>
       <span @click="removeManagers()" id="remove" class="button">Remove</span>
     </div>
@@ -173,7 +178,7 @@
 }
 
 #manage-area {
-  background-color: oldlace;
+  background-color: var(--sb);
   border-radius: 20px;
 }
 

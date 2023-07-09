@@ -2,10 +2,10 @@
   <div class="page" id="page">
     <div id="hostqueue" class="container">
       <div class="queue">
-<div  class="queue" id="manage-area">
   <div class="manage" id="manage">
   <h2 class="greeting">Manage</h2>
-  <input id="username" class="input" placeholder="username">
+  <textarea v-model="draft" @keyup="updated()" id="username" placeholder="draft your post here"></textarea>
+  <div v-html="preview" class="preview"></div>
     <div>
       <span @click="addManagers()" id="add" class="button">Add</span>
       
@@ -17,7 +17,6 @@
       <span>Looks like you don't have permission to do that.</span>
     </div>
 
-  </div>
   </div>
   </div>
   </div>
@@ -35,10 +34,45 @@
         val2: null,
         id1: null,
         username: null,
-        manager: null
+        manager: null,
+        draft: null,
+        preview: null
       }
     },
     methods: {
+      updated() {
+        let text = [
+          /:cool:/g,
+          /:hmm:/g,
+          /:heart:/g,
+          /:pride:/g,
+          /:trans:/g,
+          /:nails:/g,
+          /:skull:/g,
+          /:sparkle:/g,
+          /:yay:/g,
+          /:eye::lip::eye:/g
+        ];
+        let emojis = [
+          "😎",
+          "🤔",
+          "❤️",
+          "🏳️‍🌈",
+          "🏳️‍⚧️",
+          "💅",
+          "💀",
+          "✨️",
+          "🎉",
+          "👁👄👁"
+        ];
+        
+        this.preview = this.draft
+        text.forEach(string => {
+          var i = text.indexOf(string)
+  this.preview = this.preview.replace(string, emojis[i]);
+})
+        
+      },
       async addManagers() { 
         this.request = 'sending';
         let useradd = document.getElementById("username").value;

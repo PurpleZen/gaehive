@@ -26,7 +26,7 @@
     <div class="break"></div>
 
     <h3>Templates:</h3>
-    <span>These templates can be copied and pasted into Contact Us, however you will need to edit in the important information. You should input the needed information in place of the "&lt; >" symbols, and extra/suggested info in place of the "[+ ]" symbols.</span>
+    <span>These templates can be copied and pasted into Contact Us, however you will need to edit in the important information. You should input the needed information in place of the "&lt; >" symbols, and extra/suggested info in place of the "[+ ]" symbols if applicable.</span>
 
     <h5>Troll Template:</h5>
     <textarea type="text" rows="8" value="Hello Scratch Team,
