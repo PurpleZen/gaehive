@@ -22,14 +22,9 @@
   }
 </script>
 
-<style>
+<style scoped>
   img {
     width: 500px;
-  }
-
-  .queue {
-    justify-content: center;
-    align-content: center;
   }
 
   @media screen and (max-width: 800px) {

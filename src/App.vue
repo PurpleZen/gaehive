@@ -35,7 +35,6 @@
     mounted() {
       document.documentElement.setAttribute('data-theme', localStorage["theme"]);
       this.theme = localStorage["theme"];
-      console.log(this.theme)
       const params = new URLSearchParams(window.location.search);
       const loggedin = params.get("login")
       if (loggedin) {
@@ -105,15 +104,17 @@ html, body {
 }
   
 textarea, .preview {
-  width: 100%;
+  width: 95%;
   resize: none;
   outline: none;
+  overflow: auto;
   border-radius: 20px;
   border: none;
   padding: 10px;
-  margin: 3px;
+  margin: 5px;
   scrollbar-width: none;
   color: var(--plnk);
+  font-family: "Vollkorn";
   background-color: var(--sb);
 }
 
@@ -184,8 +185,9 @@ textarea, .preview {
 }
   
 .queue {
-  
   display: grid;
+  justify-content: center;
+  align-content: center;
   justify-items: center;
   align-items: center;
   margin: 20px;

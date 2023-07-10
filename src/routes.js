@@ -1,5 +1,6 @@
 import Home from './pages/Home.vue'
-import Hivezine from './pages/Hivezine.vue'
+import HivezineHome from './pages/HivezineHome.vue'
+import HivezineWrite from './pages/HivezineWrite.vue'
 import Queue from './pages/Queue.vue'
 import Resources from './pages/Resources.vue'
 import Login from './pages/Login.vue'
@@ -13,7 +14,11 @@ export const routes = [
   },
   {
     path: '/hivezine',
-    component: Hivezine,
+    component: HivezineHome,
+  },
+  {
+    path: '/hivezine/new',
+    component: HivezineWrite,
   },
   {
     path: '/host-queue',

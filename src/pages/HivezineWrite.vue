@@ -1,10 +1,12 @@
 <template>
   <div class="page" id="page">
-    <div id="hostqueue" class="container">
+    <div class="container">
       <div class="queue">
-  <div class="manage" id="manage">
-  <h2 class="greeting">Manage</h2>
-  <textarea v-model="draft" @keyup="updated()" id="username" placeholder="draft your post here"></textarea>
+  <h2 class="greeting">New Post</h2>
+  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post. Below that, all styling will be previewed, so you can see what your post will look like when it's posted. You then will copy and paste your draft into the Hivezine studio, and then click "Next!"<br>Happy writing!</span>
+  <div class="break"></div>
+  <textarea class="title" v-model="title" @keyup="updated()" id="username" type="text" placeholder="title of your post"></textarea>
+  <textarea v-model="draft" @keyup="updated()" id="username" type="text" placeholder="draft your post here"></textarea>
   <div v-html="preview" class="preview"></div>
     <div>
       <span @click="addManagers()" id="add" class="button">Add</span>
@@ -17,7 +19,6 @@
       <span>Looks like you don't have permission to do that.</span>
     </div>
 
-  </div>
   </div>
   </div>
   </div>
@@ -35,7 +36,8 @@
         id1: null,
         username: null,
         manager: null,
-        draft: null,
+        title: "",
+        draft: "",
         preview: null
       }
     },
@@ -44,6 +46,7 @@
         let text = [
           /:cool:/g,
           /:hmm:/g,
+          /:thumbsup:/g,
           /:heart:/g,
           /:pride:/g,
           /:trans:/g,
@@ -56,6 +59,7 @@
         let emojis = [
           "😎",
           "🤔",
+          "👍",
           "❤️",
           "🏳️‍🌈",
           "🏳️‍⚧️",
@@ -66,7 +70,7 @@
           "👁👄👁"
         ];
         
-        this.preview = this.draft
+        this.preview = "<h3 style='margin:0'>" + this.title + "</h3>" + "<br>" + this.draft
         text.forEach(string => {
           var i = text.indexOf(string)
   this.preview = this.preview.replace(string, emojis[i]);
@@ -101,3 +105,24 @@
     }
   }
 </script>
+
+<style scoped>
+textarea {
+  border-radius: 0;
+}
+  
+.preview {
+  border-radius: 0 0 20px 20px
+}
+  
+textarea, .preview {
+  min-height: 200px;
+  margin: 2px;
+}
+  
+.title {
+  height: 20px;
+  min-height: 20px;
+  border-radius: 20px 20px 0 0;
+}
+</style>
