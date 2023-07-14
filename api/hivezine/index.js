@@ -27,6 +27,7 @@ app.get('/api/hivezine', (req, res) => {
     const body = title.concat(post)
     res.json(body)
   })
+  })
 });
 
 module.exports = app;
