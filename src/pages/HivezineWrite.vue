@@ -3,7 +3,7 @@
     <div class="container">
       <div class="queue">
   <h2 class="greeting">New Post</h2>
-  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post. Below that, all styling will be previewed, so you can see what your post will look like when it's posted. You then will copy and paste your draft into the Hivezine studio, and then click "Next!"<br>Happy writing!</span>
+  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the Hivezine studio, and then click "Next!"<br>Please remember all posts <b>must</b> follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.<br><br>Happy writing!</span>
   <div class="break"></div>
   <textarea class="title" v-model="title" @keyup="updated()" id="username" type="text" placeholder="title of your post"></textarea>
   <textarea v-model="draft" @keyup="updated()" id="username" type="text" placeholder="draft your post here"></textarea>
@@ -31,15 +31,17 @@
         loading: null,
         request: null,
         error: null,
-        val1: null,
-        val2: null,
-        id1: null,
+        
         username: null,
         manager: null,
         title: "",
         draft: "",
         preview: null
       }
+    },
+    mounted() {
+      this.username = JSON.parse(localStorage['user']).username
+      this.manager = JSON.parse(localStorage['user']).manager
     },
     methods: {
       updated() {

@@ -2,8 +2,8 @@
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
-    <router-link to="/hivezine/new">new post</router-link> 
-      <div v-html="post" v-show="!loading"  class="preview">
+    <router-link v-if="username && manager == 'true'" to="/hivezine/new">new post</router-link> 
+      <div v-show="!loading"  id="posts">
       </div>
     <div v-if="error"><h3>Error :/</h3></div>
     <div v-if="loading && !error" class="loader"></div>
@@ -17,11 +17,7 @@
     data() {
       return {
         loading: null,
-        request: null,
         error: null,
-        val1: null,
-        val2: null,
-        id1: null,
         username: null,
         manager: null,
         post: null
@@ -32,7 +28,7 @@
       if (!this.val1) {
         this.loading = true
 
-        const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/1')
+        const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/list')
         const post = await postdata.json()
 
         let chardata = [
@@ -71,11 +67,19 @@
           "'"
         ]
 
-        this.post = post[0].content
-        chardata.forEach(string => {
-          var i = chardata.indexOf(string)
-  this.post = this.post.replace(string, symbols[i]);
-})
+        
+        for ( var i = 0; i < post.length; i++ ) {
+          this.post = post[i].content;
+          chardata.forEach(string => {
+          var is = chardata.indexOf(string)
+  this.post = this.post.replace(string, symbols[is]);
+            })
+          const para = document.createElement("p");
+          para.classList.add("preview");
+          para.innerHTML = "<h3>" + post[i].author.username + "</h3>" + this.post;
+          document.getElementById("posts").insertBefore(para, document.getElementById("posts").children[0]);
+       } 
+
         
 
         this.loading = false
