@@ -23,9 +23,9 @@ app.get('/api/hivezine', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    let post = data[0].content
+    var post = data[0].content
     for ( var i = 1; i < data.length; i++ ) {
-      let post = post + data[i].content;
+      post = post + data[i].content;
     }
     
     res.json({
