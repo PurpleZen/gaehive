@@ -13,6 +13,7 @@ app.get('/api/hivezine', (req, res) => {
 
     const title = data[0].content;
     const user = data[0].author.username;
+    const uid = data[0].author.id;
     const id = data[0].id;
 
     fetch(
@@ -30,7 +31,7 @@ app.get('/api/hivezine', (req, res) => {
     }
     
     res.json([{
-      user: user, title: title, post: post
+      user: user, uid: uid, title: title, post: post
     }])
   })
   })
