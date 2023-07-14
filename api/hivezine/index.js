@@ -12,7 +12,8 @@ app.get('/api/hivezine', (req, res) => {
   ).then((response)=>{return response.json();}).then(data=>{
 
     const title = data[0].content;
-    const id = data[0].id
+    const user = data[0].author.username;
+    const id = data[0].id;
 
     fetch(
     `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies`,
@@ -29,7 +30,7 @@ app.get('/api/hivezine', (req, res) => {
     }
     
     res.json({
-      title: title, post: post
+      user: user, title: title, post: post
     })
   })
   })
