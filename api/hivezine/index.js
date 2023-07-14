@@ -11,7 +11,7 @@ app.get('/api/hivezine', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    const title = data;
+    const title = data[0].content;
     const id = data[0].id
 
     fetch(
@@ -23,9 +23,13 @@ app.get('/api/hivezine', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    const post = data;
-    const body = title.concat(post)
-    res.json(body)
+    for ( var i = 0; i < data.length; i++ ) {
+      const post = post + data[0].content;
+    }
+    
+    res.json({
+      title: title, post: post
+    })
   })
   })
 });
