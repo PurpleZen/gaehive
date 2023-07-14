@@ -29,9 +29,9 @@ app.get('/api/hivezine', (req, res) => {
       post = post + " " + data[i].content;
     }
     
-    res.json({
+    res.json([{
       user: user, title: title, post: post
-    })
+    }])
   })
   })
 });

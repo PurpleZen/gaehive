@@ -69,14 +69,14 @@
 
         
         for ( var i = 0; i < post.length; i++ ) {
-          this.post = post[i].content;
+          this.post = post[i].post;
           chardata.forEach(string => {
           var is = chardata.indexOf(string)
   this.post = this.post.replace(string, symbols[is]);
             })
           const para = document.createElement("p");
           para.classList.add("preview");
-          para.innerHTML = "<h3>" + post[i].author.username + "</h3>" + this.post;
+          para.innerHTML = "<h3>" + post[i].user + "</h3>" + this.post;
           document.getElementById("posts").insertBefore(para, document.getElementById("posts").children[0]);
        } 
 
