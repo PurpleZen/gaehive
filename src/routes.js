@@ -1,7 +1,9 @@
 import Home from './pages/Home.vue'
 import HivezineHome from './pages/HivezineHome.vue'
+import HivezinePost from './pages/HivezinePost.vue'
 import HivezineWrite from './pages/HivezineWrite.vue'
-import Queue from './pages/Queue.vue'
+import Managers from './pages/Managers.vue'
+import ManagersEdit from './pages/ManagersEdit.vue'
 import Resources from './pages/Resources.vue'
 import Login from './pages/Login.vue'
 import NotFound from './pages/404.vue'
@@ -17,12 +19,20 @@ export const routes = [
     component: HivezineHome,
   },
   {
+    path: '/hivezine/post/:id',
+    component: HivezinePost,
+  },
+  {
     path: '/hivezine/new',
     component: HivezineWrite,
   },
   {
-    path: '/host-queue',
-    component: Queue,
+    path: '/managers',
+    component: Managers,
+  },
+  {
+    path: '/managers/edit',
+    component: ManagersEdit,
   },
   {
     path: '/resources',

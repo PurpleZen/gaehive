@@ -5,7 +5,7 @@
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
     <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
-    <router-link class='sidelinks' to="/host-queue">host queue</router-link>
+    <router-link class='sidelinks' to="/managers">managers</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
@@ -108,14 +108,58 @@ textarea, .preview {
   resize: none;
   outline: none;
   overflow: auto;
+  padding: 10px;
   border-radius: 20px;
   border: none;
-  padding: 10px;
   margin: 5px;
   scrollbar-width: none;
   color: var(--plnk);
   font-family: "Vollkorn";
   background-color: var(--sb);
+}
+
+.post {
+  resize: none;
+  outline: none;
+  overflow: auto;
+  border-radius: 20px;
+  border: none;
+  margin: 5px;
+  margin-top: 25px;
+  scrollbar-width: none;
+  color: var(--plnk);
+  font-family: "Vollkorn";
+  background-color: var(--sb);
+}
+
+.posts {
+  width: 100%;
+}
+
+.title {
+  background-color: var(--acc);
+  color: var(--btxt);
+  font-size: larger;
+  border-radius: 20px 20px 0 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.username {
+  display: flex;
+  font-size: small;
+  align-items: center;
+}
+
+.username img {
+  width: 30px;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+.content {
+  padding: 10px;
 }
 
 .sidebar {
@@ -186,7 +230,6 @@ textarea, .preview {
   
 .queue {
   display: grid;
-  justify-content: center;
   align-content: center;
   justify-items: center;
   align-items: center;
@@ -298,6 +341,49 @@ textarea, .preview {
   }
 }
 
+
+
+.users {
+  display: flex;
+  cursor: pointer;
+  background-color: var(--sb);
+  margin: 5px;
+  padding: 10px;
+  border-radius: 20px;
+  align-items: center;
+}
+
+.users:hover {
+  outline: var(--acc) solid 2px;
+}
+
+.users img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 20px
+}
+
+.nexthosts {
+  margin-top: 25px;
+  background-color: var(--sb);
+  border-radius: 20px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 10px;
+  row-gap: 10px;
+  margin: 5px;
+  padding: 10px;
+  align-items: center;
+}
+
+.list .users {
+  background-color: var(--bg)
+}
+
 @media screen and (max-width: 800px) {
   html, body {
     display: grid;
@@ -313,6 +399,9 @@ textarea, .preview {
   }
   .nextlist {
     overflow: initial;
+  }
+  .list {
+    grid-template-columns: none;
   }
 }
 </style>

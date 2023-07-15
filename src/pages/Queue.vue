@@ -2,6 +2,9 @@
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
+    <div v-if="error"><h3>Error :/</h3></div>
+    <div v-if="loading && !error" class="loader"></div>
+    <h2 class="greeting">Host Queue</h2>
     
     <div v-show="!loading" id="currnext" class="currnext">
       <div v-show="!loading" id="host" class="host">
@@ -9,8 +12,7 @@
       <div v-show="!loading" id="nexthost" class="nexthost">
       </div>
     </div>
-    <div v-if="error"><h3>Error :/</h3></div>
-    <div v-if="loading && !error" class="loader"></div>
+
   </div>
   </div>
 
@@ -18,8 +20,6 @@
   <div class="queue">
     <div v-show="!loading" id="nextlist" class="nextlist">
     </div>
-    <div v-if="error"><h3>Error :/</h3></div>
-    <div v-if="loading && !error" class="loader"></div>
     
   </div>
   </div>
