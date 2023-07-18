@@ -9,7 +9,11 @@
   <textarea v-model="draft" @keyup="updated()" id="username" type="text" placeholder="draft your post here"></textarea>
   <div v-html="preview" class="preview"></div>
     <div>
-      <span @click="addManagers()" id="add" class="button">Add</span>
+
+      <!-- By clicking this button, the data is fetched from the Scratch studio! -->
+      <span @click="addManagers()" id="add" class="button">Next</span>
+      <input type="checkbox" id="checkbox" />
+<label>Feature on homepage</label>
       
     </div>
     <div v-if="request == 'sending'" class="loader"></div>
@@ -31,7 +35,6 @@
         loading: null,
         request: null,
         error: null,
-        
         username: null,
         manager: null,
         title: "",
@@ -48,6 +51,7 @@
         let text = [
           /:cool:/g,
           /:hmm:/g,
+          /:crylaugh:/g,
           /:thumbsup:/g,
           /:heart:/g,
           /:pride:/g,
@@ -61,6 +65,7 @@
         let emojis = [
           "😎",
           "🤔",
+          "😂",
           "👍",
           "❤️",
           "🏳️‍🌈",
@@ -79,6 +84,7 @@
 })
         
       },
+      // See? Pretty cool, huh?
       async addManagers() { 
         this.request = 'sending';
         let useradd = document.getElementById("username").value;
@@ -92,6 +98,7 @@
           body: JSON.stringify({
             content: document.getElementById("username").value,
             token: localStorage['token']
+            // Gotta confirm the login token!
           })
         })
         .then(res => res.json())

@@ -10,7 +10,12 @@
       <div class="title">
         <div>{{ item.title }}</div>
         <div class='username'>written by {{ item.user }}<img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
-           </div></div>
+
+          <!-- Managers and writers can delete posts if they need to re-write it! -->
+          <span v-if="username && manager == 'true'" @click="deletePost()" id="add" class="promptButton">delete</span>
+          
+      </div>
+      </div>
       <div class='content' v-html=item.post></div></div>
     </div>
   </div>
@@ -37,6 +42,7 @@
         let chardata = [
           /:cool:/g,
           /:hmm:/g,
+          /:crylaugh:/g,
           /:thumbsup:/g,
           /:heart:/g,
           /:pride:/g,
@@ -55,6 +61,7 @@
         let symbols = [
           "😎",
           "🤔",
+          "😂",
           "👍",
           "❤️",
           "🏳️‍🌈",
@@ -84,8 +91,31 @@
       }
       this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       this.manager = JSON.parse(localStorage['user']).manager
-
-      
+    },
+    methods: {
+      async deletePost() {
+        if (confirm("Are you sure you want to delete this post?")) {
+          fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/delete`, {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({
+              id: this.$route.params.id,
+              token: localStorage['token']
+            })
+          })
+          .then(res => res.json())
+          .then((res) => {
+            if (res.ok) {
+              location.href = "/hivezine"
+            }
+            if (res.error) {
+              this.request = "unauthorized"
+            }
+          })
+        }  
+      }
     }
   }
 </script>

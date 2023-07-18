@@ -1,4 +1,7 @@
 <template>
+  <div class="page" id="page">
+  <div id="hostqueue" class="container">
+  <div class="queue">
   <div v-show="username && manager == 'true'" class="queue" id="manage-area">
   <div class="manage" id="manage">
   <h2 class="greeting">Manage</h2>
@@ -18,6 +21,9 @@
       <h4>Uh oh!</h4>
       <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
     </div>
+  </div>
+  </div>
+  </div>
   </div>
   </div>
   
@@ -118,3 +124,10 @@
     }
   }
 </script>
+
+<style scoped>
+#manage-area {
+  background-color: var(--sb);
+  border-radius: 20px;
+}
+</style>

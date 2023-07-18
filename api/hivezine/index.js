@@ -1,6 +1,7 @@
 const app = require('express')();
 const fetch = require('cross-fetch');
 
+// New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
 app.get('/api/hivezine', (req, res) => {
   fetch(
     `https://api.scratch.mit.edu/studios/33586934/comments?limit=1`,

@@ -1,18 +1,21 @@
 import Home from './pages/Home.vue'
-import HivezineHome from './pages/HivezineHome.vue'
-import HivezinePost from './pages/HivezinePost.vue'
-import HivezineWrite from './pages/HivezineWrite.vue'
-import Managers from './pages/Managers.vue'
-import ManagersEdit from './pages/ManagersEdit.vue'
 import Resources from './pages/Resources.vue'
 import Login from './pages/Login.vue'
 import NotFound from './pages/404.vue'
+
+import HivezineHome from './pages/hivezine/HivezineHome.vue'
+import HivezinePost from './pages/hivezine/HivezinePost.vue'
+import HivezineWrite from './pages/hivezine/HivezineWrite.vue'
+
+import Managers from './pages/managers/Managers.vue'
+import ManagersEdit from './pages/managers/ManagersEdit.vue'
+
+import FollowingGuidelines from './pages/docs/FollowingGuidelines.vue'
 
 export const routes = [
   { 
     path: '/', 
     component: Home,
-    props: true,
   },
   {
     path: '/hivezine',
@@ -33,6 +36,10 @@ export const routes = [
   {
     path: '/managers/edit',
     component: ManagersEdit,
+  },
+  {
+    path: '/docs/how-we-follow-guidelines',
+    component: FollowingGuidelines,
   },
   {
     path: '/resources',

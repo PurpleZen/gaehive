@@ -7,7 +7,7 @@
     <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
     <router-link class='sidelinks' to="/managers">managers</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
-    <a class='sidelinks' style="cursor: pointer" href="https://gaehivecloset.fizzyizzy.repl.co/login" v-if="!this.id">sign in</a>
+    <router-link class='sidelinks' style="cursor: pointer" to="/login" v-if="!this.id">sign in</router-link>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark'">theme</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
@@ -298,6 +298,19 @@ textarea, .preview {
   padding-right: 15px;
   margin: 2px;
   margin-top: 5px;
+  border-radius: 10px;
+}
+
+.promptButton {
+  display: inline-block;
+  background-color: var(--bg);
+  color: var(--txt);
+  cursor: pointer;
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin: 2px;
+  margin-left: 7px;
   border-radius: 10px;
 }
   

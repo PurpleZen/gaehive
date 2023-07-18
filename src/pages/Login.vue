@@ -32,6 +32,10 @@
             
             location.href = "/"
           })
+      } else {
+        location.href = 'https://auth.itinerary.eu.org/auth/?redirect=' +
+      btoa('https://thegaehive.fizzyizzy.repl.co/login') +
+      '&name=the Gaehive website&authProject=867214083'
       }
     },
     data() {
