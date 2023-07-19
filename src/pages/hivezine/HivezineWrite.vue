@@ -3,7 +3,7 @@
     <div class="container">
       <div class="queue">
   <h2 class="greeting">New Post</h2>
-  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the Hivezine studio, and then click "Next!"<br>Please remember all posts <b>must</b> follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.<br><br>Happy writing!</span>
+  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>. When you're done, click "Let's go!"<br>Please remember all posts <b>must</b> follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.<br><br>Happy writing!</span>
   <div class="break"></div>
   <textarea class="title" v-model="title" @keyup="updated()" id="username" type="text" placeholder="title of your post"></textarea>
   <textarea v-model="draft" @keyup="updated()" id="username" type="text" placeholder="draft your post here"></textarea>
@@ -11,9 +11,7 @@
     <div>
 
       <!-- By clicking this button, the data is fetched from the Scratch studio! -->
-      <span @click="addManagers()" id="add" class="button">Next</span>
-      <input type="checkbox" id="checkbox" />
-<label>Feature on homepage</label>
+      <span @click="addManagers()" id="add" class="button">Let's go!</span>
       
     </div>
     <div v-if="request == 'sending'" class="loader"></div>

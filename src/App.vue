@@ -21,7 +21,7 @@
       logOut() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
-        location.href = "/"
+        window.location.reload()
       },
       loginOK() {
         this.login = null
@@ -144,6 +144,15 @@ textarea, .preview {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+}
+
+.title a {
+  color: var(--btxt) !important;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
 }
 
 .username {
@@ -279,8 +288,9 @@ textarea, .preview {
 }
 
 .input {
-  background-color: var(--bg);
+  background-color: var(--sb);
   color: var(--plnk);
+  margin: 2px;
   padding: 5px;
   border: none;
   border-radius: 20px;
@@ -291,7 +301,8 @@ textarea, .preview {
 .button {
   display: inline-block;
   background-color: var(--acc);
-  color: var(--btxt);
+  color: var(--btxt) !important;
+  text-decoration: none;
   cursor: pointer;
   padding: 5px;
   padding-left: 15px;
@@ -301,10 +312,15 @@ textarea, .preview {
   border-radius: 10px;
 }
 
+.button:hover {
+  outline: var(--btxt) solid 2px;
+}
+
 .promptButton {
   display: inline-block;
   background-color: var(--bg);
-  color: var(--txt);
+  color: var(--txt) !important;
+  text-decoration: none;
   cursor: pointer;
   padding: 5px;
   padding-left: 8px;

@@ -2,12 +2,18 @@
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
-  <div v-show="username && manager == 'true'" class="queue" id="manage-area">
-  <div class="manage" id="manage">
   <h2 class="greeting">Manage</h2>
-  <input id="username" class="input" placeholder="username"><input id="position" class="input" placeholder="position">
+    <div v-if="error"><h3>Error :/</h3></div>
+    <div v-if="loading && !error" class="loader"></div>
+    <div v-if=!loading>
+      <div v-for="(item, index) in this.managers">
+        <span>{{ item.name }} at position <b style="font-family:serif">{{ index }}</b></span>
+      </div>
+      <input id="username" class="input" placeholder="username">
+      <input id="position" class="input" placeholder="position">
+    </div>
     <div>
-      <span @click="moveManagers()" id="add" class="button">Edit</span>
+      <span @click="moveManagers()" id="add" class="button">Move</span>
       <span @click="nextHost()" id="add" class="button">Next Host</span>
     </div>
     <div class="break"></div>
@@ -21,8 +27,6 @@
       <h4>Uh oh!</h4>
       <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
     </div>
-  </div>
-  </div>
   </div>
   </div>
   </div>
@@ -40,10 +44,19 @@
         val2: null,
         id1: null,
         username: null,
-        manager: null
+        manager: null,
+        managers: null
       }
     },
     async mounted() {
+
+      this.loading = true
+      
+      const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
+      this.managers = await usersdata.json()
+
+      this.loading = false
+      
       this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       this.manager = JSON.parse(localStorage['user']).manager
     },
@@ -126,8 +139,12 @@
 </script>
 
 <style scoped>
-#manage-area {
-  background-color: var(--sb);
-  border-radius: 20px;
+#username {
+  border-radius: 20px 0 0 20px;
+}
+
+#position {
+  border-radius: 0 20px 20px 0;
+  width: 80px;
 }
 </style>

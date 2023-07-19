@@ -8,13 +8,13 @@
   <span v-if=!loading>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here, and for in the Scratch studio!</span>
 
     <!-- This link won't show if you don't have manager or writer permissions -->
-    <router-link v-if="username && manager == 'true'" to="/hivezine/new">new post</router-link>
+    <router-link v-if="username && manager == 'true'" to="/hivezine/new" class="button">New Post</router-link>
     
     <div class="posts">
     <div class="post" v-for="(item, index) in this.posts">
       <div class="title">
         <router-link :to="'/hivezine/post/' + item.id">{{ item.title }}</router-link>
-        <div class='username'>written by {{ item.user }}<img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
+        <div class='username'><span>written by <a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a></span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
            </div></div>
       <div class='content' v-html=item.post></div></div>
     </div>
@@ -96,14 +96,3 @@
     }
   }
 </script>
-
-<style scoped>
-
-
-.title a {
-  color: var(--btxt);
-  text-decoration: none;
-}
-
-
-</style>

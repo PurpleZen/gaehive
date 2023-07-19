@@ -4,12 +4,11 @@
   <div class="queue">
     <div v-if="error"><h3>Error :/</h3></div>
     <div v-if="loading && !error" class="loader"></div>
-    <router-link to="/hivezine">view all posts</router-link>
     <div class="posts">
     <div class="post" v-for="(item, index) in this.posts">
       <div class="title">
         <div>{{ item.title }}</div>
-        <div class='username'>written by {{ item.user }}<img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
+        <div class='username'><span>written by <a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a></span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->
           <span v-if="username && manager == 'true'" @click="deletePost()" id="add" class="promptButton">delete</span>
@@ -18,6 +17,7 @@
       </div>
       <div class='content' v-html=item.post></div></div>
     </div>
+    <router-link to="/hivezine" class="button">View All Posts</router-link>
   </div>
   </div>
   </div>

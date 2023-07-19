@@ -1,4 +1,11 @@
  <template>
+   <div v-if="!phase" class="page" id="page">
+    <div id="hostqueue" class="container">
+      <div class="queue">
+        <div class="loader"></div>
+      </div>
+    </div>
+   </div>
   <LoginProcess v-if="phase == 'process'" />
 </template>
 
@@ -30,7 +37,7 @@
 
             localStorage.setItem("token", res.token)
             
-            location.href = "/"
+            window.history.go(-3)
           })
       } else {
         location.href = 'https://auth.itinerary.eu.org/auth/?redirect=' +

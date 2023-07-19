@@ -6,7 +6,7 @@
     <div v-if="loading && !error" class="loader"></div>
     <h2 class="greeting">Our Managers</h2>
     <span v-if=!loading>The Gaehive Scratch studio has around <b style="font-family:serif">{{ this.active }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!</span>
-    <router-link v-if="username && manager == 'true'" to="/managers/edit">edit managers</router-link>
+    <router-link v-if="username && manager == 'true'" to="/managers/edit" class="button">Edit Managers</router-link>
     <div v-if=!loading class="break"></div>
 
     <div v-for="(item, index) in this.hosts">
