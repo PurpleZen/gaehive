@@ -8,7 +8,7 @@
     <div class="post" v-for="(item, index) in this.posts">
       <div class="title">
         <div>{{ item.title }}</div>
-        <div class='username'><span>written by <a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a></span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
+        <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->
           <span v-if="username && manager == 'true'" @click="deletePost()" id="add" class="promptButton">delete</span>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+  import symbcode from "@/data/symbcode.json"
+  import symbols from "@/data/symbols.json"
   export default {
     data() {
       return {
@@ -31,7 +33,9 @@
         error: null,
         title: null,
         posts: null,
-        data: null
+        data: null,
+        data: null,
+        symbcode: null
       }
     },
     async mounted() {
@@ -39,51 +43,18 @@
       if (!this.val1) {
         this.loading = true
 
-        let chardata = [
-          /:cool:/g,
-          /:hmm:/g,
-          /:crylaugh:/g,
-          /:thumbsup:/g,
-          /:heart:/g,
-          /:pride:/g,
-          /:trans:/g,
-          /:nails:/g,
-          /:skull:/g,
-          /:sparkle:/g,
-          /:yay:/g,
-          /:eye::lip::eye:/g,
-          /&lt;/g,
-          /&gt;/g,
-          /&quot;/g,
-          /&#39;/g
-        ]
-
-        let symbols = [
-          "😎",
-          "🤔",
-          "😂",
-          "👍",
-          "❤️",
-          "🏳️‍🌈",
-          "🏳️‍⚧️",
-          "💅",
-          "💀",
-          "✨️",
-          "🎉",
-          "👁👄👁",
-          "<",
-          ">",
-          '"',
-          "'"
-        ]
-
+this.symbcode = (symbcode)
+      this.symbols = (symbols)
+        
         const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/post/' + this.$route.params.id)
         this.data = await postdata.json()
-        chardata.forEach(string => {
-          var is = chardata.indexOf(string)
-          for ( var i = 0; i < this.data.length; i++){
-            this.data[i].title = this.data[i].title.replace(string, symbols[is]);
-            this.data[i].post = this.data[i].post.replace(string, symbols[is]);
+        
+        this.symbcode.forEach(string => {
+        var is = this.symbcode.indexOf(string)
+        for ( var i = 0; i < this.data.length; i++){
+          let regex = new RegExp(string, "g")
+          this.data[i].title = this.data[i].title.replace(regex, this.symbols[is]);
+          this.data[i].post = this.data[i].post.replace(regex, this.symbols[is]);
           }
         })
         this.posts = this.data.reverse()

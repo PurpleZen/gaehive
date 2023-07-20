@@ -27,6 +27,8 @@
 </template>
 
 <script>
+  import symbcode from "@/data/symbcode.json"
+  import symbols from "@/data/symbols.json"
   export default {
     data() {
       return {
@@ -37,7 +39,9 @@
         manager: null,
         title: "",
         draft: "",
-        preview: null
+        preview: null,
+        data: null,
+        symbcode: null
       }
     },
     mounted() {
@@ -46,39 +50,14 @@
     },
     methods: {
       updated() {
-        let text = [
-          /:cool:/g,
-          /:hmm:/g,
-          /:crylaugh:/g,
-          /:thumbsup:/g,
-          /:heart:/g,
-          /:pride:/g,
-          /:trans:/g,
-          /:nails:/g,
-          /:skull:/g,
-          /:sparkle:/g,
-          /:yay:/g,
-          /:eye::lip::eye:/g
-        ];
-        let emojis = [
-          "😎",
-          "🤔",
-          "😂",
-          "👍",
-          "❤️",
-          "🏳️‍🌈",
-          "🏳️‍⚧️",
-          "💅",
-          "💀",
-          "✨️",
-          "🎉",
-          "👁👄👁"
-        ];
+        this.symbcode = (symbcode)
+        this.symbols = (symbols)
         
         this.preview = "<h3 style='margin:0'>" + this.title + "</h3>" + "<br>" + this.draft
-        text.forEach(string => {
-          var i = text.indexOf(string)
-  this.preview = this.preview.replace(string, emojis[i]);
+        this.symbcode.forEach(string => {
+          let regex = new RegExp(string, "g")
+          var i = this.symbcode.indexOf(string)
+  this.preview = this.preview.replace(regex, this.symbols[i]);
 })
         
       },
