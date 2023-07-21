@@ -64,6 +64,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=block');
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=block');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
   --bg: #f6b93c;
@@ -77,6 +78,7 @@
   --slnkh: #484800;
   --plnk: #573c57;
   --plnkh: #392839;
+  --imp: #c94b4b;
 }
 
 [data-theme="dark"] {
@@ -144,6 +146,7 @@ textarea, .preview {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .title a {
@@ -163,7 +166,9 @@ textarea, .preview {
 
 .username img {
   width: 30px;
+  height: 30px;
   margin-left: 10px;
+  margin-right: 10px;
   border-radius: 20px;
 }
 
@@ -304,9 +309,7 @@ textarea, .preview {
   color: var(--btxt) !important;
   text-decoration: none;
   cursor: pointer;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 5px 15px;
   margin: 2px;
   margin-top: 5px;
   border-radius: 10px;
@@ -317,17 +320,57 @@ textarea, .preview {
 }
 
 .promptButton {
-  display: inline-block;
-  background-color: var(--bg);
+  display: flex;
+  position: relative;
+  width: 24px;
   color: var(--txt) !important;
   text-decoration: none;
   cursor: pointer;
-  padding: 5px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 5px 8px;
   margin: 2px;
-  margin-left: 7px;
   border-radius: 10px;
+}
+
+.promptButton#important:hover {
+  background-color: var(--imp);
+}
+
+.promptButton .material-symbols-rounded {
+  color: oldlace;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48
+}
+
+.promptButton:hover .material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48
+}
+
+.promptButton .tooltiptext {
+  width: max-content;
+  visibility: hidden;
+  background-color: var(--txt);
+  color: var(--btxt);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: 115%;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.promptButton:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
   
 .loader {
@@ -413,6 +456,15 @@ textarea, .preview {
   background-color: var(--bg)
 }
 
+.editList {
+  justify-items: center;
+  display: grid;
+}
+
+.editList a {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 800px) {
   html, body {
     display: grid;
@@ -431,6 +483,19 @@ textarea, .preview {
   }
   .list {
     grid-template-columns: none;
+  }
+  .username img {
+    display: none;
+  }
+  .title {
+    display: grid;
+    justify-content: center;
+  }
+  .promptButton {
+    padding: 0;
+  }
+  .username {
+    justify-content: center;
   }
 }
 </style>

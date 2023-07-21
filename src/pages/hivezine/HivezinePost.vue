@@ -11,7 +11,9 @@
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->
-          <span v-if="username && manager == 'true'" @click="deletePost()" id="add" class="promptButton">delete</span>
+          <span v-if="username && manager == 'true'" @click="deletePost()" class="promptButton"><div class="material-symbols-rounded">push_pin</div><span class="tooltiptext">pin post to home</span></span>
+          
+          <span v-if="username && manager == 'true'" @click="deletePost()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete post</span></span>
           
       </div>
       </div>

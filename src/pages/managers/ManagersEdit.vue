@@ -6,18 +6,17 @@
     <div v-if="error"><h3>Error :/</h3></div>
     <div v-if="loading && !error" class="loader"></div>
     <div v-if=!loading>
+      <div class="editList">
       <div v-for="(item, index) in this.managers">
-        <span>{{ item.name }} at position <b style="font-family:serif">{{ index }}</b></span>
+        <span><a @click="quickSelect(item.name )">{{ item.name }}</a> is at position <b style="font-family:serif">{{ index }}</b></span>
+      </div>
+      <div class="break"></div>
       </div>
       <input id="username" class="input" placeholder="username">
       <input id="position" class="input" placeholder="position">
     </div>
     <div>
       <span @click="moveManagers()" id="add" class="button">Move</span>
-      <span @click="nextHost()" id="add" class="button">Next Host</span>
-    </div>
-    <div class="break"></div>
-    <div>
       <span @click="addManagers()" id="add" class="button">Add</span>
       <span @click="removeManagers()" id="remove" class="button">Remove</span>
     </div>
@@ -27,6 +26,7 @@
       <h4>Uh oh!</h4>
       <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
     </div>
+    <router-link v-if="username && manager == 'true'" to="/managers" class="button">View Managers</router-link>
   </div>
   </div>
   </div>
@@ -127,12 +127,15 @@
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
-            location.href = "/managers"
+            window.location.reload()
           }
           if (res.error) {
             this.request = "unauthorized"
           }
         })
+      },
+      quickSelect(user) {
+        document.getElementById("username").value = user;
       }
     }
   }
