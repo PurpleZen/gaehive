@@ -36,6 +36,10 @@
             localStorage['user'] = JSON.stringify({'username': res.username, 'manager': res.manager})
 
             localStorage.setItem("token", res.token)
+
+            const date = new Date();
+            const exp = date.getDate() + 1;
+            localStorage.setItem("tokenExp", exp)
             
             window.history.go(-3)
           })

@@ -21,6 +21,7 @@
       logOut() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
+        localStorage.removeItem("tokenExp")
         window.location.reload()
       },
       loginOK() {
@@ -32,7 +33,26 @@
         this.theme = localStorage["theme"];
       }
     },
+    beforeMount() {
+      if (localStorage['tokenExp']) {
+        const date = new Date();
+        if (localStorage['tokenExp'] - date.getDate() < 1)
+        {
+          localStorage.removeItem("token")
+        localStorage.removeItem("user")
+        localStorage.removeItem("tokenExp")
+        }
+      }
+    },
     mounted() {
+      if (localStorage['tokenExp']) {
+        const date = new Date();
+        if (localStorage['tokenExp'] - date.getDate() < 1)
+        {
+          this.logOut()
+        }
+      }
+      
       document.documentElement.setAttribute('data-theme', localStorage["theme"]);
       this.theme = localStorage["theme"];
       const params = new URLSearchParams(window.location.search);

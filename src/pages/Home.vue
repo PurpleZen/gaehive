@@ -58,10 +58,6 @@ this.symbcode = (symbcode)
         })
         this.posts = this.data.reverse()
         this.loading = false
-      
-      this.username = JSON.parse(localStorage['user']).username.toLowerCase()
-      this.manager = JSON.parse(localStorage['user']).manager
-    
     }
   }
 </script>
