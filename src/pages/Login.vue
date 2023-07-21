@@ -33,7 +33,7 @@
         })
         .then(res => res.json())
           .then((res) => {
-            localStorage['user'] = JSON.stringify({'username': res.username, 'id': res.id, 'manager': res.manager})
+            localStorage['user'] = JSON.stringify({'username': res.username, 'manager': res.manager})
 
             localStorage.setItem("token", res.token)
             

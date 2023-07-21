@@ -1,14 +1,14 @@
 <template>
   <div class="sidebar">
-    <h1 v-if="!id">hello, welcome to the gaehive website.</h1>
-    <h1 v-if="id">hello {{ username }}, welcome to the gaehive website.</h1>
+    <h1 v-if="!this.username">hello, welcome to the gaehive website.</h1>
+    <h1 v-if="this.username">hello {{ username }}, welcome to the gaehive website.</h1>
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
     <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
     <router-link class='sidelinks' to="/managers">managers</router-link>
     <router-link class='sidelinks' to="/resources">resources</router-link>
-    <router-link class='sidelinks' style="cursor: pointer" to="/login" v-if="!this.id">sign in</router-link>
-    <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.id">sign out</a>
+    <router-link class='sidelinks' style="cursor: pointer" to="/login" v-if="!this.username">sign in</router-link>
+    <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.username">sign out</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark'">theme</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
   </div>
@@ -42,14 +42,12 @@
       }
 
       if (localStorage['user']) {
-        this.id = JSON.parse(localStorage['user']).id
         this.username = JSON.parse(localStorage['user']).username.toLowerCase()
         this.manager = JSON.parse(localStorage['user']).manager
       }
     },
     data() {
   	  return {
-        id: null,
         username: null,
         manager: null,
         login: null,
@@ -437,6 +435,7 @@ textarea, .preview {
 }
 
 .promote {
+  width: 24px;
   display: grid;
   background-color: var(--acc);
   border-radius: 0 20px 20px 0;

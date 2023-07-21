@@ -13,14 +13,14 @@
       
       <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently the host</span></a></div>
       
-      <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will be host next</span></a><div @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
+      <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will be host next</span></a><div v-if="username && manager == 'true'" @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
     </div>
     
     <div v-if=!loading class="nexthosts">
       <div class="title">These users will be host following {{ this.nexthost }}:</div>
       <div class="list">
     <div v-for="(item, index) in this.list">
-      <div class="users"><a :href="'https://scratch.mit.edu/users/' + item.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">#{{ index +3 }} {{ item.name }}</a><div @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
+      <div class="users"><a :href="'https://scratch.mit.edu/users/' + item.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">#{{ index +3 }} {{ item.name }}</a><div v-if="username && manager == 'true'" @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
     </div>
     </div>
     </div>
@@ -116,6 +116,7 @@
 
 <style scoped>
 .users a {
+  width: 100%;
   color: var(--txt);
   text-decoration: none;
   align-items: center;
