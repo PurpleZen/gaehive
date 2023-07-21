@@ -11,7 +11,7 @@
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->
-          <span v-if="username && manager == 'true'" @click="deletePost()" class="promptButton"><div class="material-symbols-rounded">push_pin</div><span class="tooltiptext">pin post to home</span></span>
+          <span v-if="username && manager == 'true'" @click="pinPost()" class="promptButton"><div class="material-symbols-rounded">push_pin</div><span class="tooltiptext">pin post to home</span></span>
           
           <span v-if="username && manager == 'true'" @click="deletePost()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete post</span></span>
           
@@ -36,13 +36,11 @@
         title: null,
         posts: null,
         data: null,
-        data: null,
         symbcode: null
       }
     },
     async mounted() {
       
-      if (!this.val1) {
         this.loading = true
 
 this.symbcode = (symbcode)
@@ -61,7 +59,7 @@ this.symbcode = (symbcode)
         })
         this.posts = this.data.reverse()
         this.loading = false
-      }
+      
       this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       this.manager = JSON.parse(localStorage['user']).manager
     },
@@ -88,6 +86,29 @@ this.symbcode = (symbcode)
             }
           })
         }  
+      },
+      async pinPost() {
+        if (confirm("Are you sure you want to pin this post to the homepage?")) {
+          fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/pin`, {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({
+              id: this.$route.params.id,
+              token: localStorage['token']
+            })
+          })
+          .then(res => res.json())
+          .then((res) => {
+            if (res.ok) {
+              location.href = "/"
+            }
+            if (res.error) {
+              this.request = "unauthorized"
+            }
+          })
+        } 
       }
     }
   }

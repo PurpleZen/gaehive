@@ -174,6 +174,26 @@ textarea, .preview {
   padding: 10px;
 }
 
+.pinnedPost {
+  display: flex;
+  align-items: center;
+}
+
+.pinnedPost .post {
+    margin-top: 0;
+}
+
+.pinnedPost .material-symbols-rounded {
+  margin-right: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 20
+}
+  
 .sidebar {
   background-color: var(--sb);
   padding: 50px;

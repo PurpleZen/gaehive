@@ -4,7 +4,7 @@
   <div class="queue">
     <div v-if="error"><h3>Error :/</h3></div>
     <div v-if="loading && !error" class="loader"></div>
-    <h2 class="greeting">The Hivezine</h2>
+    <h2 v-if=!loading class="greeting">The Hivezine</h2>
   <span v-if=!loading>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
 
     <!-- This link won't show if you don't have manager or writer permissions -->

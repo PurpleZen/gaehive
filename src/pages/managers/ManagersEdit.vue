@@ -2,7 +2,7 @@
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
-  <h2 class="greeting">Manage</h2>
+  <h2 v-if=!loading class="greeting">Manage</h2>
     <div v-if="error"><h3>Error :/</h3></div>
     <div v-if="loading && !error" class="loader"></div>
     <div v-if=!loading>
@@ -15,7 +15,7 @@
       <input id="username" class="input" placeholder="username">
       <input id="position" class="input" placeholder="position">
     </div>
-    <div>
+    <div v-if=!loading>
       <span @click="moveManagers()" id="add" class="button">Move</span>
       <span @click="addManagers()" id="add" class="button">Add</span>
       <span @click="removeManagers()" id="remove" class="button">Remove</span>
@@ -26,7 +26,7 @@
       <h4>Uh oh!</h4>
       <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
     </div>
-    <router-link v-if="username && manager == 'true'" to="/managers" class="button">View Managers</router-link>
+    <router-link to="/managers" class="button">View Managers</router-link>
   </div>
   </div>
   </div>
