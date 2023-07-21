@@ -277,6 +277,7 @@ textarea, .preview {
   font-weight: bold;
 }
 
+
 .nextlist {
   overflow: scroll;
   max-height: 75vh;
@@ -417,12 +418,11 @@ textarea, .preview {
 
 .users {
   display: flex;
+  justify-content: space-between;
   cursor: pointer;
   background-color: var(--sb);
   margin: 5px;
-  padding: 10px;
   border-radius: 20px;
-  align-items: center;
 }
 
 .users:hover {
@@ -434,6 +434,15 @@ textarea, .preview {
   height: 50px;
   margin-right: 10px;
   border-radius: 20px
+}
+
+.promote {
+  display: grid;
+  background-color: var(--acc);
+  border-radius: 0 20px 20px 0;
+  align-content: center;
+  color: var(--btxt);
+  padding: 5px;
 }
 
 .nexthosts {

@@ -78,7 +78,8 @@
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
-            location.href = "/managers"
+            this.refresh()
+            this.request = null
           }
           if (res.error) {
             this.request = "unauthorized"
@@ -102,7 +103,8 @@
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
-            location.href = "/managers"
+            this.refresh()
+            this.request = null
           }
           if (res.error) {
             this.request = "unauthorized"
@@ -127,7 +129,8 @@
         .then(res => res.json())
         .then((res) => {
           if (res.ok) {
-            window.location.reload()
+            this.refresh()
+            this.request = null
           }
           if (res.error) {
             this.request = "unauthorized"
@@ -136,6 +139,12 @@
       },
       quickSelect(user) {
         document.getElementById("username").value = user;
+      },
+      async refresh() {
+        const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
+        this.managers = await usersdata.json()
+        document.getElementById("username").value = ""
+        document.getElementById("position").value = ""
       }
     }
   }

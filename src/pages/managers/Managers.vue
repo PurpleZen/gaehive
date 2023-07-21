@@ -10,15 +10,17 @@
     <div v-if=!loading class="break"></div>
 
     <div v-for="(item, index) in this.hosts">
-      <a :href="'https://scratch.mit.edu/users/' + item.name" class="users" v-if="index == 0"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently the host</span></a>
-      <a :href="'https://scratch.mit.edu/users/' + item.name" class="users" v-if="index == 1"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will be host next</span></a>
+      
+      <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently the host</span></a></div>
+      
+      <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will be host next</span></a><div @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
     </div>
     
     <div v-if=!loading class="nexthosts">
       <div class="title">These users will be host following {{ this.nexthost }}:</div>
       <div class="list">
     <div v-for="(item, index) in this.list">
-      <a :href="'https://scratch.mit.edu/users/' + item.name" class="users"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">#{{ index +3 }} {{ item.name }}</a>
+      <div class="users"><a :href="'https://scratch.mit.edu/users/' + item.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">#{{ index +3 }} {{ item.name }}</a><div @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
     </div>
     </div>
     </div>
@@ -57,13 +59,67 @@
 
       this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       this.manager = JSON.parse(localStorage['user']).manager
+    },
+    methods: {
+      async moveManagers(user) {
+        this.request = 'sending';
+
+        fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/edit`, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "PUT",
+          body: JSON.stringify({
+            username: this.hosts[0].name,
+            position: this.active,
+            token: localStorage['token']
+          })
+        })
+        .then(res => res.json())
+        .then((res) => {
+
+        fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/edit`, {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "PUT",
+          body: JSON.stringify({
+            username: user,
+            position: 0,
+            token: localStorage['token']
+          })
+        })
+        .then(res => res.json())
+        .then((res) => {
+          if (res.ok) {
+            this.refresh()
+            this.request = null
+          }
+          if (res.error) {
+            this.request = "unauthorized"
+          }
+        })
+        })
+      },
+      async refresh() {
+        const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
+        const managers = await usersdata.json()
+      this.hosts = managers.slice(0, 2)
+      this.list = managers.slice(2, managers.length)
+
+      this.nexthost = this.hosts[1].name
+      this.active = this.hosts.length + this.list.length;
+      }
     }
   }
 </script>
 
 <style scoped>
-a.users {
+.users a {
   color: var(--txt);
   text-decoration: none;
+  align-items: center;
+  display: flex;
+  padding: 10px;
 }
 </style>
