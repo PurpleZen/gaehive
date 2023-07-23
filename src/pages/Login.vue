@@ -13,11 +13,18 @@
   import LoginProcess from '../models/LoginProcess.vue'
   
   export default {
+    beforeRouteEnter() {
+      const params = new URLSearchParams(window.location.search);
+      const privateCode = params.get("privateCode")
+      if (!privateCode) {
+        localStorage.setItem("returnURL", window.location)
+      }
+    },
     mounted() {
-      
       const params = new URLSearchParams(window.location.search);
       const privateCode = params.get("privateCode")
       const logout = params.get("logout")
+      
 
       if (privateCode) {
         this.phase = "process"
@@ -33,15 +40,16 @@
         })
         .then(res => res.json())
           .then((res) => {
-            localStorage['user'] = JSON.stringify({'username': res.username, 'manager': res.manager})
+            localStorage['user'] = JSON.stringify({'username': res.username, 'admin': res.admin, 'manager': res.manager, 'writer': res.writer})
 
             localStorage.setItem("token", res.token)
 
-            const date = new Date();
-            const exp = date.getDate() + 1;
-            localStorage.setItem("tokenExp", exp)
+            var date = new Date();
+            date.setDate(date.getDate() + 14)
+            localStorage.setItem("tokenExp", date)
             
-            window.history.go(-3)
+            window.location = localStorage["returnURL"]
+            localStorage.removeItem("returnURL")
           })
       } else {
         location.href = 'https://auth.itinerary.eu.org/auth/?redirect=' +
@@ -49,12 +57,14 @@
       '&name=the Gaehive website&authProject=867214083'
       }
     },
+    
     data() {
       return {
         phase: null,
         loading: null
       }
     },
+    
     components: {
       LoginProcess
     }

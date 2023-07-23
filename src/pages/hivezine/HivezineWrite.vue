@@ -2,7 +2,7 @@
   <div class="page" id="page">
     <div class="container">
       <div class="queue">
-  <h2 class="greeting">New Post</h2>
+  <h1 class="greeting">New Post</h1>
   <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>. When you're done, click "Let's go!"<br>Please remember all posts <b>must</b> follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.<br><br>Happy writing!</span>
   <div class="break"></div>
   <textarea class="title" v-model="title" @keyup="updated()" id="username" type="text" placeholder="title of your post"></textarea>
@@ -63,7 +63,7 @@
       },
       // See? Pretty cool, huh?
       async addManagers() { 
-        this.request = 'sending';
+        this.$emit('load')
         let useradd = document.getElementById("username").value;
 
 
@@ -84,7 +84,8 @@
             location.href = "/hivezine"
           }
           if (res.error) {
-            this.request = "unauthorized"
+            this.$emit('load')
+            this.$emit('error')
           }
         })
       }

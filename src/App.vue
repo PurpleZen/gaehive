@@ -1,7 +1,11 @@
 <template>
   <div class="sidebar">
-    <h1 v-if="!this.username">hello, welcome to the gaehive website.</h1>
-    <h1 v-if="this.username">hello {{ username }}, welcome to the gaehive website.</h1>
+    <div v-if="loading" class="loader"></div>
+    <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
+    <div v-if="!loading && !error" class="loader-placehold"></div>
+    <h1 v-if="!username">hello, welcome to the gaehive website.</h1>
+    <h1 v-if="username">hello {{ username }}, welcome to the gaehive website.</h1>
+    
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
     <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
@@ -11,8 +15,11 @@
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.username">sign out</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark'">theme</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
+    <div class="loader-placehold"></div>
   </div>
-  <router-view />
+  
+  <router-view @load="loading = !loading" @error="error = !error"/>
+  
 </template>
 
 <script>
@@ -24,66 +31,47 @@
         localStorage.removeItem("tokenExp")
         window.location.reload()
       },
-      loginOK() {
-        this.login = null
-      },
       changeTheme(theme) {
         localStorage.setItem("theme", theme);
         document.documentElement.setAttribute('data-theme', localStorage["theme"]);
         this.theme = localStorage["theme"];
       }
     },
+    
     beforeMount() {
+      
       if (localStorage['tokenExp']) {
         const date = new Date();
-        if (localStorage['tokenExp'] - date.getDate() < 1)
+        const timeDiff = (Date.parse(localStorage["tokenExp"]) - date.getTime()) / (1000 * 3600 * 24) + 1
+        if (Math.trunc(timeDiff) < 1)
         {
           localStorage.removeItem("token")
-        localStorage.removeItem("user")
-        localStorage.removeItem("tokenExp")
+          localStorage.removeItem("user")
+          localStorage.removeItem("tokenExp")
         }
       }
     },
+    
     mounted() {
-      if (localStorage['tokenExp']) {
-        const date = new Date();
-        if (localStorage['tokenExp'] - date.getDate() < 1)
-        {
-          this.logOut()
-        }
-      }
-      
-      document.documentElement.setAttribute('data-theme', localStorage["theme"]);
       this.theme = localStorage["theme"];
-      const params = new URLSearchParams(window.location.search);
-      const loggedin = params.get("login")
-      if (loggedin) {
-        this.login = true;
-      }
 
       if (localStorage['user']) {
         this.username = JSON.parse(localStorage['user']).username.toLowerCase()
-        this.manager = JSON.parse(localStorage['user']).manager
       }
     },
+    
     data() {
   	  return {
         username: null,
-        manager: null,
-        login: null,
-        theme: null
+        theme: null,
+        loading: false,
+        error: false
   	  }
     }
   }
-
-  
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=block');
-@import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=block');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
-
 :root {
   --bg: #f6b93c;
   --sb: oldlace;
@@ -112,6 +100,31 @@
   --plnk: #FF9900;
   --plnkh: #CC7A00;
 }
+
+.hz-move,
+.hz-enter-active,
+.hz-leave-active {
+  transition: all 0.5s ease;
+}
+.hz-enter-from,
+.hz-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.mng-move,
+.mng-enter-active,
+.mng-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.mng-enter-from,
+.mng-leave-to {
+  opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
+}
+.mng-leave-active {
+  position: absolute;
+}
   
 html, body {
   color: var(--txt);
@@ -138,82 +151,6 @@ textarea, .preview {
   background-color: var(--sb);
 }
 
-.post {
-  resize: none;
-  outline: none;
-  overflow: auto;
-  border-radius: 20px;
-  border: none;
-  margin: 5px;
-  margin-top: 25px;
-  scrollbar-width: none;
-  color: var(--plnk);
-  font-family: "Vollkorn";
-  background-color: var(--sb);
-}
-
-.posts {
-  width: 100%;
-}
-
-.title {
-  background-color: var(--acc);
-  color: var(--btxt);
-  font-size: larger;
-  border-radius: 20px 20px 0 0;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.title a {
-  color: var(--btxt) !important;
-  text-decoration: none;
-}
-
-.title a:hover {
-  text-decoration: underline;
-}
-
-.username {
-  display: flex;
-  font-size: small;
-  align-items: center;
-}
-
-.username img {
-  width: 30px;
-  height: 30px;
-  margin-left: 10px;
-  margin-right: 10px;
-  border-radius: 20px;
-}
-
-.content {
-  padding: 10px;
-}
-
-.pinnedPost {
-  display: flex;
-  align-items: center;
-}
-
-.pinnedPost .post {
-    margin-top: 0;
-}
-
-.pinnedPost .material-symbols-rounded {
-  margin-right: 5px;
-  font-size: 20px;
-  text-decoration: none;
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 200,
-  'opsz' 20
-}
-  
 .sidebar {
   background-color: var(--sb);
   padding: 50px;
@@ -293,42 +230,166 @@ textarea, .preview {
   color: var(--acc2);
 }
 
-.user {
+.users {
   display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background-color: var(--sb);
+  margin: 5px;
+  border-radius: 20px;
+}
+
+.users:hover {
+  outline: var(--acc) solid 2px;
+}
+
+.users a {
+  width: 100%;
+  color: var(--txt);
+  text-decoration: none;
   align-items: center;
-  font-size: 20px;
-  color: inherit;
+  display: flex;
+  padding: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.users span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.users img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 20px
+}
+
+.promote {
+  width: 24px;
+  display: grid;
+  background-color: var(--acc);
+  border-radius: 0 20px 20px 0;
+  align-content: center;
+  color: var(--btxt);
+  padding: 5px;
+}
+
+.nexthosts {
+  margin-top: 25px;
+  background-color: var(--sb);
+  border-radius: 20px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 10px;
+  row-gap: 10px;
+  margin: 5px;
+  padding: 10px;
+  align-items: center;
+}
+
+.list .users {
+  background-color: var(--bg)
+}
+
+.editList {
+  position: relative;
+  justify-items: center;
+  display: grid;
+}
+
+.editList a {
+  cursor: pointer;
+}
+  
+.post {
+  resize: none;
+  outline: none;
+  overflow: auto;
+  border-radius: 20px;
+  border: none;
+  margin: 5px;
+  margin-top: 25px;
+  scrollbar-width: none;
+  color: var(--plnk);
+  font-family: "Vollkorn";
+  background-color: var(--sb);
+}
+
+.posts {
+  width: 100%;
+}
+
+.title {
+  background-color: var(--acc);
+  color: var(--btxt);
+  font-size: larger;
+  border-radius: 20px 20px 0 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title a {
+  color: var(--btxt) !important;
   text-decoration: none;
 }
 
-.user p {
-  margin: 0px;
+.title a:hover {
+  text-decoration: underline;
 }
 
-.user img {  
-  border-radius: 50%;
+.username {
+  display: flex;
+  font-size: small;
+  align-items: center;
+}
+
+.username img {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
   margin-right: 10px;
+  border-radius: 20px;
 }
 
-.currnext .user {
-  font-size: 25px;
-  font-weight: bold;
+.content {
+  padding: 10px;
 }
 
-
-.nextlist {
-  overflow: scroll;
-  max-height: 75vh;
-  padding-right: 15px;
+.reactions {
+  border-top: var(--brk) 2px dotted;
+  margin: 0 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.hostinfo p {
-  margin: 0;
+.pinnedPost {
+  display: flex;
+  align-items: center;
 }
 
-.status {
+.pinnedPost .post {
+    margin-top: 0;
+}
+
+.pinnedPost .material-symbols-rounded {
+  margin-right: 5px;
+  width: 20px;
   font-size: 20px;
-  font-weight: normal;
+  text-decoration: none;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 20
 }
 
 .input {
@@ -421,6 +482,22 @@ textarea, .preview {
   animation: rotation 1s ease-in-out infinite;
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  height: 48px;
+}
+
+.error .material-symbols-rounded {
+  color: #de3b3b;
+  margin-right: 5px;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 200,
+  'opsz' 48
+}
+
 .loader-placehold {
   width: 48px; 
   height: 48px; 
@@ -450,67 +527,6 @@ textarea, .preview {
     scale: 100%;
     border-radius: 100%;
   }
-}
-
-
-
-.users {
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  background-color: var(--sb);
-  margin: 5px;
-  border-radius: 20px;
-}
-
-.users:hover {
-  outline: var(--acc) solid 2px;
-}
-
-.users img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border-radius: 20px
-}
-
-.promote {
-  width: 24px;
-  display: grid;
-  background-color: var(--acc);
-  border-radius: 0 20px 20px 0;
-  align-content: center;
-  color: var(--btxt);
-  padding: 5px;
-}
-
-.nexthosts {
-  margin-top: 25px;
-  background-color: var(--sb);
-  border-radius: 20px;
-}
-
-.list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 10px;
-  row-gap: 10px;
-  margin: 5px;
-  padding: 10px;
-  align-items: center;
-}
-
-.list .users {
-  background-color: var(--bg)
-}
-
-.editList {
-  justify-items: center;
-  display: grid;
-}
-
-.editList a {
-  cursor: pointer;
 }
 
 @media screen and (max-width: 800px) {
@@ -544,6 +560,9 @@ textarea, .preview {
   }
   .username {
     justify-content: center;
+  }
+  .users a {
+    white-space: unset;
   }
 }
 </style>

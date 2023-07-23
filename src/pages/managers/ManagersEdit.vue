@@ -1,36 +1,34 @@
 <template>
   <div class="page" id="page">
-  <div id="hostqueue" class="container">
-  <div class="queue">
-  <h2 v-if=!loading class="greeting">Manage</h2>
-    <div v-if="error"><h3>Error :/</h3></div>
-    <div v-if="loading && !error" class="loader"></div>
-    <div v-if=!loading>
-      <div class="editList">
-      <div v-for="(item, index) in this.managers">
-        <span><a @click="quickSelect(item.name )">{{ item.name }}</a> is at position <b style="font-family:serif">{{ index }}</b></span>
+    <div id="hostqueue" class="container">
+      <div class="queue">
+        <h1 v-if=!loading class="greeting">Manage</h1>
+    
+        <div v-if="loading && !error" class="loader"></div>
+        <div v-if=!loading>
+          <div class="editList">
+            <TransitionGroup name="mng">
+            <div v-for="(item, index) in this.managers" :key="item.name">
+              <span>
+                <a @click="quickSelect(item.name )">{{ item.name }}</a> is at position <b style="font-family:serif">{{ index }}</b>
+              </span>
+            </div>
+            </TransitionGroup>
+            <div class="break"></div>
+          </div>
+          <input id="username" class="input" placeholder="username">
+          <input id="position" class="input" placeholder="position">
+        </div>
+        <div v-if=!loading>
+          <span @click="moveManagers()" id="add" class="button">Move</span>
+          <span @click="addManagers()" id="add" class="button">Add</span>
+          <span @click="removeManagers()" id="remove" class="button">Remove</span>
+        </div>
+        
+        <router-link to="/managers" class="button">View Managers</router-link>
       </div>
-      <div class="break"></div>
-      </div>
-      <input id="username" class="input" placeholder="username">
-      <input id="position" class="input" placeholder="position">
     </div>
-    <div v-if=!loading>
-      <span @click="moveManagers()" id="add" class="button">Move</span>
-      <span @click="addManagers()" id="add" class="button">Add</span>
-      <span @click="removeManagers()" id="remove" class="button">Remove</span>
-    </div>
-    <div v-if="request == 'sending'" class="loader"></div>
-    <div v-if="request == null" class="loader-placehold"></div>
-    <div v-if="request == 'unauthorized'">
-      <h4>Uh oh!</h4>
-      <span>Looks like this user doesn't exist, or you don't have permission to do that.</span>
-    </div>
-    <router-link to="/managers" class="button">View Managers</router-link>
   </div>
-  </div>
-  </div>
-  
 </template>
 
 <script>
@@ -51,18 +49,18 @@
     async mounted() {
 
       this.loading = true
-      
-      const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
-      this.managers = await usersdata.json()
 
-      this.loading = false
-      
-      this.username = JSON.parse(localStorage['user']).username.toLowerCase()
-      this.manager = JSON.parse(localStorage['user']).manager
+      if (!localStorage["managers"]) {
+        this.noManagerData()
+      } else {
+        this.getManagerData()
+
+        this.loading = false
+      }
     },
     methods: {
       async addManagers() { 
-        this.request = 'sending';
+        this.$emit('load')
         let useradd = document.getElementById("username").value;
 
    fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/add`, {
@@ -79,15 +77,16 @@
         .then((res) => {
           if (res.ok) {
             this.refresh()
-            this.request = null
+            this.$emit('load')
           }
           if (res.error) {
-            this.request = "unauthorized"
+            this.$emit('load')
+            this.$emit('error')
           }
         })
       },
       async removeManagers() {
-        this.request = 'sending';
+        this.$emit('load')
         let username = document.getElementById("username").value;
 
         fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/remove`, {
@@ -104,15 +103,16 @@
         .then((res) => {
           if (res.ok) {
             this.refresh()
-            this.request = null
+            this.$emit('load')
           }
           if (res.error) {
-            this.request = "unauthorized"
+            this.$emit('load')
+            this.$emit('error')
           }
         })
       },
       async moveManagers() {
-        this.request = 'sending';
+        this.$emit('load')
         let username = document.getElementById("username").value;
 
         fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/edit`, {
@@ -130,19 +130,35 @@
         .then((res) => {
           if (res.ok) {
             this.refresh()
-            this.request = null
+            this.$emit('load')
           }
           if (res.error) {
-            this.request = "unauthorized"
+            this.$emit('load')
+            this.$emit('error')
           }
         })
       },
+
+      async noManagerData() {
+        const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
+        const managers = await usersdata.json()
+        localStorage.setItem('managers', JSON.stringify(managers));
+        this.getManagerData()
+      },
+      
+      async getManagerData() {
+        this.managers = JSON.parse(localStorage["managers"])
+        this.refresh()
+      },
+      
       quickSelect(user) {
         document.getElementById("username").value = user;
+        document.getElementById("position").select()
       },
       async refresh() {
         const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/db/managers')
         this.managers = await usersdata.json()
+        localStorage.setItem('managers', JSON.stringify(this.managers))
         document.getElementById("username").value = ""
         document.getElementById("position").value = ""
       }

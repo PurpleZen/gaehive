@@ -2,24 +2,26 @@
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
-    <div v-if="error"><h3>Error :/</h3></div>
+    
     <div v-if="loading && !error" class="loader"></div>
     <div class="posts">
-    <div class="post" v-for="(item, index) in this.posts">
+      <TransitionGroup name="hz">
+    <div class="post" v-for="(item, index) in this.posts" :key="index">
       <div class="title">
         <div>{{ item.title }}</div>
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->
-          <span v-if="username && manager == 'true'" @click="pinPost()" class="promptButton"><div class="material-symbols-rounded">push_pin</div><span class="tooltiptext">pin post to home</span></span>
+          <span v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" @click="pinPost()" class="promptButton"><div class="material-symbols-rounded">push_pin</div><span class="tooltiptext">pin post to home</span></span>
           
-          <span v-if="username && manager == 'true'" @click="deletePost()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete post</span></span>
+          <span v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" @click="deletePost()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete post</span></span>
           
       </div>
       </div>
       <div class='content' v-html=item.post></div></div>
+        </TransitionGroup>
     </div>
-    <router-link to="/hivezine" class="button">View All Posts</router-link>
+    <router-link v-if=!loading to="/hivezine" class="button">View All Posts</router-link>
   </div>
   </div>
   </div>
@@ -43,6 +45,13 @@
       
         this.loading = true
 
+      if (localStorage['user']) {
+        this.username = JSON.parse(localStorage['user']).username.toLowerCase()
+        this.admin = JSON.parse(localStorage['user']).admin 
+        this.manager = JSON.parse(localStorage['user']).manager
+        this.writer = JSON.parse(localStorage['user']).writer 
+      }
+
 this.symbcode = (symbcode)
       this.symbols = (symbols)
         
@@ -59,13 +68,11 @@ this.symbcode = (symbcode)
         })
         this.posts = this.data.reverse()
         this.loading = false
-      
-      this.username = JSON.parse(localStorage['user']).username.toLowerCase()
-      this.manager = JSON.parse(localStorage['user']).manager
     },
     methods: {
       async deletePost() {
         if (confirm("Are you sure you want to delete this post?")) {
+          this.$emit('load')
           fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/delete`, {
             headers: {
               "Content-Type": "application/json"
@@ -89,6 +96,7 @@ this.symbcode = (symbcode)
       },
       async pinPost() {
         if (confirm("Are you sure you want to pin this post to the homepage?")) {
+          this.$emit('load')
           fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/pin`, {
             headers: {
               "Content-Type": "application/json"

@@ -1,5 +1,15 @@
 const app = require('express')();
+const rateLimit = require('express-rate-limit');
 const fetch = require('cross-fetch');
+
+const apiRequestLimiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 2,
+    standardHeaders: true, 
+	 legacyHeaders: false,
+})
+
+app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
 app.get('/api/hivezine', (req, res) => {

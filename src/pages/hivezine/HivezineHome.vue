@@ -1,24 +1,29 @@
-<template>
+  <template>
   <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
-    <div v-if="error"><h3>Error :/</h3></div>
-    <div v-if="loading && !error" class="loader"></div>
-    <h2 v-if=!loading class="greeting">The Hivezine</h2>
-  <span v-if=!loading>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
+    <h1 class="greeting">The Hivezine</h1>
+  <span>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
 
     <!-- This link won't show if you don't have manager or writer permissions -->
-    <router-link v-if="username && manager == 'true'" to="/hivezine/new" class="button">New Post</router-link>
+    <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/new" class="button">New Post</router-link>
+
+    <div v-if="loading && !error" class="loader"></div>
     
     <div class="posts">
-    <div class="post" v-for="(item, index) in this.posts">
+      <TransitionGroup name="hz">
+    <div class="post" v-for="(item, index) in this.posts" :key="item.id">
       <div class="title">
         <router-link :to="'/hivezine/post/' + item.id">{{ item.title }}</router-link>
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
-           </div></div>
-      <div class='content' v-html=item.post></div></div>
+           </div>
+      </div>
+      <div class='content' v-html=item.post>
+      </div>
+      <div class="reactions"></div>
     </div>
-    
+      </TransitionGroup>
+    </div>
   </div>
   </div>
   </div>
@@ -33,7 +38,9 @@
         loading: null,
         error: null,
         username: null,
+        admin: null,
         manager: null,
+        writer: null,
         title: null,
         posts: null,
         data: null,
@@ -42,6 +49,13 @@
     },
     async mounted() {
       this.loading = true
+
+      if (localStorage['user']) {
+        this.username = JSON.parse(localStorage['user']).username.toLowerCase()
+        this.admin = JSON.parse(localStorage['user']).admin 
+        this.manager = JSON.parse(localStorage['user']).manager
+        this.writer = JSON.parse(localStorage['user']).writer 
+      }
       
       this.symbcode = (symbcode)
       this.symbols = (symbols)
@@ -59,9 +73,12 @@
       })
       this.posts = this.data.reverse()
       this.loading = false
-      
-      this.username = JSON.parse(localStorage['user']).username.toLowerCase()
-      this.manager = JSON.parse(localStorage['user']).manager    
     }
   }
 </script>
+
+<style scoped>
+.queue {
+  align-content: baseline;
+}
+</style>
