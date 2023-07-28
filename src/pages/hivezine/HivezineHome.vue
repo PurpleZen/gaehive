@@ -8,7 +8,7 @@
     <!-- This link won't show if you don't have manager or writer permissions -->
     <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/new" class="button">New Post</router-link>
 
-    <div v-if="loading && !error" class="loader"></div>
+    <div v-if="loading" class="loader">Loading...</div>
     
     <div class="posts">
       <TransitionGroup name="hz">

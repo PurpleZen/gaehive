@@ -2,11 +2,13 @@ const app = require('express')();
 const rateLimit = require('express-rate-limit');
 const fetch = require('cross-fetch');
 
+// Limit how many requests can be made to prevent users from potentially spamming the Scratch servers.
 const apiRequestLimiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 2,
-    standardHeaders: true, 
-	 legacyHeaders: false,
+  windowMs: 1 * 60 * 1000,
+  max: 2,
+  message: { 'error': 'too many requests' },
+  standardHeaders: true, 
+	legacyHeaders: false,
 })
 
 app.use(apiRequestLimiter)

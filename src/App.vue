@@ -1,10 +1,10 @@
 <template>
   <div class="sidebar">
-    <div v-if="loading" class="loader"></div>
+    <div v-if="loading" class="loader">Loading...</div>
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
     <div v-if="!loading && !error" class="loader-placehold"></div>
     <h1 v-if="!username">hello, welcome to the gaehive website.</h1>
-    <h1 v-if="username">hello {{ username }}, welcome to the gaehive website.</h1>
+    <h1 @click.right="this.secret = true" v-if="username">hello {{ username }}, welcome to the gaehive website.</h1>
     
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
@@ -13,8 +13,9 @@
     <router-link class='sidelinks' to="/resources">resources</router-link>
     <router-link class='sidelinks' style="cursor: pointer" to="/login" v-if="!this.username">sign in</router-link>
     <a class='sidelinks' style="cursor: pointer" @click="logOut()" v-if="this.username">sign out</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark'">theme</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark'">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark' || this.theme == '2000s-blog'">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</a>
     <div class="loader-placehold"></div>
   </div>
   
@@ -64,6 +65,7 @@
   	  return {
         username: null,
         theme: null,
+        secret: null,
         loading: false,
         error: false
   	  }
@@ -79,19 +81,20 @@
   --acc2: #483248;
   --brk: #0006;
   --txt: #444;
-  --btxt: white;
+  --btxt: oldlace;
   --slnk: #676700;
   --slnkh: #484800;
   --plnk: #573c57;
   --plnkh: #392839;
   --imp: #c94b4b;
+  --brkb: 4px dotted var(--brk);
 }
 
 [data-theme="dark"] {
   --bg: #221f1b;
   --sb: #483232;
-  --acc: #FF9900;
-  --acc2: #FF9900;
+  --acc: #e38735;
+  --acc2: #d88235;
   --brk: #ffb30094;
   --txt: #E7B148;
   --btxt: black;
@@ -99,8 +102,50 @@
   --slnkh: #C6B164;
   --plnk: #FF9900;
   --plnkh: #CC7A00;
+  --imp: #fff;
 }
 
+[data-theme="2000s-blog"] {
+  --bg: blue;
+  --sb: gray;
+  --acc: magenta;
+  --acc2: white;
+  --brk: magenta;
+  --txt: white;
+  --btxt: white;
+  --slnk: blue;
+  --slnkh: purple;
+  --plnk: magenta;
+  --plnkh: lime;
+  --imp: red;
+  --brkb: 4px solid var(--brk);
+}
+[data-theme="2000s-blog"] * {
+  font-family: 'Comic Neue' !important;
+  border-radius: 0 !important;
+  transition: none !important;
+  animation: none !important;
+}
+[data-theme="2000s-blog"] .sidebar {
+  background-color: lightgray;
+}
+[data-theme="2000s-blog"] .loader {
+  border: none;
+  width: auto;
+  color: white;
+}
+[data-theme="2000s-blog"] .input {
+  color: black;
+  background-color: white;
+}
+[data-theme="2000s-blog"] .promptButton .tooltiptext {
+  color: black;
+}
+[data-theme="2000s-blog"] .material-symbols-rounded {
+  font-family: 'Material Symbols Rounded' !important;
+}
+  
+  
 .hz-move,
 .hz-enter-active,
 .hz-leave-active {
@@ -146,8 +191,8 @@ textarea, .preview {
   border: none;
   margin: 5px;
   scrollbar-width: none;
-  color: var(--plnk);
-  font-family: "Vollkorn";
+  color: var(--txt);
+  font-family: 'Vollkorn';
   background-color: var(--sb);
 }
 
@@ -162,7 +207,7 @@ textarea, .preview {
 }
 
 .sidebar h1 {
-  font-family: "Abril Fatface";
+  font-family: 'Abril Fatface';
   color: var(--acc);
   border-left: solid 3.5px var(--bg);
   padding-left: 5px;
@@ -315,8 +360,8 @@ textarea, .preview {
   margin: 5px;
   margin-top: 25px;
   scrollbar-width: none;
-  color: var(--plnk);
-  font-family: "Vollkorn";
+  color: var(--txt);
+  font-family: 'Vollkorn';
   background-color: var(--sb);
 }
 
@@ -436,7 +481,7 @@ textarea, .preview {
 }
 
 .promptButton .material-symbols-rounded {
-  color: oldlace;
+  color: var(--btxt);
   font-variation-settings:
   'FILL' 0,
   'wght' 400,
@@ -477,6 +522,7 @@ textarea, .preview {
   width: 48px;
   height: 48px;
   border: solid 7px var(--acc);
+  color: transparent;
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s ease-in-out infinite;
@@ -509,7 +555,7 @@ textarea, .preview {
 .break {
   display: inline-block;
   width: 40%;
-  border-bottom: 4px dotted var(--brk);
+  border-bottom: var(--brkb);
   margin: 15px
 }
 
@@ -537,7 +583,7 @@ textarea, .preview {
     width: auto;
   }
   .sidebar {
-    height: 50vh;
+    height: 60vh;
   }
   .page {
     overflow: initial;

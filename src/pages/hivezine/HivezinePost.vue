@@ -3,7 +3,7 @@
   <div id="hostqueue" class="container">
   <div class="queue">
     
-    <div v-if="loading && !error" class="loader"></div>
+    <div v-if="loading" class="loader">Loading...</div>
     <div class="posts">
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in this.posts" :key="index">
