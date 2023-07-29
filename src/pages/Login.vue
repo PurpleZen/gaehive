@@ -36,11 +36,15 @@
             window.close()
           })
       } else {
-        window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/login') +
-      '&name=the Gaehive website&authProject=867214083', "", "width=500,height=500");
+        window.location = "/"
       }
     }
   }
   
 </script>
+
+<style scoped>
+.page {
+  width: 100%;
+}
+</style>

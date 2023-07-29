@@ -30,7 +30,7 @@
       logIn() {
         window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/login') +
-      '&name=the Gaehive website&authProject=867214083', "", "width=600,height=500");
+      '&name=the Gaehive website&authProject=867214083', "", "width=700,height=400,popup=false");
       },
       logOut() {
         localStorage.removeItem("token")

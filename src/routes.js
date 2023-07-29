@@ -1,6 +1,7 @@
+import Main from './pages/Main.vue'
+
 import Home from './pages/Home.vue'
 import Resources from './pages/Resources.vue'
-import Login from './pages/Login.vue'
 import NotFound from './pages/404.vue'
 
 import HivezineHome from './pages/hivezine/HivezineHome.vue'
@@ -12,46 +13,49 @@ import ManagersEdit from './pages/managers/ManagersEdit.vue'
 
 import FollowingGuidelines from './pages/docs/FollowingGuidelines.vue'
 
-import Main from './pages/Main.vue'
+import Login from './pages/Login.vue'
+
 export const routes = [
   {
     path: '/',
     component: Main,
     children: [
-  { 
-    path: '/', 
-    component: Home,
-  },
-  {
-    path: '/hivezine',
-    component: HivezineHome,
-  },
-  {
-    path: '/hivezine/post/:id',
-    component: HivezinePost,
-  },
-  {
-    path: '/hivezine/new',
-    component: HivezineWrite,
-  },
-  {
-    path: '/managers',
-    component: Managers,
-  },
-  {
-    path: '/managers/edit',
-    component: ManagersEdit,
-  },
-  {
-    path: '/docs/how-we-follow-guidelines',
-    component: FollowingGuidelines,
-  },
-  {
-    path: '/resources',
-    component: Resources,
-  },
-  { path: '/:path(.*)', component: NotFound },
-      ]
+      { 
+        path: '/', 
+        component: Home,
+      },
+      {
+        path: '/hivezine',
+        component: HivezineHome,
+      },
+      {
+        path: '/hivezine/post/:id',
+        component: HivezinePost,
+      },
+      {
+        path: '/hivezine/new',
+        component: HivezineWrite,
+      },
+      {
+        path: '/managers',
+        component: Managers,
+      },
+      {
+        path: '/managers/edit',
+        component: ManagersEdit,
+      },
+      {
+        path: '/docs/how-we-follow-guidelines',
+        component: FollowingGuidelines,
+      },
+      {
+        path: '/resources',
+        component: Resources,
+      },
+      { path: '/:path(.*)',
+        component: NotFound
+      },
+    ]
   },
   {
     path: '/login',
