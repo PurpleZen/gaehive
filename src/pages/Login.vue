@@ -1,35 +1,19 @@
- <template>
-   <div v-if="!phase" class="page" id="page">
-    <div id="hostqueue" class="container">
-      <div class="queue">
-        <div class="loader"></div>
-      </div>
+<template>
+  <div class="page">
+    <div class="queue">
+      <h2>Signing you in</h2>
+       <div class="loader">Loading...</div>
     </div>
-   </div>
-  <LoginProcess v-if="phase == 'process'" />
+  </div>
 </template>
 
 <script>
-  import LoginProcess from '../models/LoginProcess.vue'
-  
   export default {
-    beforeRouteEnter() {
+    beforeCreate() {
       const params = new URLSearchParams(window.location.search);
       const privateCode = params.get("privateCode")
-      if (!privateCode) {
-        localStorage.setItem("returnURL", window.location)
-      }
-    },
-    mounted() {
-      const params = new URLSearchParams(window.location.search);
-      const privateCode = params.get("privateCode")
-      const logout = params.get("logout")
-      
 
-      if (privateCode) {
-        this.phase = "process"
-
-        fetch(`https://gaehivecloset.fizzyizzy.repl.co/login`, {
+      if (privateCode) {     fetch(`https://gaehivecloset.fizzyizzy.repl.co/login`, {
           headers: {
             "Content-Type": "application/json"
           },
@@ -48,25 +32,14 @@
             date.setDate(date.getDate() + 14)
             localStorage.setItem("tokenExp", date)
             
-            window.location = localStorage["returnURL"]
-            localStorage.removeItem("returnURL")
+            window.opener.location.reload();
+            window.close()
           })
       } else {
-        location.href = 'https://auth.itinerary.eu.org/auth/?redirect=' +
+        window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/login') +
-      '&name=the Gaehive website&authProject=867214083'
+      '&name=the Gaehive website&authProject=867214083', "", "width=500,height=500");
       }
-    },
-    
-    data() {
-      return {
-        phase: null,
-        loading: null
-      }
-    },
-    
-    components: {
-      LoginProcess
     }
   }
   

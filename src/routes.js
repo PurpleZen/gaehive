@@ -12,7 +12,12 @@ import ManagersEdit from './pages/managers/ManagersEdit.vue'
 
 import FollowingGuidelines from './pages/docs/FollowingGuidelines.vue'
 
+import Main from './pages/Main.vue'
 export const routes = [
+  {
+    path: '/',
+    component: Main,
+    children: [
   { 
     path: '/', 
     component: Home,
@@ -45,9 +50,11 @@ export const routes = [
     path: '/resources',
     component: Resources,
   },
+  { path: '/:path(.*)', component: NotFound },
+      ]
+  },
   {
     path: '/login',
     component: Login,
   },
-  { path: '/:path(.*)', component: NotFound },
 ]

@@ -64,9 +64,7 @@
       // See? Pretty cool, huh?
       async addManagers() { 
         this.$emit('load')
-        let useradd = document.getElementById("username").value;
-
-
+        
    fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/add`, {
           headers: {
             "Content-Type": "application/json"
