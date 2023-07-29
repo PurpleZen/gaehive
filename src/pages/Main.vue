@@ -13,7 +13,7 @@
     <router-link class='sidelinks' to="/resources">resources</router-link>
     
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark' || this.theme == '2000s-blog'">theme</a>
+    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</a>
     <div class="loader-placehold"></div>
     <a class='login' @click="logIn()" v-if="!this.username">sign in</a>
@@ -29,7 +29,7 @@
     methods: {
       logIn() {
         window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/login') +
+      btoa('https://' + location.hostname + '/api/auth/verify') +
       '&name=the Gaehive website&authProject=867214083', "", "width=700,height=400,popup=false");
       },
       logOut() {

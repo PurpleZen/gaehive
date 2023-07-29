@@ -52,7 +52,8 @@ export const routes = [
         path: '/resources',
         component: Resources,
       },
-      { path: '/:path(.*)',
+      { 
+        path: '/:path(.*)',
         component: NotFound
       },
     ]
