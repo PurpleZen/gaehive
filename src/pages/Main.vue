@@ -29,7 +29,7 @@
     methods: {
       logIn() {
         window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/api/auth/verify') +
+      btoa('https://' + location.hostname + '/login') +
       '&name=the Gaehive website&authProject=867214083', "", "width=700,height=400,popup=false");
       },
       logOut() {
