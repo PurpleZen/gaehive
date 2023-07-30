@@ -1,4 +1,6 @@
 const app = require('express')();
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
 const cookieOptions = {
   path: '/',                    // Send the cookie to all routes
