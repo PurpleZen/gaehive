@@ -28,3 +28,5 @@ app.get('/api/auth/verify', (req, res) => {
         res.redirect("/")
       }
 });
+
+module.exports = app;
