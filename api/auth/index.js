@@ -1,5 +1,5 @@
 const app = require('express')();
 
 app.get('/api/auth', (req, res) => {
-  window.location = "/"
+  res.redirect("/")
 });
