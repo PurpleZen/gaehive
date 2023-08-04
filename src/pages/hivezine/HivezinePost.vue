@@ -18,7 +18,32 @@
           
       </div>
       </div>
-      <div class='content' v-html=item.post></div></div>
+      <div class='content' v-html=item.post></div>
+      
+    <div v-if=username class="reactions">
+      
+        <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">❤️<span>{{ item.love }}</span></div>
+        <div v-if="contains(item.loveby)" class="reactbuttonactive">❤️<span>{{ item.love }}</span></div>
+
+        <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍<span>{{ item.like }}</span></div>
+        <div v-if="contains(item.likeby)" class="reactbuttonactive">👍<span>{{ item.like }}</span></div>
+
+        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😂<span>{{ item.laugh }}</span></div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive">😂<span>{{ item.laugh }}</span></div>
+
+        <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">😮<span>{{ item.wow }}</span></div>
+        <div v-if="contains(item.wowby)" class="reactbuttonactive">😮<span>{{ item.wow }}</span></div>
+
+        <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😟<span>{{ item.sad }}</span></div>
+        <div v-if="contains(item.sadby)" class="reactbuttonactive">😟<span>{{ item.sad }}</span></div>
+
+        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉<span>{{ item.yay }}</span></div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive">🎉<span>{{ item.yay }}</span></div>
+
+      <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
+        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
+      </div>
+    </div>
         </TransitionGroup>
     </div>
     <router-link v-if=!loading to="/hivezine" class="button">View All Posts</router-link>
@@ -33,6 +58,7 @@
   export default {
     data() {
       return {
+        username: null,
         loading: null,
         error: null,
         title: null,
@@ -46,7 +72,7 @@
         this.loading = true
 
       if (localStorage['user']) {
-        this.username = JSON.parse(localStorage['user']).username.toLowerCase()
+        this.username = JSON.parse(localStorage['user']).username
         this.admin = JSON.parse(localStorage['user']).admin 
         this.manager = JSON.parse(localStorage['user']).manager
         this.writer = JSON.parse(localStorage['user']).writer 
@@ -117,6 +143,59 @@ this.symbcode = (symbcode)
             }
           })
         } 
+      },
+      async refresh() {
+        const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/post/' + this.$route.params.id)
+      this.data = await postdata.json()
+      
+      this.symbcode.forEach(string => {
+        var is = this.symbcode.indexOf(string)
+        for ( var i = 0; i < this.data.length; i++){
+          let regex = new RegExp(string, "g")
+          this.data[i].title = this.data[i].title.replace(regex, this.symbols[is]);
+          this.data[i].post = this.data[i].post.replace(regex, this.symbols[is]);
+        }
+      })
+      this.posts = this.data.reverse()
+      },
+      
+      contains(name) {
+        if (name) {
+          return name.includes(this.username)
+        }
+      },
+
+      secret(post) {
+        if (post.includes(":frog:")) {
+          return true
+        }
+      },
+      
+      async react(type, post) {
+        this.$emit('load')
+          fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/react`, {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({
+              username: this.username,
+              type: type,
+              id: post,
+              token: localStorage['token']
+            })
+          })
+          .then(res => res.json())
+          .then((res) => {
+            if (res.ok) {
+              this.$emit('load')
+              this.refresh()
+            }
+            if (res.error) {
+              this.$emit('load')
+              this.$emit('error')
+            }
+          })
       }
     }
   }

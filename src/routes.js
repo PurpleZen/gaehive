@@ -7,6 +7,7 @@ import NotFound from './pages/404.vue'
 import HivezineHome from './pages/hivezine/HivezineHome.vue'
 import HivezinePost from './pages/hivezine/HivezinePost.vue'
 import HivezineWrite from './pages/hivezine/HivezineWrite.vue'
+import HivezineWriters from './pages/hivezine/HivezineWriters.vue'
 
 import Managers from './pages/managers/Managers.vue'
 import ManagersEdit from './pages/managers/ManagersEdit.vue'
@@ -25,7 +26,7 @@ export const routes = [
         component: Home,
       },
       {
-        path: '/hivezine',
+        path: '/hivezine/:pg*',
         component: HivezineHome,
       },
       {
@@ -35,6 +36,10 @@ export const routes = [
       {
         path: '/hivezine/new',
         component: HivezineWrite,
+      },
+      {
+        path: '/hivezine/writers',
+        component: HivezineWriters,
       },
       {
         path: '/managers',

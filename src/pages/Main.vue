@@ -153,8 +153,7 @@
   
   
 .hz-move,
-.hz-enter-active,
-.hz-leave-active {
+.hz-enter-active {
   transition: all 0.5s ease;
 }
 .hz-enter-from,
@@ -453,7 +452,7 @@ textarea, .preview {
   align-items: center;
 }
 
-.reactbutton {
+.reactbutton, .reactbuttonactive {
   position: relative;
   background-color: var(--sb);
   border: 2px solid var(--brk);
@@ -469,25 +468,21 @@ textarea, .preview {
 }
 
 .reactbuttonactive {
-  position: relative;
+  color: var(--sb) !important;
   background-color: var(--acc);
   border: 2px solid var(--acc);
-  color: var(--sb);
-  padding: 0px 10px 2px 10px;
-  margin-right: 5px;
-  display: inline-block;
-  font-family: serif;
-  font-weight: bolder;
-  text-decoration: none;
   cursor: default;
-  margin-top: 5px;
-  border-radius: 10px;
+}
+
+.pages {
+  display: flex;
+  font-family: serif;
 }
 
 .reactbutton:hover {
   background-color: var(--acc);
   border: 2px solid var(--acc);
-  color: var(--sb)
+  color: var(--sb) !important;
 }
 
 .pinnedPost {
@@ -673,6 +668,7 @@ textarea, .preview {
   }
   .title {
     display: grid;
+    justify-items: center;
     justify-content: center;
   }
   .promptButton {
@@ -683,6 +679,15 @@ textarea, .preview {
   }
   .users a {
     white-space: unset;
+  }
+  .reactions {
+    justify-content: center;
+  }
+  .reactbutton, .reactbuttonactive {
+    padding: 10px 8px;
+  }
+  .reactbutton span, .reactbuttonactive span {
+    display: none;
   }
 }
 </style>

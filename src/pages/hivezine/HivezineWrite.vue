@@ -10,6 +10,7 @@
   <div v-html="preview" class="preview"></div>
     <div>
 
+      <router-link to="/hivezine" class="button">Back</router-link>
       <!-- By clicking this button, the data is fetched from the Scratch studio! -->
       <span @click="addManagers()" id="add" class="button">Let's go!</span>
       
@@ -41,7 +42,8 @@
         draft: "",
         preview: null,
         data: null,
-        symbcode: null
+        symbcode: null,
+        symbols: null
       }
     },
     mounted() {

@@ -34,26 +34,34 @@
       <div class='content' v-html=item.post>
       </div>
       <div v-if=username class="reactions">
-        <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">❤️{{ item.love }}</div>
-        <div v-if="contains(item.loveby)" class="reactbuttonactive">❤️{{ item.love }}</div>
+        <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">❤️<span>{{ item.love }}</span></div>
+        <div v-if="contains(item.loveby)" class="reactbuttonactive">❤️<span>{{ item.love }}</span></div>
 
-        <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍{{ item.like }}</div>
-        <div v-if="contains(item.likeby)" class="reactbuttonactive">👍{{ item.like }}</div>
+        <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍<span>{{ item.like }}</span></div>
+        <div v-if="contains(item.likeby)" class="reactbuttonactive">👍<span>{{ item.like }}</span></div>
 
-        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😂{{ item.laugh }}</div>
-        <div v-if="contains(item.laughby)" class="reactbuttonactive">😂{{ item.laugh }}</div>
+        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😂<span>{{ item.laugh }}</span></div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive">😂<span>{{ item.laugh }}</span></div>
 
-        <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">😮{{ item.wow }}</div>
-        <div v-if="contains(item.wowby)" class="reactbuttonactive">😮{{ item.wow }}</div>
+        <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">😮<span>{{ item.wow }}</span></div>
+        <div v-if="contains(item.wowby)" class="reactbuttonactive">😮<span>{{ item.wow }}</span></div>
 
-        <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😟{{ item.sad }}</div>
-        <div v-if="contains(item.sadby)" class="reactbuttonactive">😟{{ item.sad }}</div>
+        <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😟<span>{{ item.sad }}</span></div>
+        <div v-if="contains(item.sadby)" class="reactbuttonactive">😟<span>{{ item.sad }}</span></div>
 
-        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉{{ item.yay }}</div>
-        <div v-if="contains(item.yayby)" class="reactbuttonactive">🎉{{ item.yay }}</div>
+        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉<span>{{ item.yay }}</span></div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive">🎉<span>{{ item.yay }}</span></div>
+
+        <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
+        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
       </div>
     </div>
       </TransitionGroup>
+    </div>
+    <div class="pages">
+    <div v-for="(item, index) in this.pages" :key="item">
+    <router-link :to="'/hivezine/' + (item + 1)" :class="{reactbuttonactive: this.page == item + 1, reactbutton: this.page !== item + 1}">{{ item + 1 }}</router-link>
+    </div>
     </div>
   </div>
   </div>
@@ -76,10 +84,23 @@
         title: null,
         posts: null,
         data: null,
-        symbcode: null
+        symbcode: null,
+        symbols: null,
+        page: 1,
+        pages: null
       }
     },
     async mounted() {
+      this.$watch(
+        () => this.$route.params,
+        () => {
+          this.getPosts()
+        },
+        { immediate: true }
+      )
+      this.symbcode = (symbcode)
+      this.symbols = (symbols)
+      
       this.loading = true
 
       if (localStorage['user']) {
@@ -94,13 +115,32 @@
       } else {
         this.getWriterData()
       }
-      
-      this.symbcode = (symbcode)
-      this.symbols = (symbols)
 
       const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/list')
       this.data = await postdata.json()
+
+      for (var i = 0; i < Math.ceil(this.data.length / 10); i++) {
+        if (!this.pages) {
+          this.pages = [i];
+        } else {
+          this.pages.splice(1, 0, i);
+        }
+    }
       
+      this.getPosts()
+      
+      this.loading = false
+    },
+
+    methods: {
+      async getPosts() {
+        window.scrollTo(0, 0);
+        document.getElementById("page").scrollTo(0, 0);
+        
+        if (this.$route.params.pg) {
+        this.page = this.$route.params.pg
+      }
+        
       this.symbcode.forEach(string => {
         var is = this.symbcode.indexOf(string)
         for ( var i = 0; i < this.data.length; i++){
@@ -109,11 +149,11 @@
           this.data[i].post = this.data[i].post.replace(regex, this.symbols[is]);
         }
       })
-      this.posts = this.data.reverse()
-      this.loading = false
-    },
-
-    methods: {
+      var start = (this.page - 1) * 10
+      var end = this.page * 10
+      this.posts = this.data.slice(start, end)
+      },
+      
       async noWriterData() {
         const usersdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/writers')
         const writers = await usersdata.json()
@@ -146,13 +186,23 @@
           this.data[i].post = this.data[i].post.replace(regex, this.symbols[is]);
         }
       })
-      this.posts = this.data.reverse()
+      var start = (this.page - 1) * 10
+      var end = this.page * 10
+      this.posts = this.data.slice(start, end)
       },
+      
       contains(name) {
         if (name) {
           return name.includes(this.username)
         }
       },
+
+      secret(post) {
+        if (post.includes(":frog:")) {
+          return true
+        }
+      },
+      
       async react(type, post) {
         this.$emit('load')
           fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/react`, {
