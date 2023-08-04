@@ -392,9 +392,9 @@ textarea, .preview {
 }
   
 .post {
+  display: grid;
   resize: none;
   outline: none;
-  overflow: auto;
   border-radius: 20px;
   border: none;
   margin-top: 25px;
@@ -448,11 +448,46 @@ textarea, .preview {
 
 .reactions {
   border-top: var(--brk) 2px dotted;
-  margin: 0 10px;
-  padding: 10px;
+  margin: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.reactbutton {
+  position: relative;
+  background-color: var(--sb);
+  border: 2px solid var(--brk);
+  padding: 0px 10px 2px 10px;
+  margin-right: 5px;
+  display: inline-block;
+  font-family: serif;
+  font-weight: bolder;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+.reactbuttonactive {
+  position: relative;
+  background-color: var(--acc);
+  border: 2px solid var(--acc);
+  color: var(--sb);
+  padding: 0px 10px 2px 10px;
+  margin-right: 5px;
+  display: inline-block;
+  font-family: serif;
+  font-weight: bolder;
+  text-decoration: none;
+  cursor: default;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+
+.reactbutton:hover {
+  background-color: var(--acc);
+  border: 2px solid var(--acc);
+  color: var(--sb)
 }
 
 .pinnedPost {
@@ -551,7 +586,7 @@ textarea, .preview {
   opacity: 0;
   transition: opacity 0.3s;
 }
-
+  
 .promptButton:hover .tooltiptext {
   visibility: visible;
   opacity: 1;

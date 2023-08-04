@@ -20,7 +20,7 @@
             </TransitionGroup>
           </div>
         </div>
-
+    <div class="break" style="margin-bottom: 0;"></div>
     <div v-if="loading" class="loader">Loading...</div>
     
     <div class="posts">
@@ -33,7 +33,25 @@
       </div>
       <div class='content' v-html=item.post>
       </div>
-      <div class="reactions"></div>
+      <div v-if=username class="reactions">
+        <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">❤️{{ item.love }}</div>
+        <div v-if="contains(item.loveby)" class="reactbuttonactive">❤️{{ item.love }}</div>
+
+        <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍{{ item.like }}</div>
+        <div v-if="contains(item.likeby)" class="reactbuttonactive">👍{{ item.like }}</div>
+
+        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😂{{ item.laugh }}</div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive">😂{{ item.laugh }}</div>
+
+        <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">😮{{ item.wow }}</div>
+        <div v-if="contains(item.wowby)" class="reactbuttonactive">😮{{ item.wow }}</div>
+
+        <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😟{{ item.sad }}</div>
+        <div v-if="contains(item.sadby)" class="reactbuttonactive">😟{{ item.sad }}</div>
+
+        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉{{ item.yay }}</div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive">🎉{{ item.yay }}</div>
+      </div>
     </div>
       </TransitionGroup>
     </div>
@@ -65,7 +83,7 @@
       this.loading = true
 
       if (localStorage['user']) {
-        this.username = JSON.parse(localStorage['user']).username.toLowerCase()
+        this.username = JSON.parse(localStorage['user']).username
         this.admin = JSON.parse(localStorage['user']).admin 
         this.manager = JSON.parse(localStorage['user']).manager
         this.writer = JSON.parse(localStorage['user']).writer 
@@ -116,6 +134,50 @@
         localStorage.setItem('writers', JSON.stringify(writers))
 
         this.list = writers
+
+        const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/list')
+      this.data = await postdata.json()
+      
+      this.symbcode.forEach(string => {
+        var is = this.symbcode.indexOf(string)
+        for ( var i = 0; i < this.data.length; i++){
+          let regex = new RegExp(string, "g")
+          this.data[i].title = this.data[i].title.replace(regex, this.symbols[is]);
+          this.data[i].post = this.data[i].post.replace(regex, this.symbols[is]);
+        }
+      })
+      this.posts = this.data.reverse()
+      },
+      contains(name) {
+        if (name) {
+          return name.includes(this.username)
+        }
+      },
+      async react(type, post) {
+        this.$emit('load')
+          fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/react`, {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({
+              username: this.username,
+              type: type,
+              id: post,
+              token: localStorage['token']
+            })
+          })
+          .then(res => res.json())
+          .then((res) => {
+            if (res.ok) {
+              this.$emit('load')
+              this.refresh()
+            }
+            if (res.error) {
+              this.$emit('load')
+              this.$emit('error')
+            }
+          })
       }
     }
   }
