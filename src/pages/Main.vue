@@ -684,7 +684,7 @@ textarea, .preview {
     justify-content: center;
   }
   .reactbutton, .reactbuttonactive {
-    padding: 10px 8px;
+    padding: 10px 6px;
   }
   .reactbutton span, .reactbuttonactive span {
     display: none;

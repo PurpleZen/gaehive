@@ -13,6 +13,7 @@ import Managers from './pages/managers/Managers.vue'
 import ManagersEdit from './pages/managers/ManagersEdit.vue'
 
 import FollowingGuidelines from './pages/docs/FollowingGuidelines.vue'
+import WritersGuide from './pages/docs/WritersGuide.vue'
 
 import Login from './pages/Login.vue'
 
@@ -56,6 +57,10 @@ export const routes = [
       {
         path: '/resources',
         component: Resources,
+      },
+      {
+        path: '/hivezine/guide',
+        component: WritersGuide,
       },
       { 
         path: '/:path(.*)',

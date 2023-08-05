@@ -61,7 +61,7 @@
         this.$emit('load')
         let useradd = document.getElementById("usernamehz").value;
 
-   fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/add`, {
+   fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/writers/add`, {
           headers: {
             "Content-Type": "application/json"
           },
@@ -87,13 +87,13 @@
         this.$emit('load')
         let username = document.getElementById("usernamehz").value;
 
-        fetch(`https://gaehivecloset.fizzyizzy.repl.co/db/managers/remove`, {
+        fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/writers/remove`, {
           headers: {
             "Content-Type": "application/json"
           },
           method: "PUT",
           body: JSON.stringify({
-            username: document.getElementById("username").value,
+            username: document.getElementById("usernamehz").value,
             token: localStorage['token']
           })
         })
