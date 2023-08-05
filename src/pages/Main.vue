@@ -187,14 +187,12 @@ html, body {
 }
   
 textarea, .preview {
-  width: 95%;
   resize: none;
   outline: none;
   overflow: auto;
-  padding: 10px;
-  border-radius: 20px;
   border: none;
-  margin: 5px;
+  border-radius: inherit;
+  margin-top: 0;
   scrollbar-width: none;
   color: var(--txt);
   font-family: 'Vollkorn';

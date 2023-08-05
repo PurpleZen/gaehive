@@ -4,7 +4,7 @@
       <div class="queue">
         <div v-if="loading" class="loader"></div>
         <h1 v-if=!loading class="greeting">Our Managers</h1>
-        <span v-if=!loading>The Gaehive Scratch studio has around <b @click.right="this.secret()" style="font-family:serif">{{ this.active }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!</span>
+        <span v-if=!loading>The Gaehive Scratch studio has around <b @click.right="this.secret()" style="font-family:serif">{{ this.active }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span>
         
         <router-link v-if="username && manager == 'true' || admin == 'true'" to="/managers/edit" class="button">Edit Managers</router-link>
         <div v-if=!loading class="break"></div>

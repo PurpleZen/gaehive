@@ -3,11 +3,19 @@
     <div class="container">
       <div class="queue">
   <h1 class="greeting">New Post</h1>
-  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>. When you're done, click "Let's go!"<br>Please remember all posts <b>must</b> follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.<br><br>Happy writing!</span>
+  <span>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>.<br><b>When posting your comments, the first, main comment should be your title. All replies will be your post itself!</b><br>When you're done, click "Let's go!"<br>Check out the <router-link to="/hivezine/guide">guide</router-link> on how you can format your posts!<br><b>Please remember all posts must follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.</b><br><br>Happy writing!</span>
   <div class="break"></div>
-  <textarea class="title" v-model="title" @keyup="updated()" id="username" type="text" placeholder="title of your post"></textarea>
-  <textarea v-model="draft" @keyup="updated()" id="username" type="text" placeholder="draft your post here"></textarea>
-  <div v-html="preview" class="preview"></div>
+        <div class="posts">
+  <div class="post">
+          <textarea class="title" v-model="title" @keyup="updated()" id="username" rows="1" type="text" placeholder="title of your post"></textarea>
+          <textarea class="content" v-model="draft" @keyup="updated()" id="username" rows="10" type="text" placeholder="draft your post here"> </textarea>
+        </div>
+
+        <div v-if="title || draft" class="post">
+          <div class="title" v-html="pretitle" onmousedown="return false" onselectstart="return false"></div>
+          <div class="content" v-html="predraft" onmousedown="return false" onselectstart="return false"></div>
+        </div>
+          </div>
     <div>
 
       <router-link to="/hivezine" class="button">Back</router-link>
@@ -21,7 +29,7 @@
       <h4>Uh oh!</h4>
       <span>Looks like you don't have permission to do that.</span>
     </div>
-
+        
   </div>
   </div>
   </div>
@@ -40,7 +48,8 @@
         manager: null,
         title: "",
         draft: "",
-        preview: null,
+        pretitle: "",
+        predraft: "",
         data: null,
         symbcode: null,
         symbols: null
@@ -54,12 +63,14 @@
       updated() {
         this.symbcode = (symbcode)
         this.symbols = (symbols)
-        
-        this.preview = "<h3 style='margin:0'>" + this.title + "</h3>" + "<br>" + this.draft
+
+        this.pretitle = this.title
+        this.predraft = this.draft
         this.symbcode.forEach(string => {
           let regex = new RegExp(string, "g")
           var i = this.symbcode.indexOf(string)
-  this.preview = this.preview.replace(regex, this.symbols[i]);
+            this.pretitle = this.pretitle.replace(regex, this.symbols[i]);
+            this.predraft = this.predraft.replace(regex, this.symbols[i]);
 })
         
       },
@@ -93,23 +104,3 @@
   }
 </script>
 
-<style scoped>
-textarea {
-  border-radius: 0;
-}
-  
-.preview {
-  border-radius: 0 0 20px 20px
-}
-  
-textarea, .preview {
-  min-height: 200px;
-  margin: 2px;
-}
-  
-.title {
-  height: 20px;
-  min-height: 20px;
-  border-radius: 20px 20px 0 0;
-}
-</style>
