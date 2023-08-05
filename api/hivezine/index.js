@@ -11,7 +11,6 @@ const apiRequestLimiter = rateLimit({
   legacyHeaders: false,
 })
 
-app.set('trust proxy', 1)
 app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
