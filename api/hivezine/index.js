@@ -8,9 +8,10 @@ const apiRequestLimiter = rateLimit({
   max: 2,
   message: { 'error': 'too many requests' },
   standardHeaders: true, 
-	legacyHeaders: false,
+  legacyHeaders: false,
 })
 
+app.set('trust proxy', 1)
 app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
