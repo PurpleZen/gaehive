@@ -4,7 +4,7 @@
       <div id="text" class="queue">
         <h1 class="greeting">The Gaehive Website</h1>
         <h3>Welome to the official Gaehive website! This website was built by <a href="https://scratch.mit.edu/users/LegoManiac04/">LegoManiac04</a> for the Scratch Studio known as the Gaehive. Here, you can find useful links, as well as some useful and fun tools, like the Hivezine and the host queue!</h3>
-        <span><i>To follow Scratch Community Guidelines, all "user-generated" content on this site is fetched and stored from Scratch comments. Users cannot generate any content on this website.<br>For more information, please check out <router-link to="/docs/how-we-follow-guidelines">this page</router-link>.</i></span>
+        <span><i>To follow Scratch Community Guidelines, all "user-generated" content on this site is fetched and stored from Scratch comments. Users cannot generate any content on this website. For more information, please check out <router-link to="/docs/how-we-follow-guidelines">this page</router-link>.<br>Have feedback? Tell us <a href="https://scratch.mit.edu/studios/33687618/comments">here</a>.</i></span>
 
         <div v-if="loading" class="loader">Loading...</div>
         
