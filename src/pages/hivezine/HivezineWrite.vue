@@ -3,7 +3,7 @@
     <div class="container">
       <div class="queue">
   <h1 class="greeting">New Post</h1>
-  <span><h3>Please read this <router-link to="/hivezine/guide">guide</router-link> on how to submit and format your posts!</h3>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>.<br>When you're done, click "Let's go!"<br><b>Please remember all posts must follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.</b><br><br>Happy writing!</span>
+  <span><h3>Please read this <router-link to="/docs/writers-guide">guide</router-link> on how to submit and format your posts!</h3>Hello writer! This is where you can write up awesome new posts for the Hivezine.<br> Below, you can write a draft of your post and see a preview, that way you can see what your post will look like when it's posted. You then will copy and paste your draft into the <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank">Hivezine studio</a>.<br>When you're done, click "Let's go!"<br><b>Please remember all posts must follow <a href="https://scratch.mit.edu/community_guidelines">Scratch Community Guidelines</a>.</b><br><br>Happy writing!</span>
   <div class="break"></div>
         <div class="posts">
   <div class="post">

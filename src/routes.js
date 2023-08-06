@@ -55,12 +55,12 @@ export const routes = [
         component: FollowingGuidelines,
       },
       {
-        path: '/resources',
-        component: Resources,
+        path: '/docs/writers-guide',
+        component: WritersGuide,
       },
       {
-        path: '/hivezine/guide',
-        component: WritersGuide,
+        path: '/resources',
+        component: Resources,
       },
       { 
         path: '/:path(.*)',
