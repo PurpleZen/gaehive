@@ -8,7 +8,7 @@
     <div>
       <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/new" class="button">New Post</router-link>
       <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/writers" class="button">Edit Writers</router-link>
-      <a v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
+      <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
     </div>
     <div class="writers">
           <div class="title">Our Writers:</div>
