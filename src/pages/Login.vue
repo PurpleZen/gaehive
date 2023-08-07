@@ -10,7 +10,7 @@
 <script>
   export default {
 
-  async created() {
+  async beforeCreate() {
     const params = new URLSearchParams(window.location.search);
       const privateCode = params.get("privateCode")
         let res = await fetch('https://gaehivecloset.fizzyizzy.repl.co/login/' + privateCode)
