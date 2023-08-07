@@ -401,6 +401,10 @@ textarea, .preview {
   background-color: var(--sb);
 }
 
+.post img {
+  max-width: 300px;
+}
+
 .posts {
   width: 100%;
 }
@@ -687,5 +691,8 @@ textarea, .preview {
   .reactbutton span, .reactbuttonactive span {
     display: none;
   }
+  .post img {
+  max-width: 200px;
+}
 }
 </style>
