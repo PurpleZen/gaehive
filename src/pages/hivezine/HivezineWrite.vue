@@ -122,5 +122,6 @@
 <style scoped>
 #title {
   padding: 0;
+  width: 100%;
 }
 </style>
