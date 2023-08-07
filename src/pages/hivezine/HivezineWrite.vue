@@ -7,7 +7,7 @@
   <div class="break"></div>
         <div class="posts">
   <div class="post">
-          <div class="title"><textarea class="title" v-model="title" @keyup="updated()" id="title" rows="1" type="text" placeholder="title of your post"></textarea>
+          <div class="title"><textarea class="title" v-model="title" @keyup="updated()" id="title" rows="1" wrap="off" type="text" placeholder="title of your post"></textarea>
             <div class=username>
               <span @click="deleteDraft()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete draft</span></span>
             </div>
