@@ -124,7 +124,7 @@
         if (!this.pages) {
           this.pages = [i];
         } else {
-          this.pages.splice(1, 0, i);
+          this.pages.splice(i, 0, i);
         }
     }
       
