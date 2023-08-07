@@ -9,38 +9,27 @@
 
 <script>
   export default {
-    beforeCreate() {
-      const params = new URLSearchParams(window.location.search);
+
+  async created() {
+    const params = new URLSearchParams(window.location.search);
       const privateCode = params.get("privateCode")
+        let res = await fetch('https://gaehivecloset.fizzyizzy.repl.co/login/' + privateCode)
+        let data = await res.json()
+        if (data.error) {
+          window.location = "/error"
+        } else {
+          localStorage['user'] = JSON.stringify({'username': data.username, 'admin': data.admin, 'manager': data.manager, 'writer': data.writer})
 
-      if (privateCode) {     fetch(`https://gaehivecloset.fizzyizzy.repl.co/login`, {
-          headers: {
-            "Content-Type": "application/json"
-          },
-          method: "POST",
-          body: JSON.stringify({
-            privateCode: privateCode
-          })
-        })
-        .then(res => res.json())
-          .then((res) => {
-            localStorage['user'] = JSON.stringify({'username': res.username, 'admin': res.admin, 'manager': res.manager, 'writer': res.writer})
-
-            localStorage.setItem("token", res.token)
+            localStorage.setItem("token", data.token)
 
             var date = new Date();
             date.setDate(date.getDate() + 14)
             localStorage.setItem("tokenExp", date)
-            
-            window.opener.location.reload();
-            window.close()
-          })
-      } else {
-        window.location = "/"
-      }
-    }
+            window.location = "/"
+        }
   }
-  
+  }
+
 </script>
 
 <style scoped>

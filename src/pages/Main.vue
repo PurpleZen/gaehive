@@ -18,6 +18,7 @@
     <div class="loader-placehold"></div>
     <a class='login' @click="logIn()" v-if="!this.username">sign in</a>
     <a class='login' @click="logOut()" v-if="this.username">sign out</a>
+    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments">feedback</a>
   </div>
   
   <router-view @load="loading = !loading" @error="error = !error"/>
@@ -28,10 +29,10 @@
   export default {
     methods: {
       logIn() {
-        window.open('https://auth.itinerary.eu.org/auth/?redirect=' +
+        window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/login') +
-      '&name=the Gaehive website&authProject=867214083', "", "width=700,height=400,popup=false");
-      },
+      '&name=the Gaehive website&authProject=867214083'
+    },
       logOut() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
@@ -228,20 +229,25 @@ textarea, .preview {
   color: var(--slnkh);
 }
 
-.login {
+.login, .feedback{
   background-color: var(--acc);
   color: var(--btxt);
   padding: 2px 11px;
+  margin-bottom: 5px;
   border-radius: 10px;
   width: fit-content;
   text-decoration: none;
   cursor: pointer;
 }
 
-.login:hover {
+.login:hover, .feedback:hover {
   outline: var(--bg) solid 2px;
 }
 
+.feedback {
+  font-size: small;
+}
+  
 .credits {
   font-family: 'Vollkorn';
   font-size: 12px;
