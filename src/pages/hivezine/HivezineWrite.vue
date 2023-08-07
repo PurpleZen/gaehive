@@ -7,8 +7,12 @@
   <div class="break"></div>
         <div class="posts">
   <div class="post">
-          <textarea class="title" v-model="title" @keyup="updated()" id="username" rows="1" type="text" placeholder="title of your post"></textarea>
-          <textarea class="content" v-model="draft" @keyup="updated()" id="username" rows="10" type="text" placeholder="draft your post here"> </textarea>
+          <div class="title"><textarea class="title" v-model="title" @keyup="updated()" id="title" rows="1" type="text" placeholder="title of your post"></textarea>
+            <div class=username>
+              <span @click="deleteDraft()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">delete draft</span></span>
+            </div>
+          </div>
+          <textarea class="content" v-model="draft" @keyup="updated()" rows="10" type="text" placeholder="draft your post here"> </textarea>
         </div>
 
         <div v-if="title || draft" class="post">
@@ -20,7 +24,7 @@
 
       <router-link to="/hivezine" class="button">Back</router-link>
       <!-- By clicking this button, the data is fetched from the Scratch studio! -->
-      <span @click="addManagers()" id="add" class="button">Let's go!</span>
+      <span @click="addPost()" id="add" class="button">Let's go!</span>
       
     </div>
     <div v-if="request == 'sending'" class="loader"></div>
@@ -56,6 +60,8 @@
       }
     },
     mounted() {
+      this.title = localStorage['title']
+      this.draft = localStorage['draft']
       this.username = JSON.parse(localStorage['user']).username
       this.manager = JSON.parse(localStorage['user']).manager
     },
@@ -72,10 +78,12 @@
             this.pretitle = this.pretitle.replace(regex, this.symbols[i]);
             this.predraft = this.predraft.replace(regex, this.symbols[i]);
 })
+        localStorage.setItem("title", this.title);
+        localStorage.setItem("draft", this.draft);
         
       },
       // See? Pretty cool, huh?
-      async addManagers() { 
+      async addPost() { 
         this.$emit('load')
         
    fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/add`, {
@@ -84,7 +92,6 @@
           },
           method: "PUT",
           body: JSON.stringify({
-            content: document.getElementById("username").value,
             token: localStorage['token']
             // Gotta confirm the login token!
           })
@@ -99,8 +106,21 @@
             this.$emit('error')
           }
         })
+      },
+      async deleteDraft() {
+        if (confirm("Are you sure you want to delete this draft?")) {
+          this.title = ''
+          localStorage['title'] = ''
+          this.draft = ''
+          localStorage['draft'] = ''
+        }
       }
     }
   }
 </script>
 
+<style scoped>
+#title {
+  padding: 0;
+}
+</style>

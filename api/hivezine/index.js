@@ -30,7 +30,7 @@ app.get('/api/hivezine', (req, res) => {
     const id = data[0].id;
 
     fetch(
-    `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies`,
+    `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",

@@ -64,7 +64,8 @@
         title: null,
         posts: null,
         data: null,
-        symbcode: null
+        symbcode: null,
+        reacting: false
       }
     },
     async mounted() {
@@ -157,6 +158,8 @@ this.symbcode = (symbcode)
         }
       })
       this.posts = this.data.reverse()
+
+      this.reacting = false
       },
       
       contains(name) {
@@ -172,7 +175,9 @@ this.symbcode = (symbcode)
       },
       
       async react(type, post) {
-        this.$emit('load')
+        if (this.reacting == false) {
+          this.reacting = true
+          this.$emit('load')
           fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/react`, {
             headers: {
               "Content-Type": "application/json"
@@ -196,6 +201,7 @@ this.symbcode = (symbcode)
               this.$emit('error')
             }
           })
+        }
       }
     }
   }

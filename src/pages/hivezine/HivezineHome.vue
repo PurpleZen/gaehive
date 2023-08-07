@@ -41,8 +41,8 @@
         <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍<span>{{ item.like }}</span></div>
         <div v-if="contains(item.likeby)" class="reactbuttonactive">👍<span>{{ item.like }}</span></div>
 
-        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😂<span>{{ item.laugh }}</span></div>
-        <div v-if="contains(item.laughby)" class="reactbuttonactive">😂<span>{{ item.laugh }}</span></div>
+        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😹<span>{{ item.laugh }}</span></div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive">😹<span>{{ item.laugh }}</span></div>
 
         <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">😮<span>{{ item.wow }}</span></div>
         <div v-if="contains(item.wowby)" class="reactbuttonactive">😮<span>{{ item.wow }}</span></div>
@@ -88,7 +88,8 @@
         symbcode: null,
         symbols: null,
         page: 1,
-        pages: null
+        pages: null,
+        reacting: false
       }
     },
     async mounted() {
@@ -190,6 +191,8 @@
       var start = (this.page - 1) * 10
       var end = this.page * 10
       this.posts = this.data.slice(start, end)
+
+      this.reacting = false
       },
       
       contains(name) {
@@ -205,7 +208,9 @@
       },
       
       async react(type, post) {
-        this.$emit('load')
+        if (this.reacting == false) {
+          this.reacting = true
+          this.$emit('load')
           fetch(`https://gaehivecloset.fizzyizzy.repl.co/hivezine/react`, {
             headers: {
               "Content-Type": "application/json"
@@ -229,6 +234,7 @@
               this.$emit('error')
             }
           })
+        }
       }
     }
   }
