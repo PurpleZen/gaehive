@@ -4,7 +4,7 @@
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
     <div v-if="!loading && !error" class="loader-placehold"></div>
     <h1 v-if="!username">hello, welcome to the gaehive website.</h1>
-    <h1 @click.right="this.secret = true" v-if="username">hello {{ username }}, welcome to the gaehive website.</h1>
+    <h1 @click.right="this.secret = true" v-if="username">hello{{ mellie }} {{ username }}, welcome to the gaehive website.</h1>
     
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
@@ -66,6 +66,9 @@
       if (localStorage['user']) {
         this.username = JSON.parse(localStorage['user']).username.toLowerCase()
       }
+      if (this.username == "melody-sy") {
+        this.mellie = "sy"
+      }
     },
     
     data() {
@@ -73,6 +76,7 @@
         username: null,
         theme: null,
         secret: null,
+        mellie: null,
         loading: false,
         error: false
   	  }
