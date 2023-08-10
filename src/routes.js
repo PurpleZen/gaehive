@@ -16,6 +16,7 @@ import FollowingGuidelines from './pages/docs/FollowingGuidelines.vue'
 import WritersGuide from './pages/docs/WritersGuide.vue'
 
 import Login from './pages/Login.vue'
+import CommandLine from './pages/CommandLine.vue'
 
 export const routes = [
   {
@@ -72,4 +73,8 @@ export const routes = [
     path: '/login',
     component: Login,
   },
+  {
+    path: '/terminal',
+    component: CommandLine,
+  }
 ]

@@ -155,7 +155,18 @@
 [data-theme="2000s-blog"] .material-symbols-rounded {
   font-family: 'Material Symbols Rounded' !important;
 }
-  
+
+[data-theme="terminal"] {
+  --bg: #000;
+  --txt: lightgreen;
+}
+[data-theme="terminal"] body {
+  font-family: monospace;
+  width: auto;
+  margin: 20px;
+  white-space: pre-line;
+}
+
   
 .hz-move,
 .hz-enter-active {
@@ -180,7 +191,8 @@
 .mng-leave-active {
   position: absolute;
 }
-  
+
+
 html, body {
   color: var(--txt);
   background-color: var(--bg);
