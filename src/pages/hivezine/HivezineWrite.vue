@@ -27,12 +27,6 @@
       <span @click="addPost()" id="add" class="button">Let's go!</span>
       
     </div>
-    <div v-if="request == 'sending'" class="loader"></div>
-    <div v-if="request == null" class="loader-placehold"></div>
-    <div v-if="request == 'unauthorized'">
-      <h4>Uh oh!</h4>
-      <span>Looks like you don't have permission to do that.</span>
-    </div>
         
   </div>
   </div>
@@ -45,9 +39,6 @@
   export default {
     data() {
       return {
-        loading: null,
-        request: null,
-        error: null,
         username: null,
         manager: null,
         title: "",

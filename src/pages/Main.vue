@@ -489,6 +489,10 @@ textarea, .preview {
 .pages {
   display: flex;
   font-family: serif;
+  overflow: scroll;
+  max-width: 90%;
+  padding-bottom: 15px;
+
 }
 
 .reactbutton:hover {
@@ -550,7 +554,7 @@ textarea, .preview {
   position: relative;
   width: 24px;
   color: var(--txt) !important;
-  text-decoration: none;
+  text-decoration: none !important;
   cursor: pointer;
   padding: 5px 8px;
   margin: 2px;
