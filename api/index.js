@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const supabase = require('@supabase/supabase-js')
 const Cookies = require('js-cookie');
 
-app.get('api/:code', async (req, res) => {
-  const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.params.code);
+app.get('/api', async (req, res) => {
+  const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
 
   if (json.valid) {
