@@ -17,7 +17,7 @@
   <template>
     <button @click="window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/api') +
-      '&name=the Gaehive website 2'"
+      '&name=the Gaehive website 2'">Login</button>
     <ul>
       <li v-for="country in countries" :key="country.id">{{ country.name }}</li>
     </ul>
