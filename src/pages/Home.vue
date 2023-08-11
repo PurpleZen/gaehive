@@ -13,7 +13,7 @@
             <div class="title">
               <div class="pinnedPost">
                 <div class="material-symbols-rounded">push_pin</div>
-                <router-link :to="'/hivezine/post/' + item.id">{{ item.title }}</router-link>
+                <router-link :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
               </div>
               <div class='username'>
                 <span>

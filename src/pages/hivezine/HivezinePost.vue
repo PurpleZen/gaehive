@@ -8,7 +8,7 @@
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in this.posts" :key="index">
       <div class="title">
-        <div>{{ item.title }}</div>
+        <div v-html=item.title></div>
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
 
           <!-- Managers and writers can delete posts if they need to re-write it! -->

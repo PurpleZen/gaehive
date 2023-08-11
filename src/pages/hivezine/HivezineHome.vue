@@ -28,7 +28,7 @@
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in this.posts" :key="item.id">
       <div class="title">
-        <router-link :to="'/hivezine/post/' + item.id">{{ item.title }}</router-link>
+        <router-link :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
         <div class='username'><span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}</span><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
            </div>
       </div>
