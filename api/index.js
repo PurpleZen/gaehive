@@ -1,6 +1,6 @@
 const app = require('express')();
 const jwt = require('jsonwebtoken');
-import { supabase } from '@/lib/supabaseClient'
+const supabase = require('@supabase/supabase-js')
 const Cookies = require('js-cookie');
 
 app.get('api/:code', async (req, res) => {
