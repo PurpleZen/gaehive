@@ -10,6 +10,8 @@ export const supabase = createClient('https://krtafulrwvxmpzmuqjbf.supabase.co',
 const cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
+app.use(supabase());
+
 
 const cookieOptions = {
   path: '/',                    // Send the cookie to all routes
