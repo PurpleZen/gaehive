@@ -10,8 +10,6 @@ export const supabase = createClient('https://krtafulrwvxmpzmuqjbf.supabase.co',
 const cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
-app.use(supabase());
-
 
 const cookieOptions = {
   path: '/',                    // Send the cookie to all routes
@@ -28,7 +26,7 @@ app.get('/api', async (req, res) => {
   if (json.valid) {
     const token = jwt.sign({ name: json.username, role: "authenticated", level: "manager" }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
     res.cookie('mytoken', token, cookieOptions);
-    const { user, error } = supabase.auth.setAuth(req.cookies.mytoken)
+    const { user, error } = supabase.auth.setSession(req.cookies.mytoken)
     
   } else {
     return res.json({ token: "invalid" })
