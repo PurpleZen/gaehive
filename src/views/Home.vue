@@ -15,7 +15,7 @@
   </script>
 
   <template>
-    <button @click="logIn()">Login</button>
+    <button @click="logIn()">Login</button><button @click="logOut()">Logout</button>
     <ul>
       <li v-for="country in countries" :key="country.id">{{ country.name }}</li>
     </ul>
@@ -28,6 +28,9 @@
         window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/api') +
       '&name=the Gaehive website'
+    },
+      logOut() {
+        document.cookie = ""
     },
     }
   }
