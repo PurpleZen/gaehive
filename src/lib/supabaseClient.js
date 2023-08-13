@@ -7,7 +7,7 @@
       auth: {
         autoRefreshToken: false,
         detectSessionInUrl: false,
-        persistSession: true
+        persistSession: true,
       },
       global: { 
         headers: {

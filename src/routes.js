@@ -1,20 +1,24 @@
-import Home from './views/Home.vue'
-import Faq from './views/Faq.vue'
-import About from './views/About.vue'
-import NotFound from './views/404.vue'
+import Home from './pages/Home.vue'
+import NotFound from './pages/404.vue'
+
+
+import Managers from './pages/managers/Managers.vue'
 
 export const routes = [
-  { 
-    path: '/', 
-    component: Home,
-  },
-  {
-    path: '/faq',
-    component: Faq,
-  },
-  {
-    path: '/about',
-    component: About,
-  },
-  { path: '/:path(.*)', component: NotFound },
+      { 
+        path: '/', 
+        component: Home,
+      },
+      
+      {
+        path: '/managers',
+        component: Managers,
+      },
+      { 
+        path: '/:path(.*)',
+        component: NotFound
+      },
+
+  
+  
 ]

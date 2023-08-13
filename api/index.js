@@ -5,11 +5,11 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 const cookieOptions = {
-  path: '/',                    // Send the cookie to all routes
-  httpOnly: false,               // Make the cookie not accessible by document.cookie
-  sameSite: 'lax',              // Allow incoming links (but not requests) to include the cookie
-  secure: true,                 // Make sure the cookie is secure
-  maxAge: 7 * 24 * 3600 * 1000  // The cookie expires in 7 days
+  path: '/',
+  httpOnly: false,
+  sameSite: 'lax',
+  secure: true,
+  maxAge: 7 * 24 * 3600 * 1000
 };
 
 app.get('/api', async (req, res) => {
