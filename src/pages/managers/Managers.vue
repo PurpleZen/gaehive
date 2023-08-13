@@ -8,16 +8,10 @@
         
         <router-link v-if="username && manager == 'true' || admin == 'true'" to="/managers/edit" class="button">Edit Managers</router-link>
         <div v-if=!loading class="break"></div>
-        <TransitionGroup name="mng">
-        <div v-for="(item, index) in this.hosts" :key="item.name">
-          <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently host</span></a></div>
-      
-          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will host next</span></a><div v-if="username && manager == 'true' || admin == 'true'" @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
-        </div>
-        </TransitionGroup>
+        
     
         <div v-if=!loading class="nexthosts">
-          <div class="title">These users will be host following {{ this.nexthost }}:</div>
+          <div class="title">These users will be host following :</div>
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="manager in managers" :key="manager.id">
@@ -48,10 +42,6 @@
         manager: null
       }
     },
-    
-    async mounted() {
-     
-      }
   }
 </script>
 
