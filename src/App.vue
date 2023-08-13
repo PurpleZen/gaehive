@@ -31,7 +31,7 @@
         window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/api') +
       '&name=the Gaehive website'
-    }
+    },
       logOut() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")
