@@ -86,7 +86,7 @@
 <style>
 :root {
   --bg: #f6b93c;
-  --sb: khaki;
+  --sb: oldlace;
   --acc: #365a35;
   --acc2: #483248;
   --brk: #0006;
