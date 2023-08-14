@@ -5,19 +5,20 @@
     <div v-if="!loading && !error" class="loader-placehold"></div>
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
+    <img v-if="!username" src="/favicon.ico">
     <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }}<br>{{ username }}</h2>
-    <h2 @click.right="this.secret = true" v-if="!username">Hello</h2>
+    <h2 @click.right="this.secret = true" v-if="!username">Hello<br>freind</h2>
     </div>
     
-    <a class='button' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
-    <router-link class='button' to="/">home</router-link>
-    <router-link class='button' to="/hivezine">hivezine</router-link>
-    <router-link class='button' to="/managers">managers</router-link>
-    <router-link class='button' to="/resources">resources</router-link>
+    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
+    <router-link class='sidebutton' to="/">home</router-link>
+    <router-link class='sidebutton' to="/hivezine">hivezine</router-link>
+    <router-link class='sidebutton' to="/managers">managers</router-link>
+    <router-link class='sidebutton' to="/resources">resources</router-link>
     
-    <button @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
-    <button @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
-    <button @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
+    <button class='sidebutton' @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
+    <button class='sidebutton' @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
+    <button class='sidebutton' @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
     <button class='login' @click="logOut()" v-if="this.username">sign out</button>
@@ -96,7 +97,7 @@
   --slnkh: #484800;
   --plnk: #573c57;
   --plnkh: #392839;
-  --imp: #c94b4b;
+  --imp: #9f4928;
   --brkb: 4px dotted var(--brk);
 }
 
@@ -217,14 +218,13 @@ textarea, .preview {
 }
 
 .sidebar {
-  width: min-content;
+  width: 20%;
   background-color: var(--sb);
   border-image: linear-gradient(#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
   border-left: solid 10px;
   padding: 50px;
   flex-shrink: 0;
   display: grid;
-  justify-content: center;
   align-content: center;
   box-shadow: #0005 0 0 10px;
   transition: all ease 0.2s;
@@ -249,27 +249,39 @@ textarea, .preview {
   border: var(--bg) solid 3px;
 }
 
-.sidelinks {
-  color: var(--slnk);
-  text-decoration: underline;
-  font-family: 'Vollkorn';
-  font-size: 20px;
-  width: fit-content;
+.sidebutton {
+  display: inline-block;
+  background-color: transparent;
+  color: var(--txt);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  padding: 5px 15px;
+  margin: 5px 2px 2px;
 }
 
-.sidelinks:hover {
-  color: var(--slnkh);
+.sidebutton:hover {
+  outline: var(--btxt) solid 2px;
+  padding-left: 20px;
+  background-color: var(--acc);
+  color: var(--btxt);
 }
 
 .login, .feedback{
   background-color: var(--acc);
   color: var(--btxt);
+  font-family: inherit;
+  font-size: inherit;
   padding: 2px 11px;
   margin-bottom: 5px;
   border-radius: 10px;
   width: fit-content;
   text-decoration: none;
   cursor: pointer;
+  border: none;
 }
 
 .login:hover, .feedback:hover {
@@ -369,14 +381,38 @@ textarea, .preview {
   border-radius: 20px
 }
 
+.hostnext {
+  display: flex;
+}
+
+.useroptions {
+  display: grid;
+}
+
 .promote {
   width: 24px;
   display: grid;
   background-color: var(--acc);
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 0 0;
   align-content: center;
   color: var(--btxt);
   padding: 5px;
+  transition: scale 0.05s;
+}
+
+.remove {
+  width: 24px;
+  display: grid;
+  background-color: var(--imp);
+  border-radius: 0 0 5px 0;
+  align-content: center;
+  color: var(--btxt);
+  padding: 5px;
+  transition: scale 0.05s;
+}
+
+.promote:hover, .remove:hover {
+  scale: 1.05;
 }
 
 .nexthosts {
@@ -565,12 +601,11 @@ textarea, .preview {
   text-align: center;
 }
 
-.button, button {
+.button {
   display: inline-block;
   background-color: var(--acc);
   color: var(--btxt) !important;
   text-decoration: none;
-  border: none;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
