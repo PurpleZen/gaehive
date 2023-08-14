@@ -6,11 +6,17 @@
         <h1 v-if=!loading class="greeting">Our Managers</h1>
         <span v-if=!loading>The Gaehive Scratch studio has around <b style="font-family:serif">{{ managers.length }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span><input id="new" @keyup.enter="newCountry()">
 
-        <router-link v-if="username && manager == 'true' || admin == 'true'" to="/managers/edit" class="button">Edit Managers</router-link>
-        <div v-if=!loading class="break"></div>
-        
+<div v-if=!loading class="break"></div>
+        <TransitionGroup name="mng">
+        <div v-for="(item, index) in this.hosts" :key="item.name">
+          <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently host</span></a></div>
+      
+          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} will host next</span></a><div v-if="username && manager == 'true' || admin == 'true'" @click="moveManagers(item.name)" class="promote"><div class="material-symbols-rounded">stars</div></div></div>
+        </div>
+        </TransitionGroup>
+    
         <div v-if=!loading class="nexthosts">
-          <div class="title">These users will be host following :</div>
+          <div class="title">These users will be host following {{ nexthost }}:</div>
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="(manager,index) in managers" :key="manager.id">
@@ -30,10 +36,12 @@
   import { supabase } from '@/lib/supabaseClient'
 
   const managers = ref([])
+  const nexthost = ref()
 
   async function getCountries() {
     const { data } = await supabase.from('managers').select('data')
     managers.value = data[0].data
+    nexthost.value = managers.value[0].name
   }
 
   async function newCountry() {

@@ -3,7 +3,8 @@
     <div v-if="loading" class="loader">Loading...</div>
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
     <div v-if="!loading && !error" class="loader-placehold"></div>
-    
+    <h1 @click.right="this.secret = true" v-if="username">hello{{ mellie }} {{ username }}, welcome to the gaehive website.</h1>
+    <h1 @click.right="this.secret = true" v-if="!username">hello, welcome to the gaehive website.</h1>
     
     <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='sidelinks' to="/">home</router-link>
@@ -86,12 +87,12 @@
 <style>
 :root {
   --bg: #f6b93c;
-  --sb: oldlace;
-  --acc: #365a35;
+  --sb: #fafafa;
+  --acc: #467949;
   --acc2: #483248;
   --brk: #0006;
   --txt: #444;
-  --btxt: oldlace;
+  --btxt: #fafafa;
   --slnk: #676700;
   --slnkh: #484800;
   --plnk: #573c57;
@@ -216,6 +217,7 @@ textarea, .preview {
 }
 
 .sidebar {
+  width: 20%;
   background-color: var(--sb);
   padding: 50px;
   flex-shrink: 0;
@@ -223,6 +225,7 @@ textarea, .preview {
   justify-content: center;
   align-content: center;
   box-shadow: #0005 0 0 10px;
+  transition: all ease 0.2s;
 }
 
 .sidebar h1 {
@@ -319,11 +322,14 @@ textarea, .preview {
   cursor: pointer;
   background-color: var(--sb);
   margin: 5px;
-  border-radius: 20px;
+  border-radius: 5px;
+  box-shadow: #0005 0 0 10px -5px;
+  transition: all ease 0.2s;
 }
 
 .users:hover {
-  outline: var(--acc) solid 2px;
+  box-shadow: #0006 0 0 10px;
+  scale: 1.01;
 }
 
 .users a {
@@ -353,7 +359,7 @@ textarea, .preview {
   width: 24px;
   display: grid;
   background-color: var(--acc);
-  border-radius: 0 20px 20px 0;
+  border-radius: 0 5px 5px 0;
   align-content: center;
   color: var(--btxt);
   padding: 5px;
@@ -362,7 +368,8 @@ textarea, .preview {
 .nexthosts {
   margin-top: 25px;
   background-color: var(--sb);
-  border-radius: 20px;
+  border-radius: 15px;
+  box-shadow: #0005 0 0 10px;
 }
 
 .list {
@@ -433,11 +440,12 @@ textarea, .preview {
   background-color: var(--acc);
   color: var(--btxt);
   font-size: larger;
-  border-radius: 20px 20px 0 0;
+  border-radius: 5px 5px 0 0;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: #0005 0 -5px 10px -3px inset;
 }
 
 .title a {
