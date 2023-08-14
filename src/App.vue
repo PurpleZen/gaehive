@@ -3,9 +3,11 @@
     <div v-if="loading" class="loader">Loading...</div>
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
     <div v-if="!loading && !error" class="loader-placehold"></div>
-    <img width="200px" v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
+    <div class="hello"
+    <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
     <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }} {{ username }}</h2>
     <h2 @click.right="this.secret = true" v-if="!username">Hello</h2>
+    </div>
     
     <a class='button' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='button' to="/">home</router-link>
@@ -233,6 +235,18 @@ textarea, .preview {
   color: var(--acc2);
   border-left: solid 3.5px var(--bg);
   padding-left: 5px;
+}
+
+.hello {
+  display: flex;
+  align-items: center;
+}
+
+.hello img {
+  width: 50px;
+  border-radius: 100%;
+  border: var(--bg) solid 3px;
+  height: 50px;
 }
 
 .sidelinks {
