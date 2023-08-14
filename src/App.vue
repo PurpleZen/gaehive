@@ -5,7 +5,7 @@
     <div v-if="!loading && !error" class="loader-placehold"></div>
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
-    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }} {{ username }}</h2>
+    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }}<br>{{ username }}</h2>
     <h2 @click.right="this.secret = true" v-if="!username">Hello</h2>
     </div>
     
@@ -244,9 +244,9 @@ textarea, .preview {
 
 .hello img {
   width: 50px;
+  height: 50px;
   border-radius: 100%;
   border: var(--bg) solid 3px;
-  height: 50px;
 }
 
 .sidelinks {
