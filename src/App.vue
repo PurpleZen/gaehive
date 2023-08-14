@@ -3,8 +3,9 @@
     <div v-if="loading" class="loader">Loading...</div>
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
     <div v-if="!loading && !error" class="loader-placehold"></div>
-    <h1 @click.right="this.secret = true" v-if="username">hello{{ mellie }} {{ username }}, welcome to the gaehive website.</h1>
-    <h1 @click.right="this.secret = true" v-if="!username">hello, welcome to the gaehive website.</h1>
+    <img width="200px" v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
+    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }} {{ username }}</h2>
+    <h2 @click.right="this.secret = true" v-if="!username">Hello</h2>
     
     <a class='button' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     <router-link class='button' to="/">home</router-link>
@@ -58,7 +59,8 @@
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
-        this.username = JSON.parse(localStorage['user']).username.toLowerCase()
+        this.username = JSON.parse(localStorage['user']).username
+        this.id = JSON.parse(localStorage['user']).id
       }
       if (this.username == "melody-sy") {
         this.mellie = "sy"
@@ -68,6 +70,7 @@
     data() {
   	  return {
         username: null,
+        id: null,
         theme: null,
         secret: null,
         mellie: null,
@@ -225,7 +228,7 @@ textarea, .preview {
   transition: all ease 0.2s;
 }
 
-.sidebar h1 {
+.sidebar h2 {
   font-family: 'Abril Fatface';
   color: var(--acc2);
   border-left: solid 3.5px var(--bg);
