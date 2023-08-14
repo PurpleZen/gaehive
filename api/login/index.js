@@ -12,14 +12,15 @@ const cookieOptions = {
   maxAge: 7 * 24 * 3600 * 1000
 };
 
-app.get('/api', async (req, res) => {
+app.get('/api/login', async (req, res) => {
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
 
   if (json.valid) {
     const token = jwt.sign({ name: json.username, role: "authenticated", level: "manager" }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
     res.cookie('mytoken', token, cookieOptions);
-    res.redirect("/")
+    let user = ['username': json.username]
+    res.redirect("/?user=" + btoa(user))
   } else {
     return res.json({ token: "invalid" })
   }

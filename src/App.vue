@@ -6,19 +6,19 @@
     <h1 @click.right="this.secret = true" v-if="username">hello{{ mellie }} {{ username }}, welcome to the gaehive website.</h1>
     <h1 @click.right="this.secret = true" v-if="!username">hello, welcome to the gaehive website.</h1>
     
-    <a class='sidelinks' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
-    <router-link class='sidelinks' to="/">home</router-link>
-    <router-link class='sidelinks' to="/hivezine">hivezine</router-link>
-    <router-link class='sidelinks' to="/managers">managers</router-link>
-    <router-link class='sidelinks' to="/resources">resources</router-link>
+    <a class='button' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
+    <router-link class='button' to="/">home</router-link>
+    <router-link class='button' to="/hivezine">hivezine</router-link>
+    <router-link class='button' to="/managers">managers</router-link>
+    <router-link class='button' to="/resources">resources</router-link>
     
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</a>
-    <a class='sidelinks' style="cursor: pointer" @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</a>
+    <button @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
+    <button @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
+    <button @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
     <div class="loader-placehold"></div>
-    <a class='login' @click="logIn()" v-if="!this.username">sign in</a>
-    <a class='login' @click="logOut()" v-if="this.username">sign out</a>
-    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments">feedback</a>
+    <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
+    <button class='login' @click="logOut()" v-if="this.username">sign out</button>
+    <button v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments">feedback</button>
   </div>
   
   <router-view @load="loading = !loading" @error="error = !error"/>
@@ -30,7 +30,7 @@
     methods: {
       logIn() {
         window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/api') +
+      btoa('https://' + location.hostname + '/api/login') +
       '&name=the Gaehive website'
     },
       logOut() {
@@ -48,15 +48,8 @@
     
     beforeMount() {
       
-      if (localStorage['tokenExp']) {
-        const date = new Date();
-        const timeDiff = (Date.parse(localStorage["tokenExp"]) - date.getTime()) / (1000 * 3600 * 24) + 1
-        if (Math.trunc(timeDiff) < 1)
-        {
-          localStorage.removeItem("token")
-          localStorage.removeItem("user")
-          localStorage.removeItem("tokenExp")
-        }
+      if (window.location.search.slice(6) ) {
+        localStorage.setItem("user", atob(window.location.search.slice(6) ))
       }
     },
     
@@ -88,7 +81,7 @@
 :root {
   --bg: #f6b93c;
   --sb: #fafafa;
-  --acc: #467949;
+  --acc: #365a35;
   --acc2: #483248;
   --brk: #0006;
   --txt: #444;
@@ -196,6 +189,7 @@
 html, body {
   color: var(--txt);
   background-color: var(--bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
   margin: 0;
   font-family: 'Vollkorn';
   display: flex;
@@ -217,8 +211,10 @@ textarea, .preview {
 }
 
 .sidebar {
-  width: 20%;
+  width: min-content;
   background-color: var(--sb);
+  border-image: linear-gradient(#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
+  border-left: solid 10px;
   padding: 50px;
   flex-shrink: 0;
   display: grid;
@@ -230,7 +226,7 @@ textarea, .preview {
 
 .sidebar h1 {
   font-family: 'Abril Fatface';
-  color: var(--acc);
+  color: var(--acc2);
   border-left: solid 3.5px var(--bg);
   padding-left: 5px;
 }
@@ -551,12 +547,16 @@ textarea, .preview {
   text-align: center;
 }
 
-.button {
+.button, button {
   display: inline-block;
   background-color: var(--acc);
   color: var(--btxt) !important;
   text-decoration: none;
+  border: none;
   cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
   padding: 5px 15px;
   margin: 2px;
   margin-top: 5px;
