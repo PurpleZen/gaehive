@@ -49,7 +49,7 @@
     beforeMount() {
       
       if (window.location.search.slice(6) ) {
-        localStorage.setItem("user", JSON.parse(atob(window.location.search.slice(6)))
+        localStorage.setItem("user", JSON.parse(atob(window.location.search.slice(6))))
       }
     },
     
