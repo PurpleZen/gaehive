@@ -12,16 +12,25 @@
     <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
     <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>freind</h2>
     </div>
-    
+
+    <div @mouseover="active = true" @mouseleave="active = false" class="sidebuttons">
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
-    <router-link class='sidebutton' to="/">home</router-link>
+    
+    <router-link v-if="location !== '' || active" class='sidebutton' to="/">home</router-link>
+    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">home</router-link>
+    
     <router-link class='sidebutton' to="/hivezine">hivezine</router-link>
-    <router-link class='sidebutton' to="/managers">managers</router-link>
+    
+    <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">managers</router-link>
+    <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">managers</router-link>
+    
     <router-link class='sidebutton' to="/resources">resources</router-link>
     
     <button class='sidebutton' @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
     <button class='sidebutton' @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
     <button class='sidebutton' @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
+    </div>
+      
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
     <button class='login' @click="logOut()" v-if="this.username">sign out</button>
@@ -53,6 +62,12 @@
         this.theme = localStorage["theme"];
       }
     },
+
+    watch:{
+      $route (to, from){
+        this.location = window.location.pathname.split('/')[1];
+      }
+    }, 
     
     created() {
       
@@ -63,6 +78,7 @@
     },
     
     mounted() {
+      this.location = window.location.pathname
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
@@ -82,7 +98,9 @@
         secret: null,
         mellie: null,
         loading: false,
-        error: false
+        error: false,
+        active: false,
+        location: null
   	  }
     }
   }
@@ -255,6 +273,10 @@ textarea, .preview {
   background-color: var(--sb);
 }
 
+.sidebuttons {
+  display: grid;
+}
+
 .sidebutton {
   display: inline-block;
   background-color: transparent;
@@ -266,11 +288,24 @@ textarea, .preview {
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
-  transition: padding linear 0.1s;
+  transition: padding linear 0.05s;
+}
+
+.sidebuttonactive {
+  display: inline-block;
+  background-color: var(--acc);
+  color: var(--btxt);
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  padding: 5px 15px;
+  padding-left: 20px;
 }
 
 .sidebutton:hover {
-  outline: var(--btxt) solid 2px;
   padding-left: 20px;
   background-color: var(--acc);
   color: var(--btxt);
@@ -403,7 +438,6 @@ textarea, .preview {
   align-content: center;
   color: var(--txt);
   padding: 5px;
-  transition: background-color 0.05s;
 }
 
 .remove {
@@ -413,7 +447,6 @@ textarea, .preview {
   align-content: center;
   color: var(--txt);
   padding: 5px;
-  transition: background-color 0.05s;
 }
 
 .remove:hover {
