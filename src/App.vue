@@ -13,7 +13,6 @@
     <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>freind</h2>
     </div>
 
-    <div @mouseover="active = true" @mouseleave="active = false" class="sidebuttons">
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
     
     <router-link v-if="location !== '' || active" class='sidebutton' to="/">home</router-link>
@@ -29,7 +28,6 @@
     <button class='sidebutton' @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
     <button class='sidebutton' @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
     <button class='sidebutton' @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
-    </div>
       
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
@@ -78,7 +76,6 @@
     },
     
     mounted() {
-      this.location = window.location.pathname
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
@@ -273,10 +270,6 @@ textarea, .preview {
   background-color: var(--sb);
 }
 
-.sidebuttons {
-  display: grid;
-}
-
 .sidebutton {
   display: inline-block;
   background-color: transparent;
@@ -307,8 +300,7 @@ textarea, .preview {
 
 .sidebutton:hover {
   padding-left: 20px;
-  background-color: var(--acc);
-  color: var(--btxt);
+  background-color: #a68fc866;
 }
 
 .login, .feedback{

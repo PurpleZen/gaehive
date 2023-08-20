@@ -12,6 +12,23 @@ const cookieOptions = {
   maxAge: 7 * 24 * 3600 * 1000
 };
 
+import { createClient } from '@supabase/supabase-js'
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+  export const supabase = createClient(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
+        persistSession: false,
+      }
+    }
+  )
+
 app.get('/api/login', async (req, res) => {
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
