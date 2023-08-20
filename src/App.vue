@@ -87,7 +87,7 @@
 <style>
 :root {
   --bg: #f6b93c;
-  --sb: #fafafa;
+  --sb: oldlace;
   --acc: #365a35;
   --acc2: #483248;
   --brk: #0006;
@@ -233,8 +233,9 @@ textarea, .preview {
 .sidebar h2 {
   font-family: 'Abril Fatface';
   color: var(--acc2);
-  border-left: solid 3.5px var(--bg);
+  border-left: solid 3px var(--bg);
   padding-left: 5px;
+  margin-left: -3px;
 }
 
 .hello {
@@ -392,27 +393,31 @@ textarea, .preview {
 .promote {
   width: 24px;
   display: grid;
-  background-color: var(--acc);
   border-radius: 0 5px 0 0;
   align-content: center;
-  color: var(--btxt);
+  color: var(--txt);
   padding: 5px;
-  transition: scale 0.05s;
+  transition: background-color 0.05s;
 }
 
 .remove {
   width: 24px;
   display: grid;
-  background-color: var(--imp);
   border-radius: 0 0 5px 0;
   align-content: center;
-  color: var(--btxt);
+  color: var(--txt);
   padding: 5px;
-  transition: scale 0.05s;
+  transition: background-color 0.05s;
 }
 
-.promote:hover, .remove:hover {
-  scale: 1.05;
+.remove:hover {
+  background-color: var(--imp);
+  color: var(--btxt);
+}
+
+.promote:hover {
+  background-color: var(--acc);
+  color: var(--btxt);
 }
 
 .nexthosts {
@@ -740,12 +745,15 @@ textarea, .preview {
   }
   .sidebar {
     height: 70vh;
+    border-image: linear-gradient(90deg,#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
+    border-left: none;
+    border-top: solid 10px;
   }
   .page {
     overflow: initial;
   }
-  .nextlist {
-    overflow: initial;
+  .hostnext {
+    display: grid;
   }
   .list {
     grid-template-columns: none;
