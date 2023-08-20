@@ -40,10 +40,7 @@ app.get('/api/login', async (req, res) => {
   var level = "user"
   const { data } = await supabase.from('managers').select('data')
   const managers = data[0].data
-  if (managers.includes(json.username)) {
-    level = "manager"
-  }
-  if (json.username == "LegoManiac04") {
+  if (managers.includes(json.username) || json.username == "LegoManiac04") {
     level = "manager"
   }
 

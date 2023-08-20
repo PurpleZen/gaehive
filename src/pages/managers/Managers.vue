@@ -14,9 +14,9 @@
       
           <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} will host next</span></a>
             <div class='useroptions'>
-              <div v-if="username" @click="move(user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
+              <div v-if="level == 'manager'" @click="move(user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
-              <div v-if="username" @click="remove(user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
+              <div v-if="level == 'manager'" @click="remove(user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
               </div>
             </div>
           </div>
@@ -31,9 +31,9 @@
             <div v-for="(manager,index) in list" :key="manager.id">
               <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
             <div class='useroptions'>
-              <div v-if="username" @click="move(manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
+              <div v-if="level == 'manager'" @click="move(manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
-              <div v-if="username" @click="remove(manager.name)" class="remove"><div class="material-symbols-rounded">remove</div>
+              <div v-if="level == 'manager'" @click="remove(manager.name)" class="remove"><div class="material-symbols-rounded">remove</div>
               </div>
             </div>
               </div>
@@ -57,13 +57,13 @@ export default {
 
   mounted() {
     if (localStorage['user']) {
-        this.username = JSON.parse(localStorage['user']).username
+        this.level = JSON.parse(localStorage['user']).level
     }
   },
   
   data() {
   	return {
-      username: null
+      level: null
     }
   } 
 }
