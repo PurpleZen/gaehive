@@ -37,10 +37,17 @@ app.get('/api/login', async (req, res) => {
   const userdata = await userinfo.json();
   const id = userdata.id
 
+  var level = "user"
+  const { data } = await supabase.from('managers').select('data')
+  const managers = data[0].data
+  if (managers.includes(json.username)) {
+    level = "manager"
+  }
+
   if (json.valid) {
     const token = jwt.sign({ name: json.username, role: "authenticated", level: "manager" }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
     res.cookie('mytoken', token, cookieOptions);
-    res.redirect("/?user=" + btoa(JSON.stringify({'username': json.username, 'id': id})))
+    res.redirect("/?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'level': level})))
   } else {
     return res.json({ token: "invalid" })
   }
