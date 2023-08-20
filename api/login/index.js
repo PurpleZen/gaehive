@@ -43,7 +43,7 @@ app.get('/api/login', async (req, res) => {
   if (managers.includes(json.username)) {
     level = "manager"
   }
-  if (json.username == "LegoManiac04")) {
+  if (json.username == "LegoManiac04") {
     level = "manager"
   }
 
