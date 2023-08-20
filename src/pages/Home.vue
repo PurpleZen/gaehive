@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  
+  import { useMeta } from 'vue-meta'
   export default {
     data() {
       return {
@@ -49,7 +49,13 @@
         symbcode: null      
       }
     },
-    
+
+    created() {
+      useMeta({
+        title: 'The Gaehive | Home'
+      });
+    },
+  
     async mounted() {
       this.loading = true
 

@@ -46,6 +46,18 @@
   </div>
 </template>
 
+<script>
+  import { useMeta } from 'vue-meta'
+  export default {
+  created () {
+    useMeta({
+      title: 'The Gaehive | Managers'
+    })
+  }
+}
+
+</script>
+
 <script setup>
   import { ref, onMounted } from 'vue'
   import { supabase } from '@/lib/supabaseClient'

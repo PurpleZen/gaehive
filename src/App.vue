@@ -1,4 +1,7 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }"></template>
+  </metainfo>
   <div class="sidebar">
     <div v-if="loading" class="loader">Loading...</div>
     <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
@@ -6,8 +9,8 @@
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
     <img v-if="!username" src="/favicon.ico">
-    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }}<br>{{ username }}</h2>
-    <h2 @click.right="this.secret = true" v-if="!username">Hello<br>freind</h2>
+    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
+    <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>freind</h2>
     </div>
     
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
@@ -30,6 +33,7 @@
 </template>
 
 <script>
+  import { useMeta } from 'vue-meta'
   export default {
     methods: {
       logIn() {
@@ -50,7 +54,7 @@
       }
     },
     
-    beforeMount() {
+    created() {
       
       if (window.location.search.slice(6) ) {
         localStorage.setItem("user", atob(window.location.search.slice(6)))
