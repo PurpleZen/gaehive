@@ -266,7 +266,7 @@ textarea, .preview {
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
-  margin: 5px 2px 2px;
+  transition: padding linear 0.1s;
 }
 
 .sidebutton:hover {
