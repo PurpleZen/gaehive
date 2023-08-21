@@ -423,7 +423,7 @@ textarea, .preview {
   background-color: var(--sb);
 }
 
-.post img {
+.post img, .post iframe {
   max-width: 300px;
 }
 
@@ -717,7 +717,7 @@ textarea, .preview {
   .reactbutton span, .reactbuttonactive span {
     display: none;
   }
-  .post img {
+  .post img, .post iframe {
   max-width: 200px;
 }
 }
