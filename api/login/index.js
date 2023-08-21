@@ -14,8 +14,8 @@ const cookieOptions = {
 
 import { createClient } from '@supabase/supabase-js'
 
-  const supabaseUrl = process.env.VITE_SUPABASE_URL
-  const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY
+  const supabaseUrl = process.env['VITE_SUPABASE_URL']
+  const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
 
   const supabase = createClient(
     supabaseUrl,
@@ -39,7 +39,7 @@ app.get('/api/login', async (req, res) => {
 
   var level = "user"
   const { data } = await supabase.from('managers').select('data')
-  const managers = data[0].data
+  const managers = await data[0].data
   if (managers.includes(json.username) || json.username == "LegoManiac04") {
     level = "manager"
   }
