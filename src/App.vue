@@ -10,7 +10,7 @@
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
     <img v-if="!username" src="/favicon.ico">
     <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-    <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>freind</h2>
+    <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>Freind</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
@@ -250,11 +250,9 @@ textarea, .preview {
 }
 
 .sidebar h2 {
-  font-family: 'Abril Fatface';
+  font-family: 'Leckerli One';
   color: var(--acc2);
-  border-left: solid 3px var(--bg);
-  padding-left: 5px;
-  margin-left: -3px;
+  margin-left: 8px;
 }
 
 .hello {
@@ -263,8 +261,8 @@ textarea, .preview {
 }
 
 .hello img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 100%;
   border: var(--bg) solid 3px;
   background-color: var(--sb);
@@ -371,7 +369,7 @@ textarea, .preview {
 }
 
 .greeting {
-  font-family: 'Abril Fatface';
+  font-family: 'Leckerli One';
   color: var(--acc2);
 }
 
@@ -412,7 +410,7 @@ textarea, .preview {
   width: 50px;
   height: 50px;
   margin-right: 10px;
-  border-radius: 20px;
+  border-radius: 100%;
 }
 
 .hostnext {
