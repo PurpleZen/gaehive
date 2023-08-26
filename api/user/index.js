@@ -17,7 +17,7 @@ app.use(apiRequestLimiter)
 app.get('/api/user/:user', (req, res) => {
   var user = req.params.user
   fetch(
-    `https://api.scratch.mit.edu/user/${user}`,
+    `https://api.scratch.mit.edu/user/` + user,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
@@ -28,7 +28,7 @@ app.get('/api/user/:user', (req, res) => {
     const username = data.username
     const id = data.id
 
-    res.json([{ username: username, id: id }])
+    res.json({ username: username, id: id })
   })
 });
 
