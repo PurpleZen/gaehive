@@ -27,6 +27,8 @@ app.get('/api/user', (req, res) => {
 
     const username = data.username
     const id = data.id
+    console.log(user)
+    console.log(data)
 
     return res.json({ username: username, id: id })
   })
