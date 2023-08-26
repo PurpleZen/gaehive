@@ -28,7 +28,7 @@ app.get('/api/user', (req, res) => {
     const username = data.username
     const id = data.id
 
-    res.json({ username: username, id: id })
+    return res.json({ username: username, id: id })
   })
 });
 
