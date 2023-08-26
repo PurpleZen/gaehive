@@ -387,7 +387,7 @@ textarea, .preview {
   margin: 5px;
   border-radius: 5px;
   box-shadow: #0005 0 0 10px -5px;
-  transition: all ease 0.2s;
+  transition: scale ease 0.2s;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
@@ -434,6 +434,7 @@ textarea, .preview {
   align-content: center;
   color: var(--txt);
   padding: 5px;
+  overflow: hidden;
 }
 
 .remove {
@@ -443,6 +444,7 @@ textarea, .preview {
   align-content: center;
   color: var(--txt);
   padding: 5px;
+  overflow: hidden;
 }
 
 .remove:hover {
@@ -465,10 +467,10 @@ textarea, .preview {
 .list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 10px;
-  row-gap: 10px;
+  column-gap: 5px;
+  row-gap: 5px;
   margin: 5px;
-  padding: 10px;
+  padding: 5px;
   align-items: center;
 }
 
