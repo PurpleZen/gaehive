@@ -33,7 +33,7 @@ app.get('/api/login', async (req, res) => {
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
 
-  const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + json.username);
+  const userinfo = await fetch('https://gaehive2.vercel.app/api/user?name=' + json.username);
   const userdata = await userinfo.json();
   const id = userdata.id
 
