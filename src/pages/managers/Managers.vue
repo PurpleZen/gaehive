@@ -1,11 +1,11 @@
 <template>
   <div class="page" id="page">
+    <div v-if="loading == true" class="loader"></div>
     <div id="hostqueue" class="container">
       <div class="queue">
-        <div v-if="loading" class="loader"></div>
-        <h1 v-if=!loading class="greeting">Our Managers</h1>
-        <span v-if=!loading>The Gaehive Scratch studio has around <b style="font-family:serif">{{ managers.length }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span><input id="new" @keyup.enter="newManager()">
-<div v-if=!loading class="break"></div>
+        <h1  class="greeting">Our Managers</h1>
+        <span >The Gaehive Scratch studio has around <b style="font-family:serif">{{ managers.length }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span><input id="new" @keyup.enter="newManager()">
+<div  class="break"></div>
 
         <div class="hostnext">
         <TransitionGroup name="mng">
@@ -24,7 +24,7 @@
         </TransitionGroup>
         </div>
     
-        <div v-if=!loading class="nexthosts">
+        <div  class="nexthosts">
           <div class="title">These users will be host following {{ next }}:</div>
           <div class="list">
             <TransitionGroup name="mng">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-  import { getManagers, newManager, move, remove, hostnext, next, list, managers } from '@/lib/managers.js'
+  import { getManagers, newManager, move, remove, hostnext, next, list, managers, level, loading } from '@/lib/managers.js'
   import { useMeta } from 'vue-meta'
 export default {  
   created() {
@@ -58,18 +58,17 @@ export default {
 
   mounted() {
     getManagers()
-    if (localStorage['user']) {
-        this.level = JSON.parse(localStorage['user']).level
-    }
+    
   },
   
   data() {
   	return {
-      level: null,
+      level: level,
       hostnext: hostnext,
       next: next,
       list: list,
-      managers: managers
+      managers: managers,
+      loading: loading
       
     }
   },

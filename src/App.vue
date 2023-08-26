@@ -720,11 +720,17 @@ textarea, .preview {
 .loader {
   width: 48px;
   height: 48px;
-  border: solid 7px var(--acc);
+  border: solid 7px var(--bg);
   color: transparent;
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s ease-in-out infinite;
+  position: absolute;
+  box-shadow: #0005 0 0 1px 500vh;
+  justify-self: center;
+  align-self: center;
+  background: #0005;
+  z-index: 1;
 }
 
 .error {
