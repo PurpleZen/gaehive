@@ -14,7 +14,7 @@ const apiRequestLimiter = rateLimit({
 app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
-app.get('/scratch/user/:user', (req, res) => {
+app.get('/api/user/:user', (req, res) => {
   var user = req.params.user
   fetch(
     `https://api.scratch.mit.edu/user/${user}`,
@@ -25,9 +25,10 @@ app.get('/scratch/user/:user', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    const userData = data
+    const username = data[0].username
+    const id = data[0].id
 
-    res.json(userData)
+    res.json([{ username: username, id: id }])
   })
 });
 
