@@ -28,6 +28,8 @@
     <button class='sidebutton' @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
     <button class='sidebutton' @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
     <button class='sidebutton' @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
+    <input type="color" @input="color()" value="#365a35" id="color">
+    <input type="color" @input="color()" value="#fafafa" id="buttoncolor">
       
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
@@ -58,6 +60,10 @@
         localStorage.setItem("theme", theme);
         document.documentElement.setAttribute('data-theme', localStorage["theme"]);
         this.theme = localStorage["theme"];
+      },
+      color() {
+       document.querySelector(":root").style.setProperty("--acc", document.getElementById("color").value)
+        document.querySelector(":root").style.setProperty("--btxt", document.getElementById("buttoncolor").value)
       }
     },
 
