@@ -17,7 +17,7 @@ app.use(apiRequestLimiter)
 app.get('/api/user', (req, res) => {
   var user = req.query.user
   fetch(
-    `https://api.scratch.mit.edu/user/` + user,
+    `https://api.scratch.mit.edu/studios/33586934/comments?limit=1`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
