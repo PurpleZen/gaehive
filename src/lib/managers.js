@@ -37,6 +37,14 @@
     loading.value = true
     const user = document.getElementById("new").value
     document.getElementById("new").value = ""
+    try {
+      const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
+      const userdata = await userinfo.json();
+    }
+    catch(err) {
+      loading.value = false
+      alert(err.message)
+    }
     const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
   const userdata = await userinfo.json();
   const username = userdata.username
