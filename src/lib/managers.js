@@ -37,14 +37,10 @@
     loading.value = true
     const user = document.getElementById("new").value
     document.getElementById("new").value = ""
-    const userinfo = await fetch('https://gaehive2.vercel.app/api/user?name=' + user);
-    const userdata = await userinfo.json();
-    const username = userdata.username
-    const id = userdata.id
-
-    if (userdata.error) {
-      alert("error")
-    } else {
+    const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
+  const userdata = await userinfo.json();
+  const username = userdata.username
+  const id = userdata.id
 
   const newUser = {
     name: username,
@@ -58,7 +54,6 @@
   .update({ data: managers.value })
   .eq('id', 1)
     refresh()
-  }
   }
 
   async function move(name, host) {
