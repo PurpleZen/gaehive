@@ -37,10 +37,16 @@
     loading.value = true
     const user = document.getElementById("new").value
     document.getElementById("new").value = ""
-    const userinfo = await fetch('https://gaehive2.vercel.app/api/user?name=' + user);
-  const userdata = await userinfo.json();
-  const username = userdata.username
-  const id = userdata.id
+    try {
+      const userinfo = await fetch('https://gaehive2.vercel.app/api/user?name=' + user);
+      const userdata = await userinfo.json();
+      const username = userdata.username
+      const id = userdata.id
+    }
+    catch(err) {
+      alert(err.message)
+      loading.value = false
+    }
 
   const newUser = {
     name: username,
