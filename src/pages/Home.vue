@@ -1,5 +1,4 @@
 <template>
-  <div class="page">
     <div class="container">
       <div id="text" class="queue">
         <h1 v-if="!username">hello, welcome to the gaehive website.</h1>
@@ -33,7 +32,6 @@
         
       </div>
     </div>
-  </div>
 </template>
 
 <script>

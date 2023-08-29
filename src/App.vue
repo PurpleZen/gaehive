@@ -13,7 +13,7 @@
     <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>Freind</h2>
     </div>
 
-    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments">scratch studio</a>
+    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">scratch studio</a>
     
     <router-link v-if="location !== '' || active" class='sidebutton' to="/">home</router-link>
     <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">home</router-link>
@@ -25,19 +25,19 @@
     
     <router-link class='sidebutton' to="/resources">resources</router-link>
     
-    <button class='sidebutton' @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
-    <button class='sidebutton' @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
-    <button class='sidebutton' @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</button>
-    <input type="color" @input="color()" value="#365a35" id="color">
-    <input type="color" @input="color()" value="#fafafa" id="buttoncolor">
+    <router-link v-if="location !== 'settings' || active" class='sidebutton' to="/settings">settings</router-link>
+    <router-link v-if="location == 'settings' && !active" class='sidebuttonactive' to="/settings">settings</router-link>
       
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
     <button class='login' @click="logOut()" v-if="this.username">sign out</button>
-    <button v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments">feedback</button>
+    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">feedback</a>
   </div>
-  
+
+  <div class="page">
+  <div v-if="scratchdb == 'offline'" class="notice">Notice: ScratchDB is Offline, so some website features may not work</div>
   <router-view @load="loading = !loading" @error="error = !error"/>
+  </div>
   
 </template>
 
@@ -54,6 +54,7 @@
         localStorage.removeItem("token")
         localStorage.removeItem("user")
         localStorage.removeItem("tokenExp")
+        document.cookie = document.cookie + ";expires=Thu, 01 Jan 1970 00:00:00 GMT"
         window.location.reload()
       },
       changeTheme(theme) {
@@ -81,7 +82,7 @@
       }
     },
     
-    mounted() {
+    async mounted() {
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
@@ -91,6 +92,16 @@
       if (this.username == "melody-sy") {
         this.mellie = "sy"
       }
+      
+      const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
+    
+      try {
+        const userdata = await userinfo.json();
+        this.scratchdb = "online"
+      } catch(err) {
+        this.scratchdb = "offline"
+      }
+      
     },
     
     data() {
@@ -103,7 +114,8 @@
         loading: false,
         error: false,
         active: false,
-        location: null
+        location: null,
+        scratchdb: "Loading"
   	  }
     }
   }
@@ -217,6 +229,16 @@
   position: absolute;
 }
 
+.notice {
+  background: var(--imp);
+  height: fit-content;
+  margin-bottom: -30px;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 0 0 20px 20px;
+  box-shadow: #0005 0 0 10px;
+  color: var(--btxt);
+}
 
 html, body {
   color: var(--txt);
@@ -338,6 +360,7 @@ textarea, .preview {
 .page {
   display: grid;
   overflow: scroll;
+  position: relative;
 }
 
 .page h1 {
@@ -726,11 +749,31 @@ textarea, .preview {
   box-sizing: border-box;
   animation: rotation 1s ease-in-out infinite;
   position: absolute;
-  box-shadow: #0005 0 0 1px 500vh;
   justify-self: center;
   align-self: center;
   background: #0005;
   z-index: 1;
+}
+
+.dialog {
+  background-color: #0004;
+  display: grid;
+  top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+  position: absolute;
+  align-items: center;
+  justify-items: center;
+  z-index: 1;
+}
+
+.innerdialog {
+  position: absolute;
+  background-color: var(--sb);
+  padding: 10px;
+  border-radius: 15px;
+  z-index: 2;
 }
 
 .error {

@@ -1,6 +1,9 @@
 <template>
-  <div class="page" id="page">
     <div v-if="loading == true" class="loader"></div>
+    <div v-if="dialog == 'remove'" class="dialog"><div class="innerdialog">Remove?
+    <button class="button">Yes</button>
+    <button class="button">No</button>
+    </div></div>
     <div id="hostqueue" class="container">
       <div class="queue">
         <h1  class="greeting">Our Managers</h1>
@@ -12,7 +15,7 @@
         <div v-for="(user, index) in hostnext" :key="user.id">
           <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + user.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} is currently host</span></a></div>
       
-          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} will host next</span></a>
+          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} will host next</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="move(user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
@@ -29,7 +32,7 @@
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="(manager,index) in list" :key="manager.id">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
+              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="move(manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
@@ -43,7 +46,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -58,6 +60,7 @@ export default {
 
   mounted() {
     getManagers()
+    window.onclick = this.closeDialog()
     
   },
   
@@ -68,7 +71,8 @@ export default {
       next: next,
       list: list,
       managers: managers,
-      loading: loading
+      loading: loading,
+      dialog: "remove"
       
     }
   },
@@ -81,6 +85,9 @@ export default {
     },
     remove(name) {
       remove(name)
+    },
+    closeDialog() {
+      this.dialog = null
     }
   }
 }

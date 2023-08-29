@@ -43,7 +43,7 @@
     }
     catch(err) {
       loading.value = false
-      alert(err.message)
+      alert("Oh noes! It looks like ScratchDB isn't working...\nPlease try again later.")
     }
     const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
   const userdata = await userinfo.json();
