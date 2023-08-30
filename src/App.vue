@@ -76,7 +76,7 @@
     
     created() {
       
-      if (window.location.search.slice(6) ) {
+      if (decodeURIComponent(window.location.search.slice(6))) {
         localStorage.setItem("user", atob(window.location.search.slice(6)))
         window.location.search = ""
       }
