@@ -812,6 +812,7 @@ textarea, .preview {
   0% {
     scale: 100%;
     border-radius: 100%;
+    rotate: 360deg;
   }
   50% {
     scale: 50%;
@@ -820,7 +821,6 @@ textarea, .preview {
   100% {
     scale: 100%;
     border-radius: 100%;
-    rotate: 360deg;
   }
 }
 
