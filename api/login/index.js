@@ -58,7 +58,7 @@ app.get('/api/login', async (req, res) => {
   if (json.valid) {
     const token = jwt.sign({ name: json.username, role: "authenticated", level: "manager" }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
     res.cookie('mytoken', token, cookieOptions);
-    res.redirect("/?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'level': level})))
+    res.redirect("/?user=" + decodeURIComponent(btoa(JSON.stringify({'username': json.username, 'id': id, 'level': level}))))
   } else {
     return res.json({ token: "invalid" })
   }
