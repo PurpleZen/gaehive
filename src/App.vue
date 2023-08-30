@@ -741,9 +741,10 @@ textarea, .preview {
 }
   
 .loader {
-  width: 48px;
-  height: 48px;
-  border: solid 7px var(--bg);
+  width: 64px;
+  height: 64px;
+  background: var(--acc);
+  box-shadow: #0005 0 0 10px;
   color: transparent;
   display: inline-block;
   box-sizing: border-box;
@@ -751,7 +752,7 @@ textarea, .preview {
   position: absolute;
   justify-self: center;
   align-self: center;
-  background: #0005;
+  
   z-index: 1;
 }
 
