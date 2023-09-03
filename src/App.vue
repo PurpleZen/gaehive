@@ -224,6 +224,7 @@
 .mng-enter-from,
 .mng-leave-to {
   opacity: 0;
+  transform: scaleY(0.01) translate(30px, 0);
 }
 .mng-leave-active {
   position: absolute;
