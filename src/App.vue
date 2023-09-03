@@ -224,15 +224,39 @@
 .mng-enter-from,
 .mng-leave-to {
   opacity: 0;
-  transform: scaleY(0.01) translate(30px, 0);
 }
 .mng-leave-active {
   position: absolute;
 }
 
+.popup-enter-active,
+.popup-leave-active {
+  transition: all 0.2s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.popup-enter-from,
+.popup-leave-to {
+  opacity: 0;
+}
+
+
+
+.crownimg {
+  display: grid;
+}
+  
+.crown {
+  position: absolute;
+  width: 30px;
+  margin-top: -21px;
+  rotate: -17deg;
+  filter: drop-shadow(#0001 0px -5px 5px);
+}
+  
+
 .popupbg {
   position: absolute;
   background-color: #0005;
+  backdrop-filter: blur(1px);
   z-index: 1;
   width: 100%;
   height: 100%;
@@ -256,6 +280,10 @@
 
 .popup button {
   margin: 10px 5px;
+}
+
+.popup .button:hover, .popup .button:focus {
+  outline: var(--bg) solid 2px;
 }
 
 .popup input {
@@ -473,7 +501,7 @@ textarea, .preview {
   overflow: hidden;
 }
 
-.users img {
+.usersimg {
   width: 50px;
   height: 50px;
   margin-right: 10px;
@@ -721,8 +749,8 @@ textarea, .preview {
   border-radius: 10px;
 }
 
-.button:hover {
-  outline: var(--btxt) solid 2px;
+.button:hover, .button:focus {
+  outline: var(--sb) solid 2px;
 }
 
 .promptButton {
@@ -896,7 +924,10 @@ textarea, .preview {
     display: none;
   }
   .post img {
-  max-width: 200px;
-}
+    max-width: 200px;
+  }
+  .popupbody input {
+    width: 100px;
+  }
 }
 </style>

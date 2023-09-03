@@ -1,4 +1,5 @@
 <template>
+  <TransitionGroup name="popup">
   <div v-if="popup" class="popupbg"></div>
   
   <div v-if="popup == 'move'" class="popup">
@@ -43,6 +44,7 @@
       </div>
     </div>
   </div>
+  </TransitionGroup>
   
     <div id="hostqueue" class="container">
       <div class="queue">
@@ -54,9 +56,19 @@
         <div class="hostnext">
         <TransitionGroup name="mng">
         <div v-for="(user, index) in hostnext" :key="user.id">
-          <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + user.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} is currently host</span></a></div>
+          <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + user.name" >
+            <div class="crownimg">
+              <img class="crown" src="/crown.png">
+              <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
+            </div>
+            <span>{{ user.name }} is currently host</span></a></div>
       
-          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'"><span>{{ user.name }} will host next</span></a>
+          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
+            <div class="crownimg">
+              <img class="crown" src="/crown2.png">
+              <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
+            </div>
+              <span>{{ user.name }} will host next</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
@@ -73,7 +85,7 @@
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="(manager,index) in list" :key="manager.id">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
+              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
