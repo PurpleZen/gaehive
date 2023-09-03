@@ -51,9 +51,7 @@
       '&name=the Gaehive website'
     },
       logOut() {
-        localStorage.removeItem("token")
         localStorage.removeItem("user")
-        localStorage.removeItem("tokenExp")
         document.cookie = document.cookie + ";expires=Thu, 01 Jan 1970 00:00:00 GMT"
         window.location.reload()
       },
@@ -75,6 +73,9 @@
     }, 
     
     created() {
+      if (!document.cookie) {
+        localStorage.removeItem("user")
+      }
       
       if (window.location.search.slice(6)) {
         localStorage.setItem("user", atob(decodeURIComponent(window.location.search.slice(6))))
@@ -227,6 +228,43 @@
 }
 .mng-leave-active {
   position: absolute;
+}
+
+.popupbg {
+  position: absolute;
+  background-color: #0005;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.popup {
+  position: absolute;
+  background-color: var(--sb);
+  margin: 10px;
+  justify-self: center;
+  align-self: center;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.popupbody {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup button {
+  margin: 10px 5px;
+}
+
+.popup input {
+  margin: 10px;
+  background-color: var(--bg);
+  border: none;
+  border-radius: 5px;
+  font-family: 'Vollkorn';
+  padding: 10px;
 }
 
 .notice {
@@ -672,6 +710,7 @@ textarea, .preview {
   background-color: var(--acc);
   color: var(--btxt) !important;
   text-decoration: none;
+  border: none;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -741,19 +780,13 @@ textarea, .preview {
 }
   
 .loader {
-  width: 64px;
-  height: 64px;
-  background: var(--acc);
-  box-shadow: #0005 0 0 10px;
-  color: transparent;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s ease-in-out infinite;
-  position: absolute;
-  justify-self: center;
-  align-self: center;
-  
-  z-index: 1;
+  border: var(--acc) solid 5px;
+  border-left: transparent solid 5px;
+  border-radius: 100px;
+  margin: 10px;
+  width: 20px;
+  height: 20px;
+  animation: rotation 1s linear infinite;
 }
 
 .dialog {
@@ -810,17 +843,7 @@ textarea, .preview {
 
 @keyframes rotation {
   0% {
-    scale: 100%;
-    border-radius: 100%;
     rotate: 360deg;
-  }
-  50% {
-    scale: 50%;
-    border-radius: 0%;
-  }
-  100% {
-    scale: 100%;
-    border-radius: 100%;
   }
 }
 

@@ -7,6 +7,7 @@
   const managers = ref([])
   const level = ref([])
   const loading = ref([])
+  const popup = ref()
 
   async function getManagers() {
     if (localStorage['user']) {
@@ -31,22 +32,19 @@
     managers.value = data[0].data
     localStorage.setItem('managers', JSON.stringify(managers.value));
     loading.value = false
+    popup.value = null
   }
 
   async function newManager() {
     loading.value = true
     const user = document.getElementById("new").value
     document.getElementById("new").value = ""
-    try {
-      const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
-      const userdata = await userinfo.json();
-    }
-    catch(err) {
-      loading.value = false
-      alert("Oh noes! It looks like ScratchDB isn't working...\nPlease try again later.")
-    }
     const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + user);
-  const userdata = await userinfo.json();
+    const userdata = await userinfo.json();
+  if (userdata.error) {
+    popup.value = "error"
+    loading.value = false
+  } else {
   const username = userdata.username
   const id = userdata.id
 
@@ -63,9 +61,9 @@
   .eq('id', 1)
     refresh()
   }
+  }
 
   async function move(name, host) {
-    if (confirm("Are you sure you want to make " + name + " host?")) {
       loading.value = true
     for (var i = 0; i < managers.value.length; i++) {
       if (managers.value[i].name == name) {
@@ -82,12 +80,10 @@
     .update({ data: managers.value })
     .eq('id', 1)
     refresh()
-    }
   }
 
   async function remove(name) {
-    if (confirm("Are you sure you want to remove " + name + "?")) {
-      loading.value = true
+    loading.value = true
     for (var i = 0; i < managers.value.length; i++) {
       if (managers.value[i].name == name) {
         managers.value.splice(i, 1)
@@ -98,7 +94,6 @@
     .update({ data: managers.value })
     .eq('id', 1)
     getManagers()
-    }
   }
     
-  export { getManagers, newManager, move, remove, hostnext, next, list, managers, level, loading }
+  export { getManagers, newManager, move, remove, hostnext, next, list, managers, level, loading, popup }
