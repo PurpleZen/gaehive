@@ -48,8 +48,7 @@
   
     <div id="hostqueue" class="container">
       <div class="queue">
-        <h1  class="greeting">Our Managers</h1>
-        <span >The Gaehive Scratch studio has around <b style="font-family:serif">{{ managers.length }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span>
+        <h1  class="greeting">Meet our {{ managers.length }} Managers</h1>
         <button class="button" @click="prompt('add')">Add Managers</button>
 <div class="break"></div>
 
@@ -61,14 +60,14 @@
               <img class="crown" src="/crown.png">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
             </div>
-            <span>{{ user.name }} is currently host</span></a></div>
+            <span>{{ user.name }}, the current host</span></a></div>
       
           <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
             <div class="crownimg">
               <img class="crown" src="/crown2.png">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
             </div>
-              <span>{{ user.name }} will host next</span></a>
+              <span>{{ user.name }}, the next host</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
@@ -85,7 +84,7 @@
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="(manager,index) in list" :key="manager.id">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +2 }} {{ manager.name }}</span></a>
+              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +3 }} {{ manager.name }}</span></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>

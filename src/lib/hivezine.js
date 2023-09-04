@@ -6,10 +6,15 @@ import symbols from "@/data/symbols.json"
 
 const loading = ref([])
 const posts = ref([])
+const username = ref()
 
 async function getPosts() {
   loading.value = true
+  if (localStorage['user']) {
+        username.value = JSON.parse(localStorage['user']).username
+    }
   const { data } = await supabase.from('hivezine').select('data').order("id", { ascending: false })
+  posts.value = ([])
   for ( var i = 0; i < data.length; i++){
     posts.value = posts.value.concat(data[i].data)
   }
@@ -24,4 +29,4 @@ async function getPosts() {
   loading.value = false
 }
 
-export { getPosts, posts, loading }
+export { getPosts, posts, loading, username }

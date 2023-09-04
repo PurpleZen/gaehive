@@ -13,25 +13,25 @@
     <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>Freind</h2>
     </div>
 
-    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">scratch studio</a>
+    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
     
-    <router-link v-if="location !== '' || active" class='sidebutton' to="/">home</router-link>
-    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">home</router-link>
+    <router-link v-if="location !== '' || active" class='sidebutton' to="/">Home</router-link>
+    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">Home</router-link>
     
-    <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">hivezine</router-link>
-    <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">hivezine</router-link>
+    <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">Hivezine</router-link>
+    <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">Hivezine</router-link>
     
-    <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">managers</router-link>
-    <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">managers</router-link>
+    <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
+    <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
     
-    <router-link class='sidebutton' to="/resources">resources</router-link>
+    <router-link class='sidebutton' to="/resources">Resources</router-link>
     
-    <router-link v-if="location !== 'settings' || active" class='sidebutton' to="/settings">settings</router-link>
-    <router-link v-if="location == 'settings' && !active" class='sidebuttonactive' to="/settings">settings</router-link>
+    <router-link v-if="location !== 'settings' || active" class='sidebutton' to="/settings">Settings</router-link>
+    <router-link v-if="location == 'settings' && !active" class='sidebuttonactive' to="/settings">Settings</router-link>
       
     <div class="loader-placehold"></div>
-    <button class='login' @click="logIn()" v-if="!this.username">sign in</button>
-    <button class='login' @click="logOut()" v-if="this.username">sign out</button>
+    <button class='login' @click="logIn()" v-if="!this.username">Login</button>
+    <button class='login' @click="logOut()" v-if="this.username">Logout</button>
     <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">feedback</a>
   </div>
 
@@ -127,7 +127,7 @@
 :root {
   --bg: #f6b93c;
   --sb: oldlace;
-  --acc: #365a35;
+  --acc: #518d49;
   --acc2: #483248;
   --brk: #0006;
   --txt: #444;
@@ -259,19 +259,21 @@
   position: absolute;
   background-color: #0005;
   backdrop-filter: blur(1px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
   z-index: 1;
   width: 100%;
   height: 100%;
 }
 
 .popup {
-  position: absolute;
+  position: fixed;
   background-color: var(--sb);
   margin: 10px;
   justify-self: center;
   align-self: center;
   border-radius: 5px;
   z-index: 1;
+  top: 40%;
 }
 
 .popupbody {
@@ -293,7 +295,7 @@
   background-color: var(--bg);
   border: none;
   border-radius: 5px;
-  font-family: 'Vollkorn';
+  font-family: 'Manrope';
   padding: 10px;
 }
 
@@ -312,7 +314,7 @@ html, body {
   color: var(--txt);
   background-color: var(--bg);
   margin: 0;
-  font-family: 'Vollkorn';
+  font-family: 'Manrope';
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -327,16 +329,16 @@ textarea, .preview {
   margin-top: 0;
   scrollbar-width: none;
   color: var(--txt);
-  font-family: 'Vollkorn';
+  font-family: 'Manrope';
   background-color: var(--sb);
 }
 
 .sidebar {
-  width: 20%;
+  min-width: 20%;
   background-color: var(--sb);
   border-image: linear-gradient(#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
   border-left: solid 10px;
-  padding: 50px;
+  padding: 30px;
   flex-shrink: 0;
   display: grid;
   align-content: center;
@@ -347,7 +349,7 @@ textarea, .preview {
 
 .sidebar h2 {
   font-family: 'Leckerli One';
-  color: var(--acc2);
+  color: var(--acc);
   margin-left: 8px;
 }
 
@@ -357,8 +359,8 @@ textarea, .preview {
 }
 
 .hello img {
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
   border: var(--bg) solid 3px;
   background-color: var(--sb);
@@ -370,11 +372,13 @@ textarea, .preview {
   color: var(--txt);
   text-decoration: none;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
+  margin-bottom: 2px;
   transition: padding linear 0.05s;
 }
 
@@ -384,17 +388,19 @@ textarea, .preview {
   color: var(--btxt);
   text-decoration: none;
   border: none;
+  border-radius: 20px;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
   padding-left: 20px;
+  margin-bottom: 2px;
 }
 
 .sidebutton:hover {
   padding-left: 20px;
-  background-color: #a68fc866;
+  background-color: #8fc89b66;
 }
 
 .login, .feedback{
@@ -420,7 +426,7 @@ textarea, .preview {
 }
   
 .credits {
-  font-family: 'Vollkorn';
+  font-family: 'Manrope';
   font-size: 12px;
   margin-top: 30px;
 }
@@ -607,7 +613,7 @@ textarea, .preview {
   margin-top: 25px;
   scrollbar-width: none;
   color: var(--txt);
-  font-family: 'Vollkorn';
+  font-family: 'Manrope';
   background-color: var(--sb);
 }
 
@@ -622,7 +628,7 @@ textarea, .preview {
 .title {
   color: var(--txt);
   font-size: larger;
-  padding: 5px 10px;
+  padding: 10px;
   display: grid;
 }
 
@@ -650,7 +656,7 @@ textarea, .preview {
 }
 
 .content {
-  padding: 5px 10px;
+  padding: 0 10px 30px 10px;
 }
 
 .reactions {
@@ -662,23 +668,25 @@ textarea, .preview {
 
 .reactbutton, .reactbuttonactive {
   position: relative;
-  background-color: var(--sb);
-  border: 2px solid var(--brk);
-  padding: 0px 10px 2px 10px;
+  background-color: #8fc89b66;
+  padding: 8px 10px 10px 10px;
   margin-right: 5px;
   display: inline-block;
-  font-family: serif;
+  font-size: larger;
   font-weight: bolder;
   text-decoration: none;
   cursor: pointer;
   margin-top: 5px;
-  border-radius: 10px;
+  border-radius: 20px;
 }
+
+.reactbutton span, .reactbuttonactive span {
+  font-size: small;
+}  
 
 .reactbuttonactive {
   color: var(--sb) !important;
   background-color: var(--acc);
-  border: 2px solid var(--acc);
   cursor: default;
 }
 
@@ -693,7 +701,6 @@ textarea, .preview {
 
 .reactbutton:hover {
   background-color: var(--acc);
-  border: 2px solid var(--acc);
   color: var(--sb) !important;
 }
 
@@ -893,19 +900,8 @@ textarea, .preview {
   .list {
     grid-template-columns: none;
   }
-  .username img {
-    display: none;
-  }
-  .title {
-    display: grid;
-    justify-items: center;
-    justify-content: center;
-  }
   .promptButton {
     padding: 0;
-  }
-  .username {
-    justify-content: center;
   }
   .users a {
     white-space: unset;
