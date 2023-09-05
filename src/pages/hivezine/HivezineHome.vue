@@ -1,5 +1,4 @@
   <template>
-  <div class="page" id="page">
   <div id="hostqueue" class="container">
   <div class="queue">
     <h1 class="greeting">The Hivezine</h1>
@@ -66,7 +65,6 @@
     <router-link :to="'/hivezine/' + (item + 1)" :class="{reactbuttonactive: this.page == item + 1, reactbutton: this.page !== item + 1}">{{ item + 1 }}</router-link>
     </div>
     </div>
-  </div>
   </div>
   </div>
 </template>

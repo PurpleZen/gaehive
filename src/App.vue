@@ -240,7 +240,18 @@
   opacity: 0;
 }
 
+.userinfo {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.name {
+  white-space: nowrap;
+}
+  
+.bio {
+  font-size: smaller;
+}
 
 .crownimg {
   display: grid;
@@ -501,7 +512,6 @@ textarea, .preview {
   display: flex;
   padding: 10px;
   overflow: hidden;
-  white-space: nowrap;
 }
 
 .users span {
@@ -563,8 +573,6 @@ textarea, .preview {
 
 .list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 5px;
   row-gap: 5px;
   margin: 5px;
   padding: 5px;

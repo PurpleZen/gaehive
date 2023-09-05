@@ -60,14 +60,21 @@
               <img class="crown" src="/crown.png">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
             </div>
-            <span>{{ user.name }}, the current host</span></a></div>
+            <div class="userinfo">
+              <span class="name">{{ user.name }} is the host</span><br>
+              <span class="bio" v-html="user.bio"></span>
+            </div></a>
+          </div>
       
           <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
             <div class="crownimg">
               <img class="crown" src="/crown2.png">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
             </div>
-              <span>{{ user.name }}, the next host</span></a>
+            <div class="userinfo">
+              <span class="name">{{ user.name }} will host next</span><br>
+              <span class="bio" v-html="user.bio"></span>
+            </div></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
@@ -84,7 +91,11 @@
           <div class="list">
             <TransitionGroup name="mng">
             <div v-for="(manager,index) in list" :key="manager.id">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'"><span>#{{ index +3 }} {{ manager.name }}</span></a>
+              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'">
+                <div class="userinfo">
+                  <span class="name">#{{ index +3 }} {{ manager.name }}</span><br>
+                  <span class="bio" v-html="manager.bio"></span>
+                </div></a>
             <div class='useroptions'>
               <div v-if="level == 'manager'" @click="prompt('move', manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
