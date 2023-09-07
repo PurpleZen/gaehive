@@ -15,7 +15,7 @@
     }
     if (localStorage["managers"]) {
       let localManagers = JSON.parse(localStorage["managers"])
-      hostnext.value = localManagers.slice(0, 2)
+      managers.value = localManagers
       next.value = localManagers[1].name
       list.value = localManagers.slice(2, localManagers.length)
       refresh()

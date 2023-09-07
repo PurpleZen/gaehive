@@ -1,6 +1,4 @@
   <template>
-  <div id="hostqueue" class="container">
-  <div class="queue">
     <h1 class="greeting">The Hivezine</h1>
   <span>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
     <!-- This link won't show if you don't have manager or writer permissions -->
@@ -65,8 +63,6 @@
     <router-link :to="'/hivezine/' + (item + 1)" :class="{reactbuttonactive: this.page == item + 1, reactbutton: this.page !== item + 1}">{{ item + 1 }}</router-link>
     </div>
     </div>
-  </div>
-  </div>
 </template>
 
 <script>

@@ -46,69 +46,36 @@
   </div>
   </TransitionGroup>
   
-    <div id="hostqueue" class="container">
-      <div class="queue">
-        <h1  class="greeting">Meet our {{ managers.length }} Managers</h1>
-        <button class="button" @click="prompt('add')">Add Managers</button>
-<div class="break"></div>
-
-        <div class="hostnext">
+        <h1  class="greeting">Our Managers</h1>
+        <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Managers</button>
+  
+        <div class="managers">
         <TransitionGroup name="mng">
-        <div v-for="(user, index) in hostnext" :key="user.id">
-          <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + user.name" >
+        <div v-for="(user, index) in managers" :key="user.id">
+          <div class="users">
+            <a :href="'https://scratch.mit.edu/users/' + user.name" >
             <div class="crownimg">
-              <img class="crown" src="/crown.png">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
+              <img v-if="index == 0" class="crown" src="/crown.png">
+              <img v-if="index == 1" class="crown" src="/crown2.png">
             </div>
             <div class="userinfo">
-              <span class="name">{{ user.name }} is the host</span><br>
-              <span class="bio" v-html="user.bio"></span>
-            </div></a>
-          </div>
-      
-          <div class="users" v-if="index == 1"><a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
-            <div class="crownimg">
-              <img class="crown" src="/crown2.png">
-              <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
-            </div>
-            <div class="userinfo">
-              <span class="name">{{ user.name }} will host next</span><br>
-              <span class="bio" v-html="user.bio"></span>
-            </div></a>
+                  <span class="name">{{ user.name }}</span><br>
+                  <span class="bio" v-html="user.bio"></span>
+                </div></a>
             <div class='useroptions'>
-              <div v-if="level == 'manager'" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
+              <div v-if="level == 'manager' && index !== 0" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
               <div v-if="level == 'manager'" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
               </div>
             </div>
           </div>
+      
+
         </div>
         </TransitionGroup>
         </div>
-    
-        <div  class="nexthosts">
-          <div class="title">These users will be host following {{ next }}:</div>
-          <div class="list">
-            <TransitionGroup name="mng">
-            <div v-for="(manager,index) in list" :key="manager.id">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + manager.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + manager.id + '_500x500.png'">
-                <div class="userinfo">
-                  <span class="name">#{{ index +3 }} {{ manager.name }}</span><br>
-                  <span class="bio" v-html="manager.bio"></span>
-                </div></a>
-            <div class='useroptions'>
-              <div v-if="level == 'manager'" @click="prompt('move', manager.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
-              </div>
-              <div v-if="level == 'manager'" @click="prompt('remove', manager.name)" class="remove"><div class="material-symbols-rounded">remove</div>
-              </div>
-            </div>
-              </div>
-            </div>
-            </TransitionGroup>
-          </div>
-        </div>
-      </div>
-    </div>
+
 </template>
 
 <script>

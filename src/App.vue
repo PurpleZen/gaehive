@@ -240,6 +240,11 @@
   opacity: 0;
 }
 
+
+.managers {
+  min-width: 70%;
+}
+  
 .userinfo {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -329,6 +334,10 @@ html, body {
   display: flex;
   height: 100vh;
   width: 100vw;
+}
+
+h1 {
+  font-size: xxx-large;
 }
   
 textarea, .preview {
@@ -443,9 +452,11 @@ textarea, .preview {
 }
 
 .page {
+  width: 100%;
   display: grid;
   overflow: scroll;
   position: relative;
+  justify-items: center;
 }
 
 .page h1 {
@@ -483,6 +494,7 @@ textarea, .preview {
 }
 
 .greeting {
+  margin-top: 50px;
   font-family: 'Leckerli One';
   color: var(--acc2);
 }
@@ -492,9 +504,10 @@ textarea, .preview {
   justify-content: space-between;
   cursor: pointer;
   background-color: var(--sb);
-  margin: 5px;
+  margin: 10px;
   border-radius: 5px;
   box-shadow: #0005 0 0 10px -5px;
+  overflow: clip;
   transition: scale ease 0.2s;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
@@ -510,7 +523,7 @@ textarea, .preview {
   text-decoration: none;
   align-items: center;
   display: flex;
-  padding: 10px;
+  padding: 20px;
   overflow: hidden;
 }
 
