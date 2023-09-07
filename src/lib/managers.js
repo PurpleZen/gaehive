@@ -93,7 +93,7 @@
     .from('managers')
     .update({ data: managers.value })
     .eq('id', 1)
-    getManagers()
+    refresh()
   }
     
   export { getManagers, newManager, move, remove, hostnext, next, list, managers, level, loading, popup }
