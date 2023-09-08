@@ -34,7 +34,6 @@
     <button class='login' @click="logOut()" v-if="this.username">Logout</button>
     <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">feedback</a>
   </div>
-
   <div class="page">
   <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
   <div v-if="scratchdb == 'offline'" class="popup">
@@ -52,7 +51,7 @@
       You've been logged out. Would you like to log back in?
       <div class="popupbuttons">
         <button @click="logIn()" class="button">Yes</button>
-        <button @click="this.$router.push({ query: null }); this.loggedout = null" class="button">No</button>
+        <button @click="this.loggedout = null" class="button">No</button>
       </div>
     </div>
   </div>
@@ -94,7 +93,7 @@
     
     created() {
       if (!document.cookie && localStorage["user"]) {
-        window.location.search = "logout"
+        this.loggedout = true
         localStorage.removeItem("user")
       }
       
@@ -105,9 +104,6 @@
     },
     
     async mounted() {
-      if (window.location.search == "?logout") {
-        this.loggedout = true
-      }
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
