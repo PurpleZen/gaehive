@@ -5,34 +5,34 @@
   <div v-if="popup == 'move'" class="popup">
     <div class="title">Are you sure you want to make {{ this.user }} host?</div>
     <div class="popupbody">
-      <div>
+      <div class="popupbuttons">
         <button @click="this.move(this.user, this.host)" class="button">Yes</button>
         <button @click="this.popup = null" class="button">No</button>
+        <div v-if="loading == true" class="loader"></div>
       </div>
-      <div v-if="loading == true" class="loader"></div>
     </div>
   </div>
 
   <div v-if="popup == 'remove'" class="popup">
     <div class="title">Are you sure you want to remove {{ this.user }}?</div>
     <div class="popupbody">
-      <div>
+      <div class="popupbuttons">
         <button @click="this.remove(this.user)" class="button">Yes</button>
         <button @click="this.popup = null" class="button">No</button>
+        <div v-if="loading == true" class="loader"></div>
       </div>
-      <div v-if="loading == true" class="loader"></div>
     </div>
   </div>
 
   <div v-if="popup == 'add'" class="popup">
     <div class="title">Add a new manager</div>
     <div class="popupbody">
-      <input id="new" @keyup.enter="newManager()">
-      <div>
+      <input id="new" placeholder="username" @keyup.enter="newManager()">
+      <div class="popupbuttons">
         <button @click="newManager()" class="button">OK</button>
         <button @click="this.popup = null" class="button">Cancel</button>
+        <div v-if="loading == true" class="loader"></div>
       </div>
-      <div v-if="loading == true" class="loader"></div>
     </div>
   </div>
 

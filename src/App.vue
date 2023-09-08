@@ -36,7 +36,26 @@
   </div>
 
   <div class="page">
-  <div v-if="scratchdb == 'offline'" class="notice">Notice: ScratchDB is Offline, so some website features may not work</div>
+  <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
+  <div v-if="scratchdb == 'offline'" class="popup">
+    <div class="title">ScratchDB is offline!</div>
+    <div class="popupbody">
+      Some Website features like logging in and adding new writers and managers will not work.
+      <div class="popupbuttons">
+        <button @click="scratchdb = 'offline'" class="button">OK</button>
+      </div>
+    </div>
+  </div>
+  <div v-if="loggedout == true" class="popup">
+    <div class="title">Logged out</div>
+    <div class="popupbody">
+      You've been logged out. Would you like to log back in?
+      <div class="popupbuttons">
+        <button @click="logIn()" class="button">Yes</button>
+        <button @click="this.$router.push({ query: null }); this.loggedout = null" class="button">No</button>
+      </div>
+    </div>
+  </div>
   <router-view @load="loading = !loading" @error="error = !error"/>
   </div>
   
@@ -74,17 +93,21 @@
     }, 
     
     created() {
-      if (!document.cookie) {
+      if (!document.cookie && localStorage["user"]) {
+        window.location.search = "logout"
         localStorage.removeItem("user")
       }
       
-      if (window.location.search.slice(6)) {
+      if (window.location.search.slice(1,5) == "user") {
         localStorage.setItem("user", atob(decodeURIComponent(window.location.search.slice(6))))
-        window.location.search = ""
+        this.$router.push({ query: null })
       }
     },
     
     async mounted() {
+      if (window.location.search == "?logout") {
+        this.loggedout = true
+      }
       this.theme = localStorage["theme"];
 
       if (localStorage['user']) {
@@ -117,7 +140,8 @@
         error: false,
         active: false,
         location: null,
-        scratchdb: "Loading"
+        scratchdb: "Loading",
+        loggedout: null
   	  }
     }
   }
@@ -293,8 +317,14 @@
 }
 
 .popupbody {
-  display: flex;
+  display: grid;
+  margin: 0 10px;
   align-items: center;
+  justify-content: center;
+}
+
+.popupbuttons {
+  display: flex;
   justify-content: center;
 }
 
@@ -938,9 +968,6 @@ textarea, .preview {
   }
   .post img {
     max-width: 200px;
-  }
-  .popupbody input {
-    width: 100px;
   }
 }
 </style>
