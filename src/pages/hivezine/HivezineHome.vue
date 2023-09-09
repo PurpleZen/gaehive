@@ -27,7 +27,7 @@
       <div class="title">
         <div class='username'>
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
-          <span><a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a><br>{{ item.date }}</span>
+          <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
            </div>
         <router-link :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
       </div>
@@ -49,8 +49,8 @@
         <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😿<span>{{ item.sad }}</span></div>
         <div v-if="contains(item.sadby)" class="reactbuttonactive">😿<span>{{ item.sad }}</span></div>
 
-        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉<span>{{ item.yay }}</span></div>
-        <div v-if="contains(item.yayby)" class="reactbuttonactive">🎉<span>{{ item.yay }}</span></div>
+        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🌈<span>{{ item.yay }}</span></div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive">🌈<span>{{ item.yay }}</span></div>
 
         <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
         <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>

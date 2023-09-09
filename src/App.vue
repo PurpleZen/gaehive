@@ -3,9 +3,7 @@
     <template v-slot:title="{ content }"></template>
   </metainfo>
   <div class="sidebar">
-    <div v-if="loading" class="loader">Loading...</div>
-    <div v-if="error" class="error"><div class="material-symbols-rounded">error</div><span>Uh oh! Looks like something went wrong.</span><div @click="error = !error" class="button">Ok</div></div>
-    <div v-if="!loading && !error" class="loader-placehold"></div>
+    <div class="block-break"></div>
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
     <img v-if="!username" src="/favicon.ico">
@@ -28,11 +26,12 @@
     
     <router-link v-if="location !== 'settings' || active" class='sidebutton' to="/settings">Settings</router-link>
     <router-link v-if="location == 'settings' && !active" class='sidebuttonactive' to="/settings">Settings</router-link>
+
+    <a v-if="this.username" class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
       
-    <div class="loader-placehold"></div>
+    <div class="block-break"></div>
     <button class='login' @click="logIn()" v-if="!this.username">Login</button>
     <button class='login' @click="logOut()" v-if="this.username">Logout</button>
-    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank"><div class="material-symbols-rounded">feedback</div></a>
   </div>
   <div class="page">
   <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
@@ -350,6 +349,11 @@
   border-radius: 0 0 20px 20px;
   box-shadow: #0005 0 0 10px;
   color: var(--btxt);
+}
+
+.edited {
+  font-style: italic;
+  font-size: smaller;
 }
 
 html, body {
@@ -708,8 +712,8 @@ textarea, .preview {
 }
 
 .reactions {
-  border-top: var(--brk) 2px dotted;
-  margin: 10px;
+  border-top: 1px solid #8fc89b66;
+  padding: 10px;
   display: flex;
   align-items: center;
 }
@@ -724,7 +728,6 @@ textarea, .preview {
   font-weight: bolder;
   text-decoration: none;
   cursor: pointer;
-  margin-top: 5px;
   border-radius: 20px;
 }
 
@@ -904,12 +907,8 @@ textarea, .preview {
   'opsz' 48
 }
 
-.loader-placehold {
-  width: 48px; 
+.block-break {
   height: 48px; 
-  border: 7px transparent solid;
-  display: inline-block;
-  box-sizing: border-box;
 }
 
 .break {
