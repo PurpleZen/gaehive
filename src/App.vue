@@ -32,7 +32,7 @@
     <div class="loader-placehold"></div>
     <button class='login' @click="logIn()" v-if="!this.username">Login</button>
     <button class='login' @click="logOut()" v-if="this.username">Logout</button>
-    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">feedback</a>
+    <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank"><div class="material-symbols-rounded">feedback</div></a>
   </div>
   <div class="page">
   <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div v-if="loggedout == true" class="popup">
-    <div class="title">Logged out</div>
+    <div class="title">Session Expired</div>
     <div class="popupbody">
       You've been logged out. Would you like to log back in?
       <div class="popupbuttons">
@@ -454,9 +454,9 @@ textarea, .preview {
   color: var(--btxt);
   font-family: inherit;
   font-size: inherit;
-  padding: 2px 11px;
+  padding: 5px 11px;
   margin-bottom: 5px;
-  border-radius: 10px;
+  border-radius: 100px;
   width: fit-content;
   text-decoration: none;
   cursor: pointer;
@@ -468,7 +468,7 @@ textarea, .preview {
 }
 
 .feedback {
-  font-size: small;
+  display: flex;
 }
   
 .credits {
@@ -479,6 +479,7 @@ textarea, .preview {
 
 .page {
   width: 100%;
+  padding: 0 20px 20px 20px;
   display: grid;
   overflow: scroll;
   position: relative;
@@ -783,7 +784,8 @@ textarea, .preview {
   text-align: center;
 }
 
-.button {
+.button, button {
+  width: fit-content;
   display: inline-block;
   background-color: var(--acc);
   color: var(--btxt) !important;
@@ -794,13 +796,11 @@ textarea, .preview {
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
-  margin: 2px;
-  margin-top: 5px;
-  border-radius: 10px;
-}
+  margin: 5px 0;
+  border-radius: 100px;}
 
-.button:hover, .button:focus {
-  outline: var(--sb) solid 2px;
+.button:hover, .button:focus, button:hover, button:focus {
+  outline: var(--bg) solid 2px;
 }
 
 .promptButton {
