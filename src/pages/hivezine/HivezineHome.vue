@@ -95,6 +95,11 @@
       }
     },
     mounted() {
+      if (!this.$route.params.pg) {
+        getPosts(1)
+      } else {
+        getPosts(this.$route.params.pg[0])
+      }
       this.$watch(
         () => this.$route.params,
         () => {
@@ -106,7 +111,6 @@
         },
         { immediate: true }
       )
-      getPosts(1)
     },
 
     methods: {
