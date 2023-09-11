@@ -18,7 +18,7 @@ export const routes = [
       },
 
   {
-        path: '/hivezine',
+        path: '/hivezine/:pg*',
         component: HivezineHome,
       },
   

@@ -8,12 +8,12 @@ const loading = ref([])
 const posts = ref([])
 const username = ref()
 
-async function getPosts() {
+async function getPosts(page) {
   loading.value = true
   if (localStorage['user']) {
         username.value = JSON.parse(localStorage['user']).username
     }
-  const { data } = await supabase.from('hivezine').select('data').order("id", { ascending: false })
+  const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false }).range((page - 1) * 10, (page * 10) - 1)
   posts.value = ([])
   for ( var i = 0; i < data.length; i++){
     posts.value = posts.value.concat(data[i].data)

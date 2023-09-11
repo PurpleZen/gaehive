@@ -95,7 +95,18 @@
       }
     },
     mounted() {
-      getPosts()
+      this.$watch(
+        () => this.$route.params,
+        () => {
+          if (!this.$route.params.pg) {
+            getPosts(1)
+          } else {
+            getPosts(this.$route.params.pg[0])
+          }
+        },
+        { immediate: true }
+      )
+      getPosts(1)
     },
 
     methods: {

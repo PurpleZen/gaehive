@@ -65,7 +65,7 @@
     methods: {
       logIn() {
         window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/api/login') +
+      btoa('https://' + location.hostname + '/api/login?return=' + location.pathname) +
       '&name=the Gaehive website'
     },
       logOut() {
@@ -671,6 +671,7 @@ textarea, .preview {
 
 .post img {
   max-width: 300px;
+  border-radius: 5px;
 }
 
 .posts {
