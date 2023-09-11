@@ -95,10 +95,9 @@
         this.loggedout = true
         localStorage.removeItem("user")
       }
-      
       if (window.location.search.slice(1,5) == "user") {
         localStorage.setItem("user", atob(decodeURIComponent(window.location.search.slice(6))))
-        this.$router.push({ query: null })
+        this.$router.push({ path: location.pathname, query: null })
       }
     },
     
