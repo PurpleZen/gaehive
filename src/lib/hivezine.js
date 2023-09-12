@@ -7,6 +7,12 @@ import symbols from "@/data/symbols.json"
 const loading = ref([])
 const posts = ref([])
 const username = ref()
+const pages = ref()
+
+async function getPages() {
+  const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true }).not('data', 'is', null)
+  pages.value = Math.ceil(count / 10)
+}
 
 async function getPosts(page) {
   loading.value = true
@@ -27,6 +33,7 @@ async function getPosts(page) {
         }
       })
   loading.value = false
+  document.getElementsByClassName("page")[0].scrollTop = 0;
 }
 
-export { getPosts, posts, loading, username }
+export { getPosts, getPages, posts, loading, username, pages }

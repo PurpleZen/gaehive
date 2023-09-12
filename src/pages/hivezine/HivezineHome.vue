@@ -19,8 +19,13 @@
           </div>
         </div>
     <div class="break" style="margin-bottom: 0;"></div>
-    <div v-if="loading" class="loader">Loading...</div>
 
+    <div class="pages">
+      <div v-for="(item, index) in this.pages" :key="item">
+        <router-link :to="'/hivezine/' + (item)" :class="{reactbuttonactive: this.page == item, reactbutton: this.page !== item}">{{ item }}</router-link>
+      </div>
+    </div>
+    
     <div class="posts">
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in posts" :key="item.id">
@@ -58,15 +63,16 @@
     </div>
       </TransitionGroup>
     </div>
+    
     <div class="pages">
-    <div v-for="(item, index) in this.pages" :key="item">
-    <router-link :to="'/hivezine/' + (item + 1)" :class="{reactbuttonactive: this.page == item + 1, reactbutton: this.page !== item + 1}">{{ item + 1 }}</router-link>
-    </div>
+      <div v-for="(item, index) in this.pages" :key="item">
+        <router-link :to="'/hivezine/' + (item)" :class="{reactbuttonactive: this.page == item, reactbutton: this.page !== item}">{{ item }}</router-link>
+      </div>
     </div>
 </template>
 
 <script>
-  import { getPosts, posts, loading, username } from '@/lib/hivezine.js'
+  import { getPosts, getPages, posts, loading, username, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
 
   export default {
@@ -77,7 +83,7 @@
     },
     data() {
       return {
-        loading: null,
+        loading: loading,
         error: null,
         username: username,
         admin: null,
@@ -90,7 +96,7 @@
         symbcode: null,
         symbols: null,
         page: 1,
-        pages: null,
+        pages: pages,
         reacting: false
       }
     },
@@ -103,6 +109,9 @@
       this.$watch(
         () => this.$route.params,
         () => {
+          if (this.$route.params.pg) {
+            this.page = this.$route.params.pg[0]
+          }
           if (!this.$route.params.pg) {
             getPosts(1)
           } else {
@@ -111,6 +120,8 @@
         },
         { immediate: true }
       )
+
+      getPages()
     },
 
     methods: {

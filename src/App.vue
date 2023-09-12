@@ -744,6 +744,7 @@ textarea, .preview {
 .pages {
   display: flex;
   font-family: serif;
+  height: fit-content;
   overflow: scroll;
   max-width: 90%;
   padding-bottom: 15px;
