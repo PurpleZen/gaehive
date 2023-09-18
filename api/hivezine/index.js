@@ -28,11 +28,10 @@ app.get('/api/hivezine', (req, res) => {
     for ( var i = 0; i < data.length; i++ ) {
       if (data[i].author.username == username) {
         break;
-      } else {
-        res.json({ error: "post by " + username + " not found" })
       }
     }
 
+    if (data[i].content) {
     const title = data[i].content;
     const user = data[i].author.username;
     const uid = data[i].author.id;
@@ -61,6 +60,9 @@ app.get('/api/hivezine', (req, res) => {
       user: user, uid: uid, date: date, title: title, post: post, pid: id
     }])
   })
+  } else {
+    res.json({error: "post not found"})
+  }
   })
 });
 
