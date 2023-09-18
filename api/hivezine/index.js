@@ -28,6 +28,8 @@ app.get('/api/hivezine', (req, res) => {
     for ( var i = 0; i < data.length; i++ ) {
       if (data[i].author.username == username) {
         break;
+      } else {
+        res.json({ error: "post by " + username + " not found" })
       }
     }
 
