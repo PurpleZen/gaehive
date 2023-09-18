@@ -25,17 +25,16 @@ app.get('/api/hivezine', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    for ( var i = 1; i < data.length; i++ ) {
+    for ( var i = 0; i < data.length; i++ ) {
       if (data[i].author.username == user) {
-        const index == i
         break;
       }
     }
 
-    const title = data[index].content;
-    const user = data[index].author.username;
-    const uid = data[index].author.id;
-    const id = data[index].id;
+    const title = data[i].content;
+    const user = data[i].author.username;
+    const uid = data[i].author.id;
+    const id = data[i].id;
 
     fetch(
     `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,
