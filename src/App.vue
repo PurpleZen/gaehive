@@ -229,10 +229,13 @@
 .hz-enter-active {
   transition: all 0.5s ease;
 }
+.hz-leave-active {
+  transition: all 0.1s ease;
+}
 .hz-enter-from,
 .hz-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  
 }
 
 .mng-move,
@@ -258,6 +261,42 @@
   opacity: 0;
 }
 
+
+.currentpage, .nextpage {
+  padding: 10px 5px;
+  width: 10px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+  
+.currentpage {
+  background-color: var(--acc) !important;
+  color: var(--btxt) !important;
+}
+
+.nextpage {
+  background-color: var(--sb);
+  color: var(--txt);
+}
+
+.currentpage:last-child, .nextpage:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.currentpage:first-child, .nextpage:first-child {
+  border-radius: 5px 0 0 5px;
+}
+  
+.nextpage:hover {
+  background-color: #8fc89b66;
+  color: var(--txt) !important;
+}
+
+.currentpage:hover {
+  background-color: #8fc89b66;
+  color: var(--btxt) !important;
+}
 
 .managers {
   min-width: 70%;
@@ -360,6 +399,7 @@ html, body {
   background-color: var(--bg);
   margin: 0;
   font-family: 'Manrope';
+  overflow: auto;
   display: flex;
   height: 100vh;
   width: 100vw;
@@ -385,8 +425,6 @@ textarea, .preview {
 .sidebar {
   min-width: 20%;
   background-color: var(--sb);
-  border-image: linear-gradient(#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
-  border-left: solid 10px;
   padding: 30px;
   flex-shrink: 0;
   display: grid;
@@ -657,11 +695,10 @@ textarea, .preview {
   
 .post {
   display: grid;
-  resize: none;
-  outline: none;
+  height: fit-content;
   border-radius: 5px;
-  border: none;
-  margin-top: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   scrollbar-width: none;
   color: var(--txt);
   font-family: 'Manrope';
@@ -674,6 +711,8 @@ textarea, .preview {
 }
 
 .posts {
+  display: grid;
+  align-content: center;
   width: 100%;
 }
 
@@ -742,13 +781,10 @@ textarea, .preview {
 }
 
 .pages {
+  background-color: var(--sb);
   display: flex;
-  font-family: serif;
   height: fit-content;
-  overflow: scroll;
-  max-width: 90%;
-  padding-bottom: 15px;
-
+  border-radius: 5px;
 }
 
 .reactbutton:hover {
@@ -925,7 +961,7 @@ textarea, .preview {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   html, body {
     display: grid;
   }
@@ -933,10 +969,7 @@ textarea, .preview {
     width: auto;
   }
   .sidebar {
-    height: auto;
-    border-image: linear-gradient(90deg,#ef5350,#ffb74d,#fdd835,#9ccc65,#4fc3f7,#ba68c8) 1;
-    border-left: none;
-    border-top: solid 10px;
+    height: fit-content;
   }
   .page {
     overflow: initial;
@@ -964,6 +997,9 @@ textarea, .preview {
   }
   .post img {
     max-width: 200px;
+  }
+  .block-break {
+    height: 5px;
   }
 }
 </style>

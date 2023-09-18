@@ -6,6 +6,7 @@ import symbols from "@/data/symbols.json"
 
 const loading = ref([])
 const posts = ref([])
+const post = ref([])
 const username = ref()
 const pages = ref()
 
@@ -15,6 +16,9 @@ async function getPages() {
 }
 
 async function getPosts(page) {
+  document.getElementsByClassName("page")[0].scrollTop = 0;
+  document.body.scrollTop = 0;
+  document.title = 'Gaehive | Hivezine | Page ' + page
   loading.value = true
   if (localStorage['user']) {
         username.value = JSON.parse(localStorage['user']).username
@@ -33,7 +37,21 @@ async function getPosts(page) {
         }
       })
   loading.value = false
-  document.getElementsByClassName("page")[0].scrollTop = 0;
 }
 
-export { getPosts, getPages, posts, loading, username, pages }
+async function getPost(id) {
+  post.value = ([])
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  post.value = data[0].data
+  symbcode.forEach(string => {
+    var is = symbcode.indexOf(string)
+    for ( var i = 0; i < post.value.length; i++){
+      let regex = new RegExp(string, "g")
+      post.value[i].title = post.value[i].title.replace(regex, symbols[is]);
+      post.value[i].post = post.value[i].post.replace(regex, symbols[is]);
+        }
+      })
+  document.title = "Gaehive | Hivezine | " + post.value[0].title
+}
+
+export { getPosts, getPost, getPages, posts, post, loading, username, pages }

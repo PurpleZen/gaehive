@@ -8,7 +8,7 @@
   export default {
     created() {
       useMeta({
-        title: 'The Gaehive | 404'
+        title: 'Gaehive | 404'
       });
     }
   }

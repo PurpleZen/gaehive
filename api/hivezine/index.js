@@ -15,8 +15,9 @@ app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
 app.get('/api/hivezine', (req, res) => {
+  const user = req.query.username
   fetch(
-    `https://api.scratch.mit.edu/studios/33586934/comments?limit=1`,
+    `https://api.scratch.mit.edu/studios/33586934/comments?limit=5`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
@@ -24,10 +25,17 @@ app.get('/api/hivezine', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    const title = data[0].content;
-    const user = data[0].author.username;
-    const uid = data[0].author.id;
-    const id = data[0].id;
+    for ( var i = 1; i < data.length; i++ ) {
+      if data[i].author.username == user {
+        const index == i
+        break;
+      }
+    }
+
+    const title = data[index].content;
+    const user = data[index].author.username;
+    const uid = data[index].author.id;
+    const id = data[index].id;
 
     fetch(
     `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,

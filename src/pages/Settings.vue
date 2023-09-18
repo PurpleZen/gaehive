@@ -17,7 +17,7 @@
   export default {
     created() {
     useMeta({
-      title: 'The Gaehive | Settings'
+      title: 'Gaehive | Settings'
     })
   },
     

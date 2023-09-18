@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div id="text" class="queue">
-        <h1 v-if="!username">hello, welcome to the gaehive website.</h1>
+        <h1 class="greeting">The Gaehive Website</h1>
     
         <h3>Welome to the official Gaehive website! This website was built by <a href="https://scratch.mit.edu/users/LegoManiac04/">LegoManiac04</a> for the Scratch Studio known as the Gaehive. Here, you can find useful links, as well as some useful and fun tools, like the Hivezine and the host queue!</h3>
         <span><i>To follow Scratch Community Guidelines, all "user-generated" content on this site is fetched and stored from Scratch comments. Users cannot generate any content on this website. For more information, please check out <router-link to="/docs/how-we-follow-guidelines">this page</router-link>.</i></span>
@@ -19,7 +19,7 @@
   export default {
     created() {
       useMeta({
-        title: 'The Gaehive | Home'
+        title: 'Gaehive | Home'
       });
     }
   }

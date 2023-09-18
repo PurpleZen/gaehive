@@ -84,7 +84,7 @@
 export default {  
   created() {
     useMeta({
-      title: 'The Gaehive | Managers'
+      title: 'Gaehive | Managers'
     })
   },
 
