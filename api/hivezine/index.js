@@ -26,7 +26,7 @@ app.get('/api/hivezine', (req, res) => {
   ).then((response)=>{return response.json();}).then(data=>{
 
     for ( var i = 1; i < data.length; i++ ) {
-      if data[i].author.username == user {
+      if (data[i].author.username == user) {
         const index == i
         break;
       }
