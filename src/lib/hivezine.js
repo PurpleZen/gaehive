@@ -21,8 +21,8 @@ async function getPosts(page) {
   document.title = 'Gaehive | Hivezine | Page ' + page
   loading.value = true
   if (localStorage['user']) {
-        username.value = JSON.parse(localStorage['user']).username
-    }
+    username.value = JSON.parse(localStorage['user']).username
+  }
   const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false }).range((page - 1) * 10, (page * 10) - 1)
   posts.value = ([])
   for ( var i = 0; i < data.length; i++){
@@ -41,6 +41,9 @@ async function getPosts(page) {
 
 async function getPost(id) {
   post.value = ([])
+  if (localStorage['user']) {
+    username.value = JSON.parse(localStorage['user']).username
+  }
   const { data } = await supabase.from('hivezine').select('data').eq("id", id)
   post.value = data[0].data
   symbcode.forEach(string => {
