@@ -8,7 +8,7 @@
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
     <img v-if="!username" src="/favicon.ico">
     <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-    <h2 @click.right="this.secret = true" v-if="!username">Hello,<br>Freind</h2>
+    <h2 @click.right="this.secret = true" v-if="!username">Welcome</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
@@ -30,8 +30,8 @@
     <a v-if="this.username" class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
       
     <div class="block-break"></div>
-    <button class='login' @click="logIn()" v-if="!this.username">Login</button>
-    <button class='login' @click="logOut()" v-if="this.username">Logout</button>
+    <button class='login' @click="logIn()" v-if="!this.username">Sign in <div class="material-symbols-rounded">login</div></button>
+    <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
   </div>
   <div class="page">
   <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
@@ -40,7 +40,7 @@
     <div class="popupbody">
       Some Website features like logging in and adding new writers and managers will not work.
       <div class="popupbuttons">
-        <button @click="scratchdb = 'offline'" class="button">OK</button>
+        <button @click="scratchdb = 'online'" class="button">OK</button>
       </div>
     </div>
   </div>
@@ -143,12 +143,14 @@
 
 <style>
 :root {
-  --bg: #f6b93c;
+  --bg: #fc3;
   --sb: oldlace;
   --acc: #518d49;
   --acc2: #483248;
+  --acclt: #8fc89b66;
   --brk: #0006;
   --txt: #444;
+  --txtstr: #000;
   --btxt: #fafafa;
   --slnk: #676700;
   --slnkh: #484800;
@@ -163,8 +165,10 @@
   --sb: #483232;
   --acc: #e38735;
   --acc2: #d88235;
+  --acclt: #c88f8f66;
   --brk: #ffb30094;
   --txt: #E7B148;
+  --txtstr: #fff;
   --btxt: black;
   --slnk: #F8DE7E;
   --slnkh: #C6B164;
@@ -289,12 +293,12 @@
 }
   
 .nextpage:hover {
-  background-color: #8fc89b66;
+  background-color: var(--acclt);
   color: var(--txt) !important;
 }
 
 .currentpage:hover {
-  background-color: #8fc89b66;
+  background-color: var(--acclt);
   color: var(--btxt) !important;
 }
 
@@ -424,33 +428,29 @@ textarea, .preview {
 
 .sidebar {
   min-width: 20%;
-  background-color: var(--sb);
   padding: 30px;
   flex-shrink: 0;
   display: grid;
   align-content: center;
-  box-shadow: #0005 0 0 10px;
   transition: all ease 0.2s;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 .sidebar h2 {
   font-family: 'Leckerli One';
   color: var(--acc);
-  margin-left: 8px;
+  margin: 0 0 0 8px;
 }
 
 .hello {
   display: flex;
   align-items: center;
+  margin: 0 0 10px 5px;
 }
 
 .hello img {
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  border: var(--bg) solid 3px;
-  background-color: var(--sb);
 }
 
 .sidebutton {
@@ -472,6 +472,7 @@ textarea, .preview {
 .sidebuttonactive {
   display: inline-block;
   background-color: var(--acc);
+  box-shadow: #0008 0 0 10px -5px;
   color: var(--btxt);
   text-decoration: none;
   border: none;
@@ -487,16 +488,19 @@ textarea, .preview {
 
 .sidebutton:hover {
   padding-left: 20px;
-  background-color: #8fc89b66;
+  background-color: var(--acclt);
+  color: var(--txtstr);
 }
 
-.login, .feedback{
+.login {
+  display: flex;
   background-color: var(--acc);
   color: var(--btxt);
   font-family: inherit;
-  font-size: inherit;
+  font-size: 12px;
   padding: 5px 11px;
-  margin-bottom: 5px;
+  margin-left: 5px;
+  align-items: center;
   border-radius: 100px;
   width: fit-content;
   text-decoration: none;
@@ -504,15 +508,17 @@ textarea, .preview {
   border: none;
 }
 
-.login:hover, .feedback:hover {
-  outline: var(--bg) solid 2px;
+.login .material-symbols-rounded {
+  font-size: inherit !important;
+  margin-left: 5px;
 }
 
-.feedback {
-  display: flex;
+.login:hover {
+  outline: var(--bg) solid 2px;
 }
   
 .credits {
+  text-align: center;
   font-family: 'Manrope';
   font-size: 12px;
   margin-top: 30px;
@@ -703,6 +709,7 @@ textarea, .preview {
   color: var(--txt);
   font-family: 'Manrope';
   background-color: var(--sb);
+  box-shadow: #0008 0 0 10px -5px;
 }
 
 .post img {
@@ -751,7 +758,7 @@ textarea, .preview {
 }
 
 .reactions {
-  border-top: 1px solid #8fc89b66;
+  border-top: 1px solid var(--acclt);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -759,7 +766,7 @@ textarea, .preview {
 
 .reactbutton, .reactbuttonactive {
   position: relative;
-  background-color: #8fc89b66;
+  background-color: var(--acclt);
   padding: 8px 10px 10px 10px;
   margin-right: 5px;
   display: inline-block;
