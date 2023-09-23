@@ -427,12 +427,14 @@ textarea, .preview {
 }
 
 .sidebar {
+  background-color: var(--sb);
   min-width: 20%;
   padding: 30px;
   flex-shrink: 0;
   display: grid;
   align-content: center;
   transition: all ease 0.2s;
+  
 }
 
 .sidebar h2 {
@@ -472,7 +474,6 @@ textarea, .preview {
 .sidebuttonactive {
   display: inline-block;
   background-color: var(--acc);
-  box-shadow: #0008 0 0 10px -5px;
   color: var(--btxt);
   text-decoration: none;
   border: none;
@@ -580,14 +581,12 @@ textarea, .preview {
   background-color: var(--sb);
   margin: 10px;
   border-radius: 5px;
-  box-shadow: #0005 0 0 10px -5px;
   overflow: clip;
   transition: scale ease 0.2s;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 .users:hover {
-  box-shadow: #0006 0 0 10px;
+  outline: 3px solid var(--acclt);
   scale: 1.01;
 }
 
@@ -709,7 +708,6 @@ textarea, .preview {
   color: var(--txt);
   font-family: 'Manrope';
   background-color: var(--sb);
-  box-shadow: #0008 0 0 10px -5px;
 }
 
 .post img {
