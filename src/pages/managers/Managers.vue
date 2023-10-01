@@ -46,14 +46,14 @@
   </div>
   </TransitionGroup>
   
-        <h1  class="greeting">Our Managers</h1>
+        <h1 class="greeting">Our Managers</h1>
         <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Managers</button>
   
         <div class="managers">
         <TransitionGroup name="mng">
         <div v-for="(user, index) in managers" :key="user.id">
           <div class="users">
-            <a :href="'https://scratch.mit.edu/users/' + user.name" >
+            <a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
             <div class="crownimg">
               <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
               <img v-if="index == 0" class="crown" src="/crown.png">

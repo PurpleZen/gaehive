@@ -145,9 +145,9 @@
 :root {
   --bg: #fc3;
   --sb: oldlace;
-  --acc: #518d49;
+  --acc: #e58c3f;
   --acc2: #483248;
-  --acclt: #8fc89b66;
+  --acclt: #c8a28f66;
   --brk: #0006;
   --txt: #444;
   --txtstr: #000;
@@ -156,25 +156,25 @@
   --slnkh: #484800;
   --plnk: #573c57;
   --plnkh: #392839;
-  --imp: #9f4928;
+  --imp: #d22727;
   --brkb: 4px dotted var(--brk);
 }
 
 [data-theme="dark"] {
   --bg: #221f1b;
   --sb: #483232;
-  --acc: #e38735;
-  --acc2: #d88235;
+  --acc: #c16523;
+  --acc2: #fff;
   --acclt: #c88f8f66;
   --brk: #ffb30094;
   --txt: #E7B148;
   --txtstr: #fff;
-  --btxt: black;
+  --btxt: #fff;
   --slnk: #F8DE7E;
   --slnkh: #C6B164;
   --plnk: #FF9900;
   --plnkh: #CC7A00;
-  --imp: #fff;
+  --imp: #d22727;
 }
 
 [data-theme="2000s-blog"] {
@@ -439,8 +439,9 @@ textarea, .preview {
 
 .sidebar h2 {
   font-family: 'Leckerli One';
-  color: var(--acc);
+  color: var(--acc2);
   margin: 0 0 0 8px;
+  text-shadow: var(--acclt) 1.5px 1.5px;
 }
 
 .hello {
@@ -572,6 +573,7 @@ textarea, .preview {
   margin-top: 50px;
   font-family: 'Leckerli One';
   color: var(--acc2);
+  text-shadow: var(--acc) 2px 2px;
 }
 
 .users {
@@ -771,6 +773,7 @@ textarea, .preview {
   font-size: larger;
   font-weight: bolder;
   text-decoration: none;
+  text-shadow: #0005 0 1px 2px;
   cursor: pointer;
   border-radius: 20px;
 }
@@ -780,7 +783,7 @@ textarea, .preview {
 }  
 
 .reactbuttonactive {
-  color: var(--sb) !important;
+  color: var(--btxt) !important;
   background-color: var(--acc);
   cursor: default;
 }
@@ -794,7 +797,7 @@ textarea, .preview {
 
 .reactbutton:hover {
   background-color: var(--acc);
-  color: var(--sb) !important;
+  color: var(--btxt) !important;
 }
 
 .pinnedPost {
