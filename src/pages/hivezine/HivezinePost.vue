@@ -72,7 +72,7 @@
         }
       },
       secret(post) {
-        if (post.includes("🐸")) {
+        if (post.includes(":frog:")) {
           return true
         }
       }
