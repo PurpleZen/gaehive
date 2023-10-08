@@ -31,7 +31,7 @@
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
            </div>
-        <router-link :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
+        <router-link class="titlename" :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
       </div>
       <div class='content' v-html=item.post>
       </div>

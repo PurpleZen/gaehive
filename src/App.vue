@@ -3,6 +3,7 @@
     <template v-slot:title="{ content }"></template>
   </metainfo>
   <div class="sidebar">
+    <span class="mobilemenu">Menu</span>
     <div class="block-break"></div>
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
@@ -24,8 +25,7 @@
     
     <router-link class='sidebutton' to="/resources">Resources</router-link>
     
-    <router-link v-if="location !== 'settings' || active" class='sidebutton' to="/settings">Settings</router-link>
-    <router-link v-if="location == 'settings' && !active" class='sidebuttonactive' to="/settings">Settings</router-link>
+    <a class='sidebutton' @click="this.popup = 'settings'">Settings</a>
 
     <a v-if="this.username" class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
       
@@ -34,27 +34,48 @@
     <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
   </div>
   <div class="page">
-  <div v-if="scratchdb == 'offline' || loggedout" class="popupbg"></div>
-  <div v-if="scratchdb == 'offline'" class="popup">
+
+  <TransitionGroup name="popup">
+  <div v-if="popup" class="popupbg" :style="{ backdropFilter: blur }"></div>
+    
+  <div v-if="popup == 'scratchdb'" class="popup">
     <div class="title">ScratchDB is offline!</div>
     <div class="popupbody">
       Some Website features like logging in and adding new writers and managers will not work.
       <div class="popupbuttons">
-        <button @click="scratchdb = 'online'" class="button">OK</button>
+        <button @click="this.popup = null" class="button">OK</button>
       </div>
     </div>
   </div>
-  <div v-if="loggedout == true" class="popup">
+    
+  <div v-if="popup == 'settings'" class="popup">
+    <div class="title">Settings</div>
+    <div class="popupbody">
+      <button @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
+    <button @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
+    <button @click="changeTheme('2000s-blog')" v-if="this.theme !== '2000s-blog'">reset internet to 2004</button>
+    <div>
+      <label for="checkbox">Blur</label>
+      <input id="checkbox" name="checkbox" type="checkbox" v-model="toggle" true-value="1" false-value="0" @change="setBlur(toggle)" :checked="blur == 'blur(1px)'">
+    </div>
+      <div class="popupbuttons">
+        <button @click="this.popup = null" class="button">Close</button>
+      </div>
+    </div>
+  </div>
+    
+  <div v-if="popup == 'expired'" class="popup">
     <div class="title">Session Expired</div>
     <div class="popupbody">
       You've been logged out. Would you like to log back in?
       <div class="popupbuttons">
         <button @click="logIn()" class="button">Yes</button>
-        <button @click="this.loggedout = null" class="button">No</button>
+        <button @click="this.popup = null" class="button">No</button>
       </div>
     </div>
   </div>
-  <router-view @load="loading = !loading" @error="error = !error"/>
+  </TransitionGroup>
+  <router-view />
   </div>
   
 </template>
@@ -78,6 +99,10 @@
         document.documentElement.setAttribute('data-theme', localStorage["theme"]);
         this.theme = localStorage["theme"];
       },
+      setBlur(set) {
+        this.blur = "blur(" + set + "px)"
+        localStorage.setItem("blur", set);
+      },
       color() {
        document.querySelector(":root").style.setProperty("--acc", document.getElementById("color").value)
         document.querySelector(":root").style.setProperty("--btxt", document.getElementById("buttoncolor").value)
@@ -92,12 +117,15 @@
     
     created() {
       if (!document.cookie && localStorage["user"]) {
-        this.loggedout = true
+        this.popup = "expired"
         localStorage.removeItem("user")
       }
       if (window.location.search.slice(1,5) == "user") {
         localStorage.setItem("user", atob(decodeURIComponent(window.location.search.slice(6))))
         this.$router.push({ path: location.pathname, query: null })
+      }
+      if (localStorage["blur"] == 0) {
+        this.blur = "blur(0)"
       }
     },
     
@@ -116,9 +144,8 @@
     
       try {
         const userdata = await userinfo.json();
-        this.scratchdb = "online"
       } catch(err) {
-        this.scratchdb = "offline"
+        this.popup = "scratchdb"
       }
       
     },
@@ -134,8 +161,8 @@
         error: false,
         active: false,
         location: null,
-        scratchdb: "Loading",
-        loggedout: null
+        popup: null,
+        blur: "blur(1px)"
   	  }
     }
   }
@@ -268,7 +295,6 @@
 
 .currentpage, .nextpage {
   padding: 10px 5px;
-  width: 10px;
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -333,7 +359,7 @@
   
 
 .popupbg {
-  position: absolute;
+  position: fixed;
   background-color: #0005;
   backdrop-filter: blur(1px);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.1' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
@@ -350,7 +376,6 @@
   align-self: center;
   border-radius: 5px;
   z-index: 1;
-  top: 40%;
 }
 
 .popupbody {
@@ -434,7 +459,7 @@ textarea, .preview {
   display: grid;
   align-content: center;
   transition: all ease 0.2s;
-  
+  z-index: 2;
 }
 
 .sidebar h2 {
@@ -442,6 +467,10 @@ textarea, .preview {
   color: var(--acc2);
   margin: 0 0 0 8px;
   text-shadow: var(--acclt) 1.5px 1.5px;
+}
+
+.mobilemenu {
+  display: none;
 }
 
 .hello {
@@ -531,7 +560,6 @@ textarea, .preview {
   padding: 0 20px 20px 20px;
   display: grid;
   overflow: scroll;
-  position: relative;
   justify-items: center;
 }
 
@@ -725,15 +753,21 @@ textarea, .preview {
 
 .title {
   color: var(--txt);
-  font-size: larger;
   padding: 10px;
   display: grid;
 }
 
 .title a {
   justify-self: center;
-  color: var(--txt) !important;
+  color: var(--txt);
   text-decoration: none;
+}
+
+.titlename {
+  font-family: Leckerli One;
+  font-size: larger;
+  color: var(--acc2) !important;
+  text-shadow: var(--acclt) 1.5px 1.5px;
 }
 
 .title a:hover {
@@ -970,17 +1004,63 @@ textarea, .preview {
 }
 
 @media screen and (max-width: 900px) {
-  html, body {
-    display: grid;
-  }
-  .sidebar, .page {
-    width: auto;
-  }
-  .sidebar {
-    height: fit-content;
-  }
   .page {
     overflow: initial;
+    transition: none;
+    padding: 10px;
+    padding-left: 40px;
+  }
+  .sidebar {
+    width: 30px;
+    min-width: 0;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: clip;
+    position: absolute;
+    justify-content: center;
+  }
+  .sidebar div, .sidebar a, .sidebar button {
+    visibility: hidden;
+    transition: visibility 0s ease;
+    transition-delay: 0.01s;
+  }
+  .sidebar:hover div, .sidebar:hover a, .sidebar:hover button {
+    visibility: initial;
+  }
+  .sidebar:hover .mobilemenu {
+    justify-self: left;
+  }
+  .sidebar:hover {
+    width: 70%;
+    box-shadow: #0005 0 0 20px;
+  }
+  .mobilemenu {
+    display: block;
+    visibility: visible;
+    position: absolute;
+    rotate: -90deg;
+    align-self: center;
+    margin-left: -6.5px;
+  }
+  .popup {
+    background-color: var(--sb);
+    justify-self: baseline;
+    justify-content: center;
+    border-radius: 0;
+    width: 70%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    align-content: center;
+    display: grid;
+    box-shadow: #0005 0 0 20px;
+  }
+  .popupbg {
+    display: none;
   }
   .hostnext {
     display: grid;
