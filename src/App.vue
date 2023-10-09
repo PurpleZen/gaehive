@@ -4,6 +4,7 @@
   </metainfo>
   <div class="sidebar">
     <span class="mobilemenu">Menu</span>
+    <div v-if="users" class="birthday">🎂 Today is <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}'s</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span> Birthday!</div>
     <div class="block-break"></div>
     <div class="hello">
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
@@ -81,6 +82,7 @@
 </template>
 
 <script>
+  import { users, getBirthdays } from '@/lib/birthdays.js'
   import { useMeta } from 'vue-meta'
   export default {
     methods: {
@@ -127,6 +129,8 @@
       if (localStorage["blur"] == 0) {
         this.blur = "blur(0)"
       }
+
+      getBirthdays()
     },
     
     async mounted() {
@@ -162,7 +166,8 @@
         active: false,
         location: null,
         popup: null,
-        blur: "blur(1px)"
+        blur: "blur(1px)",
+        users: users
   	  }
     }
   }
@@ -293,6 +298,16 @@
 }
 
 
+.birthday {
+  font-size: small;
+  font-weight: bold;
+}
+
+.birthday a {
+  color: var(--acc2);
+  text-decoration: none;
+}
+  
 .currentpage, .nextpage {
   padding: 10px 5px;
   display: inline-block;
@@ -453,7 +468,7 @@ textarea, .preview {
 
 .sidebar {
   background-color: var(--sb);
-  min-width: 20%;
+  width: 20%;
   padding: 30px;
   flex-shrink: 0;
   display: grid;
@@ -464,6 +479,7 @@ textarea, .preview {
 
 .sidebar h2 {
   font-family: 'Leckerli One';
+  font-size: larger;
   color: var(--acc2);
   margin: 0 0 0 8px;
   text-shadow: var(--acclt) 1.5px 1.5px;
@@ -561,6 +577,7 @@ textarea, .preview {
   display: grid;
   overflow: scroll;
   justify-items: center;
+  position: relative;
 }
 
 .page h1 {
@@ -1010,15 +1027,21 @@ textarea, .preview {
     padding: 10px;
     padding-left: 40px;
   }
+  .greeting {
+    font-size: xx-large;
+  }
   .sidebar {
     width: 30px;
-    min-width: 0;
     height: 100vh;
     margin: 0;
     padding: 0;
     overflow: clip;
     position: absolute;
-    justify-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+  .sidebar h2 {
+    font-size: medium;
   }
   .sidebar div, .sidebar a, .sidebar button {
     visibility: hidden;
@@ -1035,13 +1058,26 @@ textarea, .preview {
     width: 70%;
     box-shadow: #0005 0 0 20px;
   }
+  .birthday {
+    padding: 10px;
+    height: 50px;
+  }
+  .hello {
+    display: block;
+  }
+  .sidebuttonactive {
+    padding-left: 15px;
+  }
+  .login {
+    margin-left: 0;
+  }
   .mobilemenu {
     display: block;
     visibility: visible;
     position: absolute;
     rotate: -90deg;
     align-self: center;
-    margin-left: -6.5px;
+    left: -5px;
   }
   .popup {
     background-color: var(--sb);
@@ -1085,9 +1121,6 @@ textarea, .preview {
   }
   .post img {
     max-width: 200px;
-  }
-  .block-break {
-    height: 5px;
   }
 }
 </style>
