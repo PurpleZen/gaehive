@@ -3,14 +3,18 @@
     <template v-slot:title="{ content }"></template>
   </metainfo>
   <div class="sidebar">
+    
     <span class="mobilemenu">Menu</span>
+    
     <div v-if="users" class="birthday">🎂 Today is <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}'s</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span> Birthday!</div>
+    
     <div class="block-break"></div>
+    
     <div class="hello">
-    <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
-    <img v-if="!username" src="/favicon.ico">
-    <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-    <h2 @click.right="this.secret = true" v-if="!username">Welcome</h2>
+      <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
+      <img v-if="!username" src="/favicon.ico">
+      <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
+      <h2 @click.right="this.secret = true" v-if="!username">Welcome</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
@@ -31,24 +35,17 @@
     <a v-if="this.username" class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
       
     <div class="block-break"></div>
+    
     <button class='login' @click="logIn()" v-if="!this.username">Sign in <div class="material-symbols-rounded">login</div></button>
     <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
   </div>
   <div class="page">
 
+  <!--popups-->
   <TransitionGroup name="popup">
   <div v-if="popup" class="popupbg" :style="{ backdropFilter: blur }"></div>
-    
-  <div v-if="popup == 'scratchdb'" class="popup">
-    <div class="title">ScratchDB is offline!</div>
-    <div class="popupbody">
-      Some Website features like logging in and adding new writers and managers will not work.
-      <div class="popupbuttons">
-        <button @click="this.popup = null" class="button">OK</button>
-      </div>
-    </div>
-  </div>
-    
+
+  <!--settings-->
   <div v-if="popup == 'settings'" class="popup">
     <div class="title">Settings</div>
     <div class="popupbody">
@@ -65,6 +62,18 @@
     </div>
   </div>
     
+  <!--scratchdb offline-->
+  <div v-if="popup == 'scratchdb'" class="popup">
+    <div class="title">ScratchDB is offline!</div>
+    <div class="popupbody">
+      Some Website features like logging in and adding new writers and managers will not work.
+      <div class="popupbuttons">
+        <button @click="this.popup = null" class="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!--session expired-->
   <div v-if="popup == 'expired'" class="popup">
     <div class="title">Session Expired</div>
     <div class="popupbody">
@@ -76,6 +85,7 @@
     </div>
   </div>
   </TransitionGroup>
+  <!--popups-->
   <router-view />
   </div>
   
@@ -813,6 +823,7 @@ textarea, .preview {
   padding: 10px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .reactbutton, .reactbuttonactive {
@@ -837,6 +848,10 @@ textarea, .preview {
   color: var(--btxt) !important;
   background-color: var(--acc);
   cursor: default;
+}
+
+.postoptions {
+  display: flex;
 }
 
 .pages {
@@ -906,7 +921,6 @@ textarea, .preview {
   display: flex;
   position: relative;
   width: 24px;
-  color: var(--txt) !important;
   text-decoration: none !important;
   cursor: pointer;
   padding: 5px 8px;
@@ -917,9 +931,13 @@ textarea, .preview {
 .promptButton#important:hover {
   background-color: var(--imp);
 }
+  
+.promptButton#important:hover .material-symbols-rounded {
+  color: var(--btxt);
+}
 
 .promptButton .material-symbols-rounded {
-  color: var(--btxt);
+  color: var(--txt);
   font-variation-settings:
   'FILL' 0,
   'wght' 400,

@@ -36,6 +36,7 @@
       <div class='content' v-html=item.post>
       </div>
       <div v-if=username class="reactions">
+        <div>
         <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">😻<span>{{ item.love }}</span></div>
         <div v-if="contains(item.loveby)" class="reactbuttonactive">😻<span>{{ item.love }}</span></div>
 
@@ -56,6 +57,7 @@
 
         <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
         <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
+      </div>
       </div>
     </div>
       </TransitionGroup>

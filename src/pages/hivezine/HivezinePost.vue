@@ -6,12 +6,14 @@
         <div class='username'>
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
+          
            </div>
         <router-link class="titlename" :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
       </div>
       <div class='content' v-html=item.post>
       </div>
-      <div v-if=username class="reactions">
+      <div class="reactions">
+      <div v-if=username>
         <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">😻<span>{{ item.love }}</span></div>
         <div v-if="contains(item.loveby)" class="reactbuttonactive">😻<span>{{ item.love }}</span></div>
 
@@ -32,6 +34,14 @@
 
         <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
         <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
+      </div>
+      <div class="postoptions">
+      <a :href="'https://scratch.mit.edu/studios/33586934/comments#comments-' + item.pid" class="promptButton" target="_blank"><div class="material-symbols-rounded">forum</div><span class="tooltiptext">View Source</span></a>
+          
+          <span @click="editPost()" v-if="item.user == username" class="promptButton"><div class="material-symbols-rounded">edit</div><span class="tooltiptext">Edit Post</span></span>
+          
+          <span @click="deletePost()" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">Delete Post</span></span>
+      </div>
       </div>
     </div>
       </TransitionGroup>
@@ -61,6 +71,7 @@
         reacting: false
       }
     },
+    
     created() {
       getPost(JSON.parse(this.$route.params.id) +1)
     },
