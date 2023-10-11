@@ -38,25 +38,25 @@
       <div v-if=username class="reactions">
         <div>
         <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">😻<span>{{ item.love }}</span></div>
-        <div v-if="contains(item.loveby)" class="reactbuttonactive">😻<span>{{ item.love }}</span></div>
+        <div v-if="contains(item.loveby)" class="reactbuttonactive" @click="removeReact('love', item.id)">😻<span>{{ item.love }}</span></div>
 
         <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">😺<span>{{ item.like }}</span></div>
-        <div v-if="contains(item.likeby)" class="reactbuttonactive">😺<span>{{ item.like }}</span></div>
+        <div v-if="contains(item.likeby)" class="reactbuttonactive" @click="removeReact('like', item.id)">😺<span>{{ item.like }}</span></div>
 
         <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😹<span>{{ item.laugh }}</span></div>
-        <div v-if="contains(item.laughby)" class="reactbuttonactive">😹<span>{{ item.laugh }}</span></div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive" @click="removeReact('laugh', item.id)">😹<span>{{ item.laugh }}</span></div>
 
         <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">🙀<span>{{ item.wow }}</span></div>
-        <div v-if="contains(item.wowby)" class="reactbuttonactive">🙀<span>{{ item.wow }}</span></div>
+        <div v-if="contains(item.wowby)" class="reactbuttonactive" @click="removeReact('wow', item.id)">🙀<span>{{ item.wow }}</span></div>
 
         <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😿<span>{{ item.sad }}</span></div>
-        <div v-if="contains(item.sadby)" class="reactbuttonactive">😿<span>{{ item.sad }}</span></div>
+        <div v-if="contains(item.sadby)" class="reactbuttonactive" @click="removeReact('sad', item.id)">😿<span>{{ item.sad }}</span></div>
 
         <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🌈<span>{{ item.yay }}</span></div>
-        <div v-if="contains(item.yayby)" class="reactbuttonactive">🌈<span>{{ item.yay }}</span></div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive" @click="removeReact('yay', item.id)">🌈<span>{{ item.yay }}</span></div>
 
         <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
-        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
+        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive" @click="removeReact('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
       </div>
       </div>
     </div>
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import { getPosts, getPages, posts, loading, username, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, setReact, removeReact, reacting, posts, loading, username, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
 
   export default {
@@ -89,7 +89,7 @@
         symbols: null,
         page: 1,
         pages: pages,
-        reacting: false
+        reacting: reacting
       }
     },
     created() {
@@ -113,6 +113,8 @@
             getPosts(1)
           }
           }
+          document.body.scrollTop = 0;
+          document.getElementsByClassName("page")[0].scrollTop = 0;
         },
         { immediate: true }
       )
@@ -127,6 +129,16 @@
       secret(post) {
         if (post.includes(":frog:")) {
           return true
+        }
+      },
+      react(type, post) {
+        if (this.reacting == false) {
+          setReact(type, post + 1)
+        }
+      },
+      removeReact (type, post) {
+        if (this.reacting == false) {
+          removeReact(type, post + 1)
         }
       }
     }

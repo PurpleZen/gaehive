@@ -9,6 +9,7 @@ const posts = ref([])
 const post = ref([])
 const username = ref()
 const pages = ref()
+const reacting = ref()
 
 async function getPages() {
   const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true }).not('data', 'is', null)
@@ -16,8 +17,6 @@ async function getPages() {
 }
 
 async function getPosts(page) {
-  document.getElementsByClassName("page")[0].scrollTop = 0;
-  document.body.scrollTop = 0;
   document.title = 'Gaehive | Hivezine | Page ' + page
   loading.value = true
   if (localStorage['user']) {
@@ -37,6 +36,7 @@ async function getPosts(page) {
         }
       })
   loading.value = false
+  reacting.value = false
 }
 
 async function getPost(id) {
@@ -57,4 +57,64 @@ async function getPost(id) {
   document.title = "Gaehive | Hivezine | " + post.value[0].title
 }
 
-export { getPosts, getPost, getPages, posts, post, loading, username, pages }
+async function setReact(type, id) {
+  reacting.value = true
+  if (localStorage['user']) {
+    username.value = JSON.parse(localStorage['user']).username
+  }
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  let react = data[0].data
+  
+  if (react[0][type]) {
+    react[0][type] = react[0][type] + 1
+  } else {
+    react[0][type] = 1
+  }
+      
+  let by = type + "by"
+  if (react[0][by]) {
+    react[0][by].splice(0, 0, username.value)
+  } else {
+    react[0][by] = [username.value]
+  }
+  const { error } = await supabase
+  .from('hivezine')
+  .update({ data: react })
+  .eq('id', id)
+  if (!location.pathname.split("/")[2]) {
+    getPosts(1)
+  } else {
+    getPosts(location.pathname.split("/")[2])
+  }
+}
+
+async function removeReact(type, id) {
+  reacting.value = true
+  if (localStorage['user']) {
+    username.value = JSON.parse(localStorage['user']).username
+  }
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  let react = data[0].data
+  
+  if (react[0][type] > 1) {
+    react[0][type] = react[0][type] - 1
+  } else {
+    react[0][type] = null
+  }
+      
+  let by = type + "by"
+  react[0][by].splice(react[0][by].indexOf(username.value), 1)
+  
+  const { error } = await supabase
+  .from('hivezine')
+  .update({ data: react })
+  .eq('id', id)
+  if (!location.pathname.split("/")[2]) {
+    getPosts(1)
+  } else {
+    getPosts(location.pathname.split("/")[2])
+  }
+}
+
+
+export { getPosts, getPost, getPages, setReact, removeReact, reacting, posts, post, loading, username, pages }

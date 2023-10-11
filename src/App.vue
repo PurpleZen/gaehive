@@ -847,7 +847,6 @@ textarea, .preview {
 .reactbuttonactive {
   color: var(--btxt) !important;
   background-color: var(--acc);
-  cursor: default;
 }
 
 .postoptions {
