@@ -120,7 +120,7 @@ async function removeReact(type, id) {
 
 async function addPost() {
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
-  let post = await postdata.json
+  let post = await postdata.json()
 
   let user = post[0].user
   let uid = post[0].uid
