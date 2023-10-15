@@ -122,6 +122,9 @@ async function addPost() {
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
 
+  const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true })
+
+  let id = count + 1
   let user = post[0].user
   let uid = post[0].uid
   let pid = post[0].pid
@@ -131,7 +134,7 @@ async function addPost() {
   const { data, error } = await supabase
     .from('hivezine')
     .insert([
-      { data: [{'user': user, 'uid': uid, 'pid': pid, 'title': title, 'post': newpost}] },
+      { data: [{'id': id, 'user': user, 'uid': uid, 'pid': pid, 'title': title, 'post': newpost}] },
     ])
     .select()
 
