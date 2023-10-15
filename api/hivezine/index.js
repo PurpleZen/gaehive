@@ -44,11 +44,12 @@ app.get('/api/hivezine', (req, res) => {
           "User-Agent": "Mozilla/5.0 Gaehive",
         },
       }
-    ).then((response)=>{return response.json();}).then(data=>{
+      ).then((response)=>{return response.json();}).then(data=>{
 
-      for ( var i = 0; i < data.length; i++ ) {
-        post = post + data[i].content;
-      }
+        for ( var i = 0; i < data.length; i++ ) {
+          post = post + data[i].content;
+        }
+      })
     }
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -59,8 +60,6 @@ app.get('/api/hivezine', (req, res) => {
     res.json([{
       user: user, uid: uid, date: date, title: title, post: post, pid: id
     }])
-  })
-  })
 });
 
 module.exports = app;
