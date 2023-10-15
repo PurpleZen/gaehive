@@ -36,7 +36,7 @@ app.get('/api/hivezine', (req, res) => {
     const uid = data[i].author.id;
     const id = data[i].id;
 
-    if (data[i].reply_count > 0) {
+    if (data[i].reply_count !== 0) {
       fetch(
       `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,
       {
@@ -46,13 +46,19 @@ app.get('/api/hivezine', (req, res) => {
       }
       ).then((response)=>{return response.json();}).then(data=>{
 
-      var replies = data[0].content
-        for ( var i = 1; i < data.length; i++ ) {
-          replies = replies + data[i].content;
+        for ( var i = 0; i < data.length; i++ ) {
+          post = post + data[i].content;
         }
-        post = post + replies
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+          const d = new Date();
+          let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
+
+        res.json([{
+          user: user, uid: uid, date: date, post: post, pid: id
+        }])
       })
-    }
+    } else {
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -62,6 +68,7 @@ app.get('/api/hivezine', (req, res) => {
     res.json([{
       user: user, uid: uid, date: date, post: post, pid: id
     }])
+    }
   })
 });
 
