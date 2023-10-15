@@ -60,6 +60,7 @@ app.get('/api/hivezine', (req, res) => {
     res.json([{
       user: user, uid: uid, date: date, title: title, post: post, pid: id
     }])
+  })
 });
 
 module.exports = app;
