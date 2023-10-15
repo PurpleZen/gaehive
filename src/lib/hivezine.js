@@ -124,7 +124,7 @@ async function addPost() {
 
   const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true })
 
-  let id = count + 1
+  let id = count
   let user = post[0].user
   let uid = post[0].uid
   let pid = post[0].pid
