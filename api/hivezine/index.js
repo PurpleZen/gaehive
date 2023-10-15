@@ -31,7 +31,7 @@ app.get('/api/hivezine', (req, res) => {
       }
     }
 
-    const post = data[i].content;
+    var post = data[i].content;
     const user = data[i].author.username;
     const uid = data[i].author.id;
     const id = data[i].id;
