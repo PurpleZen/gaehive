@@ -66,6 +66,7 @@
       <div class="reactions">
         <h5 style="margin:10px 0">{{ post.length }} characters</h5>
       </div>
+        <button @click="addPost()">Post</button>
     </div>
       
       <TransitionGroup name="hz">
@@ -113,7 +114,7 @@
 </template>
 
 <script>
-  import { getPosts, getPages, setReact, removeReact, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -191,6 +192,9 @@
         if (this.reacting == false) {
           removeReact(type, post + 1)
         }
+      },
+      addPost() {
+        addPost()
       },
       updated() {
         this.symbcode = (symbcode)

@@ -118,5 +118,24 @@ async function removeReact(type, id) {
   }
 }
 
+async function addPost() {
+  let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
+  let post = await postdata.json
 
-export { getPosts, getPost, getPages, setReact, removeReact, reacting, posts, post, loading, username, id, pages }
+  let user = post[0].user
+  let uid = post[0].uid
+  let pid = post[0].pid
+  let title = JSON.parse(post[0].data).title
+  let newpost = JSON.parse(post[0].data).post
+
+  const { data, error } = await supabase
+    .from('hivezine')
+    .insert([
+      { data: [{'user': user, 'uid': uid, 'pid': pid, 'title': title, 'post': newpost}] },
+    ])
+    .select()
+
+}
+
+
+export { getPosts, getPost, getPages, setReact, removeReact, addPost, reacting, posts, post, loading, username, id, pages }
