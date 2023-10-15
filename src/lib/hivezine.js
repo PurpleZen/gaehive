@@ -8,6 +8,7 @@ const loading = ref([])
 const posts = ref([])
 const post = ref([])
 const username = ref()
+const id = ref()
 const pages = ref()
 const reacting = ref()
 
@@ -21,6 +22,7 @@ async function getPosts(page) {
   loading.value = true
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
+    id.value = JSON.parse(localStorage['user']).id
   }
   const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false }).range((page - 1) * 10, (page * 10) - 1)
   posts.value = ([])
@@ -117,4 +119,4 @@ async function removeReact(type, id) {
 }
 
 
-export { getPosts, getPost, getPages, setReact, removeReact, reacting, posts, post, loading, username, pages }
+export { getPosts, getPost, getPages, setReact, removeReact, reacting, posts, post, loading, username, id, pages }

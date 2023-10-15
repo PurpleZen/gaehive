@@ -1,9 +1,8 @@
   <template>
     <h1 class="greeting">The Hivezine</h1>
   <span>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
-    <!-- This link won't show if you don't have manager or writer permissions -->
+
     <div>
-      <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/new" class="button">New Post</router-link>
       <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/writers" class="button">Edit Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
     </div>
@@ -18,12 +17,57 @@
             </TransitionGroup>
           </div>
   </div-->
+    
 
     <div class="pages">
       <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
     
     <div class="posts">
+      <div class="post">
+      <div class="title">
+        <div class="username">
+          <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
+          <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
+        </div>
+        <textarea class="titlename" placeholder="Write an awesome title!"></textarea>
+      </div>
+      <div class="toolbar">
+        <button class="tools" @click="shortcut('b')">
+          <b>B</b>
+        </button>
+        <button class="tools" @click="shortcut('i')">
+          <i>I</i>
+        </button>
+        <button class="tools" @click="shortcut('u')">
+          <u>U</u>
+        </button>
+        <button class="tools" @click="shortcut('br')">
+          Br
+        </button>
+        <button class="tools" @click="shortcut('a')">
+          <div class="material-symbols-rounded">link</div>
+        </button>
+        <button class="tools" @click="shortcut('img')">
+          <div class="material-symbols-rounded">image</div>
+        </button>
+        <button class="tools" @click="shortcut('center')">
+          <div class="material-symbols-rounded">format_align_center</div>
+        </button>
+        <button class="tools" v-if="post" @click="preview = !preview">
+          <span v-if="!preview">Preview</span>
+          <span v-else>Edit</span>
+        </button>
+      </div>
+      <div class='content'>
+        <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @focus="expand(true)" @focusout="expand(false)" @keyup="updated()" v-if="!preview" v-model="post" :style="'height:' + writing" placeholder="Write an awesome post!" ></textarea>
+        <div v-if="preview" class="styledcontent" v-html="postpreview"></div>
+      </div>
+      <div class="reactions">
+        <h5 style="margin:10px 0">{{ post.length }} characters</h5>
+      </div>
+    </div>
+      
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
@@ -69,8 +113,10 @@
 </template>
 
 <script>
-  import { getPosts, getPages, setReact, removeReact, reacting, posts, loading, username, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, setReact, removeReact, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
+  import symbcode from "@/data/symbcode.json"
+  import symbols from "@/data/symbols.json"
 
   export default {
     data() {
@@ -78,18 +124,23 @@
         loading: loading,
         error: null,
         username: username,
+        id: id,
         admin: null,
         manager: null,
         writer: null,
         list: null,
         title: null,
         posts: posts,
+        post: "",
+        postpreview: "",
+        preview: false,
         data: null,
         symbcode: null,
         symbols: null,
         page: 1,
         pages: pages,
-        reacting: reacting
+        reacting: reacting,
+        writing: null
       }
     },
     created() {
@@ -136,10 +187,76 @@
           setReact(type, post + 1)
         }
       },
-      removeReact (type, post) {
+      removeReact(type, post) {
         if (this.reacting == false) {
           removeReact(type, post + 1)
         }
+      },
+      updated() {
+        this.symbcode = (symbcode)
+        this.symbols = (symbols)
+
+        this.postpreview = this.post
+        this.symbcode.forEach(string => {
+          let regex = new RegExp(string, "g")
+          var i = this.symbcode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.symbols[i]);
+        })
+      },
+      expand(status) {
+        if (status == true) {
+          this.writing = "300px"  
+        } else {
+          if (!this.post) {
+            this.writing = null;
+          }
+        }
+      },
+      shortcut(type) {
+        if (type == "br") {
+          let textarea = document.getElementById('textarea')
+            textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+            this.post = textarea.value
+            textarea.focus()
+        } else if (type == "img") {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let jumpback = (textarea.value.length + 10) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + ' src=""' + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+          if (start == end) {
+            textarea.selectionStart = jumpback
+            textarea.selectionEnd = jumpback
+          }
+        } else if (type == "a") {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let jumpback = (textarea.value.length + 9) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + ' href=""' + '>' + textarea.value.slice(textarea.selectionStart, textarea.selectionEnd) + '</' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+            if (start == end) {
+              textarea.selectionStart = jumpback
+              textarea.selectionEnd = jumpback
+            }
+        } else {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let endtag = '</' + type + '>'
+          let jumpback = (textarea.value.length + endtag.length - 1) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + '>' + textarea.value.slice(textarea.selectionStart, textarea.selectionEnd) + '</' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+          if (start == end) {
+            textarea.selectionStart = jumpback
+            textarea.selectionEnd = jumpback
+          }
+        }
+        this.updated()
       }
     }
   }

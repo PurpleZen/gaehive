@@ -307,6 +307,21 @@
   opacity: 0;
 }
 
+.toolbar {
+  display: flex;
+  margin: 0 10px;
+}
+
+.tools {
+  border-radius: 5px;
+  margin: 2px;
+  display: grid;
+  align-content: center;
+}
+
+.tools .material-symbols-rounded {
+  font-size: inherit;
+}
 
 .birthday {
   font-size: small;
@@ -463,14 +478,13 @@ h1 {
   font-size: xxx-large;
 }
   
-textarea, .preview {
+textarea {
   resize: none;
   outline: none;
   overflow: auto;
   border: none;
   border-radius: inherit;
   margin-top: 0;
-  scrollbar-width: none;
   color: var(--txt);
   font-family: 'Manrope';
   background-color: var(--sb);
@@ -784,10 +798,15 @@ textarea, .preview {
   display: grid;
 }
 
-.title a {
+.title a, .title textarea {
   justify-self: center;
   color: var(--txt);
   text-decoration: none;
+  text-align: center;
+}
+
+.title textarea {
+  width: 100%;
 }
 
 .titlename {
@@ -818,6 +837,17 @@ textarea, .preview {
   padding: 0 10px 30px 10px;
 }
 
+.content textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.styledcontent {
+  height: 300px;
+  padding: 2px 2px 3px 2px;
+  overflow: scroll;
+}
+  
 .reactions {
   border-top: 1px solid var(--acclt);
   padding: 10px;

@@ -31,23 +31,24 @@ app.get('/api/hivezine', (req, res) => {
       }
     }
 
-    const title = data[i].content;
+    const post = data[i].content;
     const user = data[i].author.username;
     const uid = data[i].author.id;
     const id = data[i].id;
 
-    fetch(
-    `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,
-    {
-      headers: {
-        "User-Agent": "Mozilla/5.0 Gaehive",
-      },
-    }
-  ).then((response)=>{return response.json();}).then(data=>{
+    if (data[i].reply_count > 0) {
+      fetch(
+      `https://api.scratch.mit.edu/studios/33586934/comments/` + id + `/replies/?limit=25`,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 Gaehive",
+        },
+      }
+    ).then((response)=>{return response.json();}).then(data=>{
 
-    var post = data[0].content
-    for ( var i = 1; i < data.length; i++ ) {
-      post = post + " " + data[i].content;
+      for ( var i = 0; i < data.length; i++ ) {
+        post = post + data[i].content;
+      }
     }
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
