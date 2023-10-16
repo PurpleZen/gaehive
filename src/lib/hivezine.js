@@ -134,10 +134,15 @@ async function addPost() {
   const { data, error } = await supabase
     .from('hivezine')
     .insert([
-      { data: [{'id': id, 'user': user, 'uid': uid, 'pid': pid, 'title': title, 'post': newpost}] },
+      { data: [{'id': id, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
     ])
     .select()
-
+  
+  if (!location.pathname.split("/")[2]) {
+    getPosts(1)
+  } else {
+    getPosts(location.pathname.split("/")[2])
+  }
 }
 
 

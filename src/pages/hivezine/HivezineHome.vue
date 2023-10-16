@@ -54,6 +54,12 @@
         <button class="tools" @click="shortcut('center')">
           <div class="material-symbols-rounded">format_align_center</div>
         </button>
+        <select class="tools">
+          <option>h1</option>
+          <option>h2</option>
+          <option>h3</option>
+          <option>h4</option>
+        </select>
         <button class="tools" v-if="post" @click="preview = !preview">
           <span v-if="!preview">Preview</span>
           <span v-else>Edit</span>

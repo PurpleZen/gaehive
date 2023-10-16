@@ -313,6 +313,9 @@
 }
 
 .tools {
+  background-color: var(--acc);
+  border: none;
+  color: var(--btxt);
   border-radius: 5px;
   margin: 2px;
   display: grid;
