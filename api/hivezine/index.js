@@ -54,7 +54,7 @@ app.get('/api/hivezine', (req, res) => {
           const d = new Date();
           let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
 
-        post[0].post.replaceAll(`&quot:`, `\"`)
+        post[0].post.replaceAll(`&quot;`, `\"`)
         
         res.json([{
           user: user, uid: uid, date: date, data: post.replaceAll(`&quot;`, `"`), pid: id
@@ -67,7 +67,7 @@ app.get('/api/hivezine', (req, res) => {
       const d = new Date();
       let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
 
-      post[0].post.replaceAll(`&quot:`, `\"`)
+      post[0].post.replaceAll(`&quot;`, `\"`)
     
     res.json([{
       user: user, uid: uid, date: date, data: post.replaceAll(`&quot;`, `"`), pid: id
