@@ -39,6 +39,10 @@ async function getPosts(page) {
       })
   loading.value = false
   reacting.value = false
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = ''
+  }
 }
 
 async function getPost(id) {
@@ -61,6 +65,11 @@ async function getPost(id) {
 
 async function setReact(type, id) {
   reacting.value = true
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = 'progress'
+  }
+  
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
   }
@@ -92,6 +101,11 @@ async function setReact(type, id) {
 
 async function removeReact(type, id) {
   reacting.value = true
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = 'progress'
+  }
+  
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
   }
@@ -119,6 +133,11 @@ async function removeReact(type, id) {
 }
 
 async function addPost() {
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = 'wait'
+  }
+  
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
 

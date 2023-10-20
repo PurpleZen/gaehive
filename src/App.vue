@@ -784,7 +784,7 @@ textarea {
   background-color: var(--sb);
 }
 
-.post img {
+.post img, .post video {
   max-width: 300px;
   border-radius: 5px;
 }
