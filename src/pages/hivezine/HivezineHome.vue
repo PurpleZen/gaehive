@@ -54,12 +54,27 @@
         <button class="tools" @click="shortcut('center')">
           <div class="material-symbols-rounded">format_align_center</div>
         </button>
-        <select class="tools">
-          <option>h1</option>
-          <option>h2</option>
-          <option>h3</option>
-          <option>h4</option>
-        </select>
+        <details id="headers" class="tools">
+          <summary>Headers</summary>
+          <ul class="list">
+            <button @click="shortcut('h1')" class="tools">h1</button>
+            <button @click="shortcut('h2')" class="tools">h2</button>
+            <button @click="shortcut('h3')" class="tools">h3</button>
+            <button @click="shortcut('h4')" class="tools">h4</button>
+            <button @click="shortcut('h5')" class="tools">h5</button>
+            <button @click="shortcut('h6')" class="tools">h6</button>
+          </ul>
+        </details>
+        <details id="emojis" class="tools">
+          <summary>Emojis</summary>
+          <ul class="list">
+            <button @click="shortcut(':happy:')" class="tools">😊</button>
+            <button @click="shortcut(':sad:')" class="tools">☹️</button>
+            <button @click="shortcut(':cool:')" class="tools">😎</button>
+            <button @click="shortcut(':hmm:')" class="tools">🤔</button>
+            <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
+          </ul>
+        </details>
         <button class="tools" v-if="post" @click="preview = !preview">
           <span v-if="!preview">Preview</span>
           <span v-else>Edit</span>
@@ -252,6 +267,11 @@
               textarea.selectionStart = jumpback
               textarea.selectionEnd = jumpback
             }
+        } else if (type.includes(":")) {
+              let textarea = document.getElementById('textarea')
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + type + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
         } else {
           let textarea = document.getElementById('textarea')
           let start = textarea.selectionStart
@@ -267,7 +287,88 @@
           }
         }
         this.updated()
+        document.getElementById("emojis").open = false
+        document.getElementById("headers").open = false
       }
     }
   }
 </script>
+
+<style>
+ul .tools {
+  width: auto;
+}
+  
+ .tools details {
+    position: relative;
+    width: 300px;
+    margin-right: 1rem;
+  }
+
+.tools details[open] {
+    z-index: 1;
+  }
+
+.tools summary {
+    cursor: pointer;
+  margin: 0 10px;
+  font-size: smaller;
+    border-radius: 5px;
+    background-color: var(--acc);
+    list-style: none;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  }
+
+.tools summary::-webkit-details-marker {
+    display: none;
+  }
+
+.tools details[open] summary:before {
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+.tools summary:after {
+    content: '';
+    display: inline-block;
+  margin: 5px 0px 10px 5px;
+    width: .5rem;
+    height: .5rem;
+    border-bottom: 2px solid currentColor;
+    border-left: 2px solid currentColor;
+    border-bottom-left-radius: 2px;
+    transform: rotate(45deg) translate(50%, 0%);
+    transform-origin: center center;
+    transition: transform ease-in-out 100ms
+  }
+
+.tools summary:focus {
+    outline: none;
+  }
+
+details[open] summary:after {
+    transform: rotate(-45deg) translate(0%, 0%);
+  }
+
+.tools ul {
+    width: auto;
+    background: var(--acc);
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+  margin-top: 5px;
+  }
+
+
+
+</style>

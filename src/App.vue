@@ -320,6 +320,7 @@
   margin: 2px;
   display: grid;
   align-content: center;
+  position: relative;
 }
 
 .tools .material-symbols-rounded {
@@ -733,8 +734,6 @@ textarea {
 
 .list {
   display: grid;
-  row-gap: 5px;
-  margin: 5px;
   padding: 5px;
   align-items: center;
 }

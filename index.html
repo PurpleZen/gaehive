@@ -10,6 +10,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Gaehive</title>
   </head>
+
+  <style>
+    :root {
+      --bg: oldlace;
+    }
+    [data-theme="dark"] {
+      --bg: #483232;
+    }
+    html {
+      background-color: var(--bg);
+    }
+  </style>
+  <script>
+    document.documentElement.setAttribute('data-theme', localStorage["theme"]);
+  </script>
+
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
