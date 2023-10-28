@@ -63,7 +63,7 @@
   }
   }
 
-  async function move(name, host) {
+  async function transfer(name, host) {
       loading.value = true
     for (var i = 0; i < managers.value.length; i++) {
       if (managers.value[i].name == name) {
@@ -73,6 +73,32 @@
       if (managers.value[i].name == host) {
         let moved = managers.value.splice(i, 1)
           managers.value.splice(managers.value.length, 0, moved[0])
+      }
+    }
+    const { error } = await supabase
+    .from('managers')
+    .update({ data: managers.value })
+    .eq('id', 1)
+    refresh()
+  }
+
+  async function move(name, direction) {
+    if (direction == "up") {
+      for (var i = 0; i < managers.value.length; i++) {
+        if (managers.value[i].name == name) {
+          let moved = managers.value.splice(i, 1)
+          managers.value.splice(i - 1, 0, moved[0])
+          break;
+        }
+      }
+    }
+    if (direction == "down") {
+      for (var i = 0; i < managers.value.length; i++) {
+        if (managers.value[i].name == name) {
+          let moved = managers.value.splice(i, 1)
+          managers.value.splice(i + 1, 0, moved[0])
+          break;
+        }
       }
     }
     const { error } = await supabase
@@ -96,4 +122,4 @@
     refresh()
   }
     
-  export { getManagers, newManager, move, remove, hostnext, next, list, managers, level, loading, popup }
+  export { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, level, loading, popup }

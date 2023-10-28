@@ -6,7 +6,7 @@
     
     <span class="mobilemenu">Menu</span>
     
-    <div v-if="users" class="birthday">🎂 Today is <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}'s</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span> Birthday!</div>
+    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
     
     <div class="block-break"></div>
     
@@ -535,7 +535,7 @@ textarea {
   color: var(--txt);
   text-decoration: none;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -551,7 +551,7 @@ textarea {
   color: var(--btxt);
   text-decoration: none;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -576,7 +576,7 @@ textarea {
   padding: 5px 11px;
   margin-left: 5px;
   align-items: center;
-  border-radius: 100px;
+  border-radius: 5px;
   width: fit-content;
   text-decoration: none;
   cursor: pointer;
@@ -692,13 +692,15 @@ textarea {
 }
 
 .useroptions {
-  display: grid;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
 }
 
 .promote {
   width: 24px;
   display: grid;
-  border-radius: 0 5px 0 0;
+  border-radius: 5px;
   align-content: center;
   color: var(--txt);
   padding: 5px;
@@ -708,7 +710,7 @@ textarea {
 .remove {
   width: 24px;
   display: grid;
-  border-radius: 0 0 5px 0;
+  border-radius: 5px;
   align-content: center;
   color: var(--txt);
   padding: 5px;
@@ -836,7 +838,7 @@ textarea {
 }
 
 .content {
-  padding: 0 10px 30px 10px;
+  padding: 0 10px 15px 10px;
 }
 
 .content textarea {
@@ -861,7 +863,7 @@ textarea {
 .reactbutton, .reactbuttonactive {
   position: relative;
   background-color: var(--acclt);
-  padding: 8px 10px 10px 10px;
+  padding: 5px 7px 7px 7px;
   margin-right: 5px;
   display: inline-block;
   font-size: larger;
@@ -942,7 +944,8 @@ textarea {
   text-align: left;
   padding: 5px 15px;
   margin: 5px 0;
-  border-radius: 100px;}
+  border-radius: 5px;
+}
 
 .button:hover, .button:focus, button:hover, button:focus {
   outline: var(--bg) solid 2px;

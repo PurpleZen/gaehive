@@ -24,13 +24,13 @@
     </div>
     
     <div class="posts">
-      <div class="post">
+      <div v-if="newpost == 'writing'" class="post">
       <div class="title">
         <div class="username">
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
         </div>
-        <textarea class="titlename" placeholder="Write an awesome title!"></textarea>
+        <textarea v-model="title" class="titlename" placeholder="Write an awesome title!"></textarea>
       </div>
       <div class="toolbar">
         <button class="tools" @click="shortcut('b')">
@@ -86,9 +86,18 @@
       </div>
       <div class="reactions">
         <h5 style="margin:10px 0">{{ post.length }} characters</h5>
+        <button @click="jsonify()">Next</button>
       </div>
-        <button @click="addPost()">Post</button>
     </div>
+      <div v-if="newpost == 'copying'" class="post">
+        <div class="content">
+          {{ this.json }}
+        </div>
+        <div class="reactions">
+          <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
+          <button @click="addPost()">Post</button>
+        </div>
+      </div>
       
       <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in posts" :key="item.id">
@@ -162,7 +171,9 @@
         page: 1,
         pages: pages,
         reacting: reacting,
-        writing: null
+        writing: null,
+        newpost: 'writing',
+        json: null
       }
     },
     created() {
@@ -216,6 +227,11 @@
       },
       addPost() {
         addPost()
+      },
+      jsonify() {
+        this.newpost = "copying"
+        let obj = {title: this.title, post: this.post}
+        this.json = JSON.stringify(obj)
       },
       updated() {
         this.symbcode = (symbcode)
