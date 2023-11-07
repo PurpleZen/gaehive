@@ -91,11 +91,20 @@
     </div>
       <div v-if="newpost == 'copying'" class="post">
         <div class="content">
-          {{ this.json }}
+            <div v-for="(item, index) in json" :key="item">
+              <h5 v-if="index == 0">First Comment</h5>
+              <h5 v-else>Reply #{{ index }}</h5>
+              <div class="json">
+                {{ item }}
+              </div>
+            </div>
         </div>
         <div class="reactions">
-          <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
-          <button @click="addPost()">Post</button>
+          <button @click="this.newpost = 'writing'">Back</button>
+          <div>
+            <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
+            <button @click="addPost()">Post</button>
+          </div>
         </div>
       </div>
       
@@ -173,7 +182,7 @@
         reacting: reacting,
         writing: null,
         newpost: 'writing',
-        json: null
+        json: []
       }
     },
     created() {
@@ -230,8 +239,12 @@
       },
       jsonify() {
         this.newpost = "copying"
-        let obj = {title: this.title, post: this.post}
-        this.json = JSON.stringify(obj)
+        this.json = []
+        var obj = {title: this.title, post: this.post}
+        obj = JSON.stringify(obj)
+      for (var i = 0; i < obj.length / 500; i++) {
+         this.json.push(obj.slice(i * 500, (i + 1) * 500))
+      }
       },
       updated() {
         this.symbcode = (symbcode)

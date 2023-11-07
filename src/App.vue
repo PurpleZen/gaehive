@@ -307,6 +307,15 @@
   opacity: 0;
 }
 
+.json {
+  background-color: var(--acclt);
+  font-family: monospace;
+  margin: 20px 10px;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: break-spaces;
+}
+
 .toolbar {
   display: flex;
   margin: 0 10px;
@@ -943,7 +952,7 @@ textarea {
   font-size: inherit;
   text-align: left;
   padding: 5px 15px;
-  margin: 5px 0;
+  margin: 5px 3px;
   border-radius: 5px;
 }
 
