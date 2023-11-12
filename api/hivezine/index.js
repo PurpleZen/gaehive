@@ -49,24 +49,15 @@ app.get('/api/hivezine', (req, res) => {
         for ( var i = 0; i < data.length; i++ ) {
           post = post + data[i].content;
         }
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-          const d = new Date();
-          let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
 
         res.json([{
-          user: user, uid: uid, date: date, data: post.replaceAll(`&quot;`, `"`), pid: id
+          user: user, uid: uid, data: post.replaceAll(`&quot;`, `"`), pid: id
         }])
       })
     } else {
 
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-      const d = new Date();
-      let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear()
-    
     res.json([{
-      user: user, uid: uid, date: date, data: post.replaceAll(`&quot;`, `"`), pid: id
+      user: user, uid: uid, data: post.replaceAll(`&quot;`, `"`), pid: id
     }])
     }
   })

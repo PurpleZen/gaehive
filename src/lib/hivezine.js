@@ -143,8 +143,12 @@ async function addPost() {
 
   const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true })
 
+  const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+
+  const d = new Date();
+  let date = months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + ", " + d.toLocaleString('en-US', { timeStyle: 'short', hour12: true }) + " " + d.toLocaleDateString(undefined, {day:'2-digit',timeZoneName: 'short' }).substring(4)
+
   let id = count
-  let date = post[0].date
   let user = post[0].user
   let uid = post[0].uid
   let pid = post[0].pid
