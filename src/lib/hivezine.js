@@ -143,6 +143,7 @@ async function addPost() {
 
   const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true })
 
+  let date = date
   let id = count
   let user = post[0].user
   let uid = post[0].uid
@@ -153,7 +154,7 @@ async function addPost() {
   const { data, error } = await supabase
     .from('hivezine')
     .insert([
-      { data: [{'id': id, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
+      { data: [{'id': id, 'date': date, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
     ])
     .select()
   
