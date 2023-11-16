@@ -99,7 +99,7 @@
       logIn() {
         window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
       btoa('https://' + location.hostname + '/api/login?return=' + location.pathname + "&") +
-      '&name=the Gaehive website'
+      '&name=the Gaehive&authProject=867214083'
     },
       logOut() {
         localStorage.removeItem("user")
