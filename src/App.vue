@@ -19,8 +19,8 @@
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
     
-    <router-link v-if="location !== '' || active" class='sidebutton' to="/">Home</router-link>
-    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">Home</router-link>
+    <router-link v-if="location !== '' || active" class='sidebutton' to="/">About</router-link>
+    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">About</router-link>
     
     <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">Hivezine</router-link>
     <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">Hivezine</router-link>
@@ -49,13 +49,13 @@
   <div v-if="popup == 'settings'" class="popup">
     <div class="title">Settings</div>
     <div class="popupbody">
-      <button @click="changeTheme('dark')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">theme</button>
-    <button @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</button>
-    <button @click="changeTheme('2000s-blog')" v-if="this.theme !== '2000s-blog'">reset internet to 2004</button>
-    <div>
-      <label for="checkbox">Blur</label>
-      <input id="checkbox" name="checkbox" type="checkbox" v-model="toggle" true-value="1" false-value="0" @change="setBlur(toggle)" :checked="blur == 'blur(1px)'">
-    </div>
+      <div>
+      <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">Theme<space/><div class="material-symbols-rounded">palette</div></button>
+      <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'light' || this.theme == '2000s-blog'">Theme<space/><div class="material-symbols-rounded">palette</div></button>
+      
+      <button @click="setBlur(0)" v-if="blur == 'blur(1px)'">Blur<space/><div class="material-symbols-rounded">blur_on</div></button>
+      <button @click="setBlur(1)" v-if="blur !== 'blur(1px)'">Blur<space/><div class="material-symbols-rounded">blur_on</div></button>
+      </div>
       <div class="popupbuttons">
         <button @click="this.popup = null" class="button">Close</button>
       </div>
@@ -220,54 +220,20 @@
 }
 
 [data-theme="2000s-blog"] {
-  --bg: blue;
-  --sb: gray;
+  --bg: #1a009d;
+  --sb: #07002a;
   --acc: magenta;
-  --acc2: white;
+  --acc2: yellow;
+  --acclt: darkcyan;
   --brk: magenta;
-  --txt: white;
+  --txt: lime;
   --btxt: white;
   --slnk: blue;
-  --slnkh: purple;
+  --slnkh: blue;
   --plnk: magenta;
-  --plnkh: lime;
+  --plnkh: yellow;
   --imp: red;
   --brkb: 4px solid var(--brk);
-}
-[data-theme="2000s-blog"] * {
-  font-family: 'Comic Neue' !important;
-  border-radius: 0 !important;
-  transition: none !important;
-  animation: none !important;
-}
-[data-theme="2000s-blog"] .sidebar {
-  background-color: lightgray;
-}
-[data-theme="2000s-blog"] .loader {
-  border: none;
-  width: auto;
-  color: white;
-}
-[data-theme="2000s-blog"] .input {
-  color: black;
-  background-color: white;
-}
-[data-theme="2000s-blog"] .promptButton .tooltiptext {
-  color: black;
-}
-[data-theme="2000s-blog"] .material-symbols-rounded {
-  font-family: 'Material Symbols Rounded' !important;
-}
-
-[data-theme="terminal"] {
-  --bg: #000;
-  --txt: lightgreen;
-}
-[data-theme="terminal"] body {
-  font-family: monospace;
-  width: auto;
-  margin: 20px;
-  white-space: pre-line;
 }
 
   
@@ -307,6 +273,10 @@
   opacity: 0;
 }
 
+space {
+  width: 5px;
+}
+
 .json {
   background-color: var(--acclt);
   font-family: monospace;
@@ -314,6 +284,7 @@
   padding: 5px;
   border-radius: 5px;
   white-space: break-spaces;
+  line-break: anywhere;
 }
 
 .toolbar {
@@ -327,6 +298,7 @@
   color: var(--btxt);
   border-radius: 5px;
   margin: 2px;
+  padding: 0 15px;
   display: grid;
   align-content: center;
   position: relative;
@@ -653,6 +625,7 @@ textarea {
 
 .greeting {
   margin-top: 50px;
+  margin-bottom: 5px;
   font-family: 'Leckerli One';
   color: var(--acc2);
   text-shadow: var(--acc) 2px 2px;
@@ -685,8 +658,7 @@ textarea {
 }
 
 .users span {
-  text-overflow: ellipsis;
-  overflow: hidden;
+  white-space: nowrap;
 }
 
 .usersimg {
@@ -694,6 +666,11 @@ textarea {
   height: 50px;
   margin-right: 10px;
   border-radius: 100%;
+}
+
+.hzlist .usersimg {
+  width: 30px;
+  height: 30px;
 }
 
 .hostnext {
@@ -750,26 +727,47 @@ textarea {
 }
 
 .writers {
-  background-color: var(--sb);
-  border-radius: 20px;
+  display: grid;
+  border-radius: 5px;
   width: 100%;
   margin-top: 10px;
-  overflow: scroll;
 }
 
 .hzlist {
+  background-color: var(--sb);
+  border-radius: 5px;
   display: flex;
-  margin: 5px;
   align-items: center;
   overflow: scroll;
 }
 
-.list .users, .hzlist .users {
+.hzlist .users {
   background-color: var(--bg);
+  display: initial;
+  width: fit-content;
+  margin: 5px;
 }
 
-.hzlist .users {
-  width: fit-content;
+.hzlist .users:nth-child(1) {
+  margin-left: 10px;
+  cursor: initial;
+  background: none;
+  font-family: Leckerli One;
+  color: var(--acc2) !important;
+  text-shadow: var(--acclt) 1.5px 1.5px;
+}
+
+.hzlist .users:nth-child(1):hover {
+  outline: none;
+  scale: none;
+}
+
+.hzlist .users:nth-last-child(1) {
+  margin-right: 10px;
+}
+
+.hzlist .users a {
+  padding: 5px;
 }
 
 .editList {
@@ -811,15 +809,12 @@ textarea {
   display: grid;
 }
 
-.title a, .title textarea {
+.title a, .titlename {
   justify-self: center;
   color: var(--txt);
   text-decoration: none;
   text-align: center;
-}
-
-.title textarea {
-  width: 100%;
+  padding: 0;
 }
 
 .titlename {
@@ -827,6 +822,10 @@ textarea {
   font-size: larger;
   color: var(--acc2) !important;
   text-shadow: var(--acclt) 1.5px 1.5px;
+}
+
+.title textarea {
+  width: 100%;
 }
 
 .title a:hover {
@@ -929,20 +928,21 @@ textarea {
   'opsz' 20
 }
 
-.input {
+input {
   background-color: var(--sb);
   color: var(--plnk);
   margin: 2px;
   padding: 5px;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   font-family: inherit;
   text-align: center;
 }
 
 .button, button {
   width: fit-content;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background-color: var(--acc);
   color: var(--btxt) !important;
   text-decoration: none;
@@ -954,6 +954,10 @@ textarea {
   padding: 5px 15px;
   margin: 5px 3px;
   border-radius: 5px;
+}
+
+button .material-symbols-rounded {
+  font-size: inherit !important;
 }
 
 .button:hover, .button:focus, button:hover, button:focus {

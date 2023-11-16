@@ -18,7 +18,7 @@
   export default {
     created() {
       useMeta({
-        title: 'Gaehive | Home'
+        title: 'Gaehive | Welcome'
       });
     }
   }

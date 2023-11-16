@@ -13,24 +13,11 @@
     if (localStorage['user']) {
         level.value = JSON.parse(localStorage['user']).level
     }
-    if (localStorage["managers"]) {
-      let localManagers = JSON.parse(localStorage["managers"])
-      managers.value = localManagers
-      next.value = localManagers[1].name
-      list.value = localManagers.slice(2, localManagers.length)
-      refresh()
-    } else {
-      refresh()
-    }
-  }
-
-  async function refresh() {
-    const { data } = await supabase.from('managers').select('data')
+    const { data } = await supabase.from('managers').select('data').eq("id", 1)
     hostnext.value = data[0].data.slice(0, 2)
     next.value = data[0].data[1].name
     list.value = data[0].data.slice(2, data[0].data.length)
     managers.value = data[0].data
-    localStorage.setItem('managers', JSON.stringify(managers.value));
     loading.value = false
     popup.value = null
   }
@@ -59,7 +46,7 @@
   .from('managers')
   .update({ data: managers.value })
   .eq('id', 1)
-    refresh()
+    getManagers()
   }
   }
 
@@ -79,7 +66,7 @@
     .from('managers')
     .update({ data: managers.value })
     .eq('id', 1)
-    refresh()
+    getManagers()
   }
 
   async function move(name, direction) {
@@ -105,7 +92,7 @@
     .from('managers')
     .update({ data: managers.value })
     .eq('id', 1)
-    refresh()
+    getManagers()
   }
 
   async function remove(name) {
@@ -119,7 +106,7 @@
     .from('managers')
     .update({ data: managers.value })
     .eq('id', 1)
-    refresh()
+    getManagers()
   }
     
   export { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, level, loading, popup }

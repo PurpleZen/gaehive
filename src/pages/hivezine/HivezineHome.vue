@@ -1,36 +1,45 @@
   <template>
     <h1 class="greeting">The Hivezine</h1>
-  <span>Hello, welcome to the Hivezine on the Gaehive Website!<br>Here you can find news and announcements about events happening in the Scratch studio, fun spoof posts, and useful guides for here and for in the Scratch studio!</span>
-
+ 
     <div>
-      <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/writers" class="button">Edit Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
     </div>
-    <!--div class="writers">
-          <div class="title">Our Writers:</div>
-          <div class="hzlist">
-            <TransitionGroup name="mng">
-            <div v-for="(item, index) in this.list" :key="item.name">
-              <div class="users"><a :href="'https://scratch.mit.edu/users/' + item.name"><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }}</span></a>
-              </div>
-            </div>
-            </TransitionGroup>
-          </div>
-  </div-->
-    
 
+    <div style="display:flex">
     <div class="pages">
       <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
+    <input placeholder="Search...">
+    </div>
+
+    <div class="writers">
+      <div class="hzlist">
+        <TransitionGroup name="mng">
+          <div class="users">
+          <div class="userinfo">
+            <span>Writers:</span><br>
+          </div>
+          </div>
+          <div class="users" v-for="(item, index) in writers" :key="item.name">
+            <a :href="'https://scratch.mit.edu/users/' + item.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">
+              <div class="userinfo">
+                <span>{{ item.name }}</span><br>
+              </div>
+            </a>
+          </div>
+        </TransitionGroup>
+      </div>
+    </div>
     
-    <div class="posts">
+    <div v-if="username && level == 'manager' || level == 'writer'" class="posts">
       <div v-if="newpost == 'writing'" class="post">
       <div class="title">
         <div class="username">
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
         </div>
-        <textarea v-model="title" class="titlename" placeholder="Write an awesome title!"></textarea>
+        <textarea v-model="title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
+        <div class="titlename" v-if="preview" v-html="titlepreview"></div>
       </div>
       <div class="toolbar">
         <button class="tools" @click="shortcut('b')">
@@ -75,13 +84,13 @@
             <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
           </ul>
         </details>
-        <button class="tools" v-if="post" @click="preview = !preview">
+        <button class="tools" v-if="post || title" @click="preview = !preview">
           <span v-if="!preview">Preview</span>
           <span v-else>Edit</span>
         </button>
       </div>
       <div class='content'>
-        <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @focus="expand(true)" @focusout="expand(false)" @keyup="updated()" v-if="!preview" v-model="post" :style="'height:' + writing" placeholder="Write an awesome post!" ></textarea>
+        <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @focus="expand(true)" @focusout="expand(false)" @keyup="updated()" v-if="!preview" v-model="post" :style="'height:' + writing" placeholder="Write an awesome post!"></textarea>
         <div v-if="preview" class="styledcontent" v-html="postpreview"></div>
       </div>
       <div class="reactions">
@@ -107,8 +116,10 @@
           </div>
         </div>
       </div>
-      
-      <TransitionGroup name="hz">
+    </div>
+
+    <div class="posts">
+    <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
         <div class='username'>
@@ -148,12 +159,12 @@
     </div>
     
     <div class="pages">
-      <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+      <router-link @click="scrollTop" v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
 </template>
 
 <script>
-  import { getPosts, getPages, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, setReact, removeReact, addPost, getWriters, writers, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -165,11 +176,10 @@
         error: null,
         username: username,
         id: id,
-        admin: null,
-        manager: null,
-        writer: null,
+        level: null,
         list: null,
-        title: null,
+        title: "",
+        titlepreview: "",
         posts: posts,
         post: "",
         postpreview: "",
@@ -182,7 +192,8 @@
         reacting: reacting,
         writing: null,
         newpost: 'writing',
-        json: []
+        json: [],
+        writers: writers
       }
     },
     created() {
@@ -190,6 +201,12 @@
        title: 'Gaehive | Hivezine | Page 1'
       })
       getPages()
+      getWriters()
+    },
+    mounted() {
+      if (localStorage['user']) {
+        this.level = JSON.parse(localStorage['user']).level
+      }
       if (!this.$route.params.pg) {
         getPosts(1)
       } else {
@@ -206,8 +223,6 @@
             getPosts(1)
           }
           }
-          document.body.scrollTop = 0;
-          document.getElementsByClassName("page")[0].scrollTop = 0;
         },
         { immediate: true }
       )
@@ -251,10 +266,12 @@
         this.symbols = (symbols)
 
         this.postpreview = this.post
+        this.titlepreview = this.title
         this.symbcode.forEach(string => {
           let regex = new RegExp(string, "g")
           var i = this.symbcode.indexOf(string)
             this.postpreview = this.postpreview.replace(regex, this.symbols[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
         })
       },
       expand(status) {
@@ -318,6 +335,11 @@
         this.updated()
         document.getElementById("emojis").open = false
         document.getElementById("headers").open = false
+      },
+      scrollTop() {
+        document.body.scrollTop = 0;
+        document.getElementsByClassName("pages")[0].scrollIntoView()
+        document.getElementsByClassName("page")[0].scrollTop = document.getElementsByClassName("page")[0].scrollTop - 10
       }
     }
   }
@@ -340,7 +362,6 @@ ul .tools {
 
 .tools summary {
     cursor: pointer;
-  margin: 0 10px;
   font-size: smaller;
     border-radius: 5px;
     background-color: var(--acc);

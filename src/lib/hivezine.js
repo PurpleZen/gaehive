@@ -11,6 +11,7 @@ const username = ref()
 const id = ref()
 const pages = ref()
 const reacting = ref()
+const writers = ref()
 
 async function getPages() {
   const { count } = await supabase.from('hivezine').select('data', { count: 'exact', head: true }).not('data', 'is', null)
@@ -169,5 +170,17 @@ async function addPost() {
   }
 }
 
+async function deletePost(id) {
+  const { error } = await supabase
+  .from('hivezine')
+  .update({ data: null })
+  .eq('id', id)
+  getPosts(1)
+}
 
-export { getPosts, getPost, getPages, setReact, removeReact, addPost, reacting, posts, post, loading, username, id, pages }
+async function getWriters() {
+  const { data } = await supabase.from('managers').select('data').eq("id", 2)
+  writers.value = data[0].data
+}
+
+export { getPosts, getPost, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
