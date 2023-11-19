@@ -2,33 +2,8 @@
     <h1 class="greeting">The Hivezine</h1>
  
     <div>
+      <router-link class="button" to="/hivezine/writers">Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
-    </div>
-
-    <div style="display:flex">
-    <div class="pages">
-      <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
-    </div>
-    <input placeholder="Search...">
-    </div>
-
-    <div class="writers">
-      <div class="hzlist">
-        <TransitionGroup name="mng">
-          <div class="users">
-          <div class="userinfo">
-            <span>Writers:</span><br>
-          </div>
-          </div>
-          <div class="users" v-for="(item, index) in writers" :key="item.name">
-            <a :href="'https://scratch.mit.edu/users/' + item.name" target="_blank"><img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'">
-              <div class="userinfo">
-                <span>{{ item.name }}</span><br>
-              </div>
-            </a>
-          </div>
-        </TransitionGroup>
-      </div>
     </div>
     
     <div v-if="username && level == 'manager' || level == 'writer'" class="posts">
@@ -118,6 +93,13 @@
       </div>
     </div>
 
+    <div style="display:flex">
+      <div class="pages">
+        <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+      </div>
+      <input placeholder="Search...">
+    </div>
+
     <div class="posts">
     <TransitionGroup name="hz">
     <div class="post" v-for="(item, index) in posts" :key="item.id">
@@ -164,7 +146,7 @@
 </template>
 
 <script>
-  import { getPosts, getPages, setReact, removeReact, addPost, getWriters, writers, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -193,7 +175,6 @@
         writing: null,
         newpost: 'writing',
         json: [],
-        writers: writers
       }
     },
     created() {
@@ -201,7 +182,6 @@
        title: 'Gaehive | Hivezine | Page 1'
       })
       getPages()
-      getWriters()
     },
     mounted() {
       if (localStorage['user']) {

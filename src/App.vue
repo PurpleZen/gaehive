@@ -396,6 +396,7 @@ space {
 .popup {
   position: fixed;
   background-color: var(--sb);
+  border: 1px solid var(--acc);
   margin: 10px;
   justify-self: center;
   align-self: center;

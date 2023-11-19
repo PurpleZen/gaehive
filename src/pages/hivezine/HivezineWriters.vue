@@ -1,38 +1,21 @@
 <template>
-  <h1 class="greeting">Our Managers</h1>
+  <h1 class="greeting">Hivezine Writers</h1>
   <div>
-    <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Managers</button>
-    <button v-if="level == 'manager'" class="button">Add/Edit Bio</button>
+    <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Writers</button>
   </div>
-  
+
   <div class="managers">
     <TransitionGroup name="mng">
-      <div v-for="(user, index) in managers" :key="user.id">
+      <div v-for="(user, index) in writers" :key="user.id">
         <div class="users">
           <a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
-            <div class="crownimg">
-              <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
-              <img v-if="index == 0" class="crown" src="/crown.png">
-              <img v-if="index == 1" class="crown" src="/crown2.png">
-            </div>
+            <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
             <div class="userinfo">
               <span class="name">{{ user.name }}</span><br>
-              <span class="bio" v-html="user.bio"></span>
             </div>
           </a>
           <div class='useroptions'>
-            <div>
-              <div v-if="level == 'manager' && index !== 0" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
-              </div>
-              <div v-if="level == 'manager'" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
-              </div>
-            </div>
-
-            <div>
-              <div v-if="level == 'manager' && index !== 0" @click="move(user.name, 'up')" class="promote"><div class="material-symbols-rounded">expand_less</div>
-              </div>
-              <div v-if="level == 'manager' && index !== managers.length - 1" @click="move(user.name, 'down')" class="promote"><div class="material-symbols-rounded">expand_more</div>
-              </div>
+            <div v-if="level == 'manager'" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
             </div>
           </div>
         </div>
@@ -43,18 +26,6 @@
   <!--popups-->
   <TransitionGroup name="popup">
     <div v-if="popup" class="popupbg" :style="{ backdropFilter: blur }"></div>
-
-  <!--move-->
-  <div v-if="popup == 'move'" class="popup">
-    <div class="title">Are you sure you want to make {{ this.user }} host?</div>
-    <div class="popupbody">
-      <div class="popupbuttons">
-        <button @click="this.transfer(this.user, this.host)" class="button">Yes</button>
-        <button @click="this.popup = null" class="button">No</button>
-        <div v-if="loading == true" class="loader"></div>
-      </div>
-    </div>
-  </div>
 
   <!--remove-->
   <div v-if="popup == 'remove'" class="popup">
@@ -95,31 +66,29 @@
 </template>
 
 <script>
-  import { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, level, loading, popup } from '@/lib/managers.js'
+  import { getWriters, writers } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
 export default {  
   created() {
     useMeta({
-      title: 'Gaehive | Managers'
+      title: 'Gaehive | Hivezine | Writers'
     })
+    if (localStorage['user']) {
+      this.level = JSON.parse(localStorage['user']).level
+    }
     if (localStorage["blur"] == 0) {
       this.blur = "blur(0)"
     }
   },
 
   mounted() {
-    getManagers()    
+    getWriters()    
   },
-  
+
   data() {
-  	return {
-      level: level,
-      hostnext: hostnext,
-      next: next,
-      list: list,
-      managers: managers,
-      loading: loading,
-      popup: popup,
+    return {
+      writers: writers,
+      level: null,
       confirm: null,
       host: null,
       user: null,
@@ -143,7 +112,7 @@ export default {
       this.popup = type
       this.user = user
       this.host = host
-      
+
     }
   }
 }

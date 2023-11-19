@@ -1,6 +1,6 @@
 <template>
   <TransitionGroup name="popup">
-    <div v-if="popup" class="popupbg"></div>
+    <div v-if="popup" class="popupbg" :style="{ backdropFilter: blur }"></div>
 
     <div v-if="popup == 'delete'" class="popup">
       <div class="title">Are you sure you want to delete this post?</div>
@@ -84,12 +84,16 @@
         page: 1,
         pages: pages,
         reacting: false,
-        popup: null
+        popup: null,
+        blur: "blur(1px)"
       }
     },
     
     created() {
       getPost(JSON.parse(this.$route.params.id) +1)
+      if (localStorage["blur"] == 0) {
+        this.blur = "blur(0)"
+      }
     },
 
     methods: {
