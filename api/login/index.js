@@ -53,11 +53,7 @@ app.get('/api/login', async (req, res) => {
         writer = true
       }
     }
-  if (json.username == "LegoManiac04") {
-    manager = true
-    writer = true
-  }
-
+  
   const { hzdata } = await supabase.from('managers').select('data').eq("id", 2)
   const writers = await hzdata[0].data
   for (var i = 0; i < writers.length; i++) {
@@ -65,7 +61,9 @@ app.get('/api/login', async (req, res) => {
         writer = true
       }
     }
+
   if (json.username == "LegoManiac04") {
+    manager = true
     writer = true
   }
 
