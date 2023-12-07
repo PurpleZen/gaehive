@@ -100,7 +100,7 @@
 export default {  
   created() {
     useMeta({
-      title: 'Gaehive | Managers'
+      title: 'Gaehive • Managers'
     })
     if (localStorage["blur"] == 0) {
       this.blur = "blur(0)"

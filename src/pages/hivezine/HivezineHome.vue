@@ -76,10 +76,10 @@
       <div v-if="newpost == 'copying'" class="post">
         <div class="content">
             <div v-for="(item, index) in json" :key="item">
-              <h5 v-if="index == 0">First Comment</h5>
-              <h5 v-else>Reply #{{ index }}</h5>
+              <h5 v-if="index == 0">First Comment <button :id="'button' + index" @click="copy(item, index)">Copy</button></h5>
+              <h5 v-else>Reply #{{ index }} <button :id="'button' + index" @click="copy(item, index)">Copy</button></h5>
               <div class="json">
-                {{ item }}
+                {{ item }} 
               </div>
             </div>
         </div>
@@ -93,15 +93,35 @@
       </div>
     </div>
 
-    <div style="display:flex">
+    <div class="pagesearch">
       <div class="pages">
         <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
       </div>
-      <input placeholder="Search...">
+      <div class="space"></div>
+      <div v-if="pages" style="display:flex">
+      <input class="search" v-model="query" @keydown.enter="searchPosts(query, type)" :placeholder="'Search by ' + type">
+        <button @click="searchPosts(query, type)" class="searchButton"><div class="material-symbols-rounded">search</div></button>
+      <details class="tools" id="type">
+        <summary>Filter</summary>
+        <ul class="list">
+          <button v-if="type !== 'post'" @click="type = 'post'; closeDropdown()" class="tools">Post</button>
+          <button v-if="type == 'post'" @click="type = 'post'; closeDropdown()" class="toolsselect">Post</button>
+          
+          <button v-if="type !== 'title'" @click="type = 'title'; closeDropdown()" class="tools">Title</button>
+          <button v-if="type == 'title'" @click="type = 'title'; closeDropdown()" class="toolsselect">Title</button>
+          
+          <button v-if="type !== 'user'" @click="type = 'user'; closeDropdown()" class="tools">Username</button>
+          <button v-if="type == 'user'" @click="type = 'user'; closeDropdown()" class="toolsselect">Username</button>
+        </ul>
+      </details>
+        <div class="space"></div>
+        <button id="clearSearch" @click="clearSearch()">Clear</button>
+      </div>
     </div>
 
     <div class="posts">
     <TransitionGroup name="hz">
+        <div v-if="posts == '' && pages" class="noposts">No results 😿</div>
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
         <div class='username'>
@@ -146,7 +166,7 @@
 </template>
 
 <script>
-  import { getPosts, getPages, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPosts, getPages, searchPosts, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -175,18 +195,20 @@
         writing: null,
         newpost: 'writing',
         json: [],
+        query: null,
+        type: "post"
       }
     },
     created() {
       useMeta({
-       title: 'Gaehive | Hivezine | Page 1'
+       title: 'Gaehive • Hivezine • Page 1'
       })
-      getPages()
-    },
-    mounted() {
       if (localStorage['user']) {
         this.level = JSON.parse(localStorage['user']).level
       }
+      getPages()
+    },
+    mounted() {
       if (!this.$route.params.pg) {
         getPosts(1)
       } else {
@@ -209,6 +231,11 @@
     },
 
     methods: {
+      copy(value, id) {
+        let element = "button" + id
+        navigator.clipboard.writeText(value)
+        document.getElementById(element).innerHTML = "Copied!"
+      },
       contains(name) {
         if (name) {
           return name.includes(this.username)
@@ -231,6 +258,24 @@
       },
       addPost() {
         addPost()
+      },
+      searchPosts(query, type) {
+        searchPosts(query, type)
+      },
+      clearSearch() {
+        if (!this.$route.params.id) {
+        if (this.$route.params.pg) {
+          this.page = this.$route.params.pg
+          getPosts(this.$route.params.pg)
+        } else {
+          getPosts(1)
+        }
+        }
+        this.query = null
+        this.type = "post"
+      },
+      closeDropdown() {
+        document.getElementById('type').open = false
       },
       jsonify() {
         this.newpost = "copying"
@@ -326,9 +371,6 @@
 </script>
 
 <style>
-ul .tools {
-  width: auto;
-}
   
  .tools details {
     position: relative;

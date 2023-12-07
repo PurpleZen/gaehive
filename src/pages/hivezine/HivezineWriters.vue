@@ -1,7 +1,7 @@
 <template>
   <h1 class="greeting">Hivezine Writers</h1>
   <div>
-    <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Writers</button>
+    <button v-if="manager" class="button" @click="prompt('add')">Add Writers</button>
   </div>
 
   <div class="managers">
@@ -71,10 +71,10 @@
 export default {  
   created() {
     useMeta({
-      title: 'Gaehive | Hivezine | Writers'
+      title: 'Gaehive • Hivezine • Writers'
     })
     if (localStorage['user']) {
-      this.level = JSON.parse(localStorage['user']).level
+      this.manager = JSON.parse(localStorage['user']).manager
     }
     if (localStorage["blur"] == 0) {
       this.blur = "blur(0)"
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       writers: writers,
-      level: null,
+      manager: null,
       confirm: null,
       host: null,
       user: null,

@@ -1,4 +1,5 @@
 <template>
+  <div class="centerpage">
   <TransitionGroup name="popup">
     <div v-if="popup" class="popupbg" :style="{ backdropFilter: blur }"></div>
 
@@ -61,6 +62,7 @@
     </div>
       </TransitionGroup>
     </div>
+  </div>
 </template>
 
 <script>

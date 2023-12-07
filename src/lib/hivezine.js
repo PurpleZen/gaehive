@@ -19,7 +19,7 @@ async function getPages() {
 }
 
 async function getPosts(page) {
-  document.title = 'Gaehive | Hivezine | Page ' + page
+  document.title = 'Gaehive • Hivezine • Page ' + page
   loading.value = true
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
@@ -29,6 +29,32 @@ async function getPosts(page) {
   posts.value = ([])
   for ( var i = 0; i < data.length; i++){
     posts.value = posts.value.concat(data[i].data)
+  }
+  symbcode.forEach(string => {
+    var is = symbcode.indexOf(string)
+    for ( var i = 0; i < posts.value.length; i++){
+      let regex = new RegExp(string, "g")
+      posts.value[i].title = posts.value[i].title.replace(regex, symbols[is]);
+      posts.value[i].post = posts.value[i].post.replace(regex, symbols[is]);
+        }
+      })
+  loading.value = false
+  reacting.value = false
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = ''
+  }
+}
+
+async function searchPosts(query, type) {
+  document.title = 'Gaehive | Hivezine | Search'
+  loading.value = true
+  const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false })
+  posts.value = ([])
+  for ( var i = 0; i < data.length; i++){
+    if (JSON.stringify(data[i].data[0][type]).toLowerCase().includes(query.toLowerCase())) {
+    posts.value = posts.value.concat(data[i].data)
+    }
   }
   symbcode.forEach(string => {
     var is = symbcode.indexOf(string)
@@ -61,7 +87,7 @@ async function getPost(id) {
       post.value[i].post = post.value[i].post.replace(regex, symbols[is]);
         }
       })
-  document.title = "Gaehive | Hivezine | " + post.value[0].title
+  document.title = "Gaehive • Hivezine • " + post.value[0].title
 }
 
 async function setReact(type, id) {
@@ -183,4 +209,4 @@ async function getWriters() {
   writers.value = data[0].data
 }
 
-export { getPosts, getPost, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
+export { getPosts, getPost, searchPosts, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }

@@ -28,7 +28,8 @@
     <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
     <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
     
-    <router-link class='sidebutton' to="/resources">Resources</router-link>
+    <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
+    <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
     
     <a class='sidebutton' @click="this.popup = 'settings'">Settings</a>
 
@@ -50,11 +51,11 @@
     <div class="title">Settings</div>
     <div class="popupbody">
       <div>
-      <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">Theme<space/><div class="material-symbols-rounded">palette</div></button>
-      <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'light' || this.theme == '2000s-blog'">Theme<space/><div class="material-symbols-rounded">palette</div></button>
+      <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'dark' && this.theme !== '2000s-blog' && !this.secret">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
+      <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'light' && this.theme">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
       
-      <button @click="setBlur(0)" v-if="blur == 'blur(1px)'">Blur<space/><div class="material-symbols-rounded">blur_on</div></button>
-      <button @click="setBlur(1)" v-if="blur !== 'blur(1px)'">Blur<space/><div class="material-symbols-rounded">blur_on</div></button>
+      <button @click="setBlur(0)" v-if="blur == 'blur(1px)'">Blur<div class="space"></div><div class="material-symbols-rounded">blur_on</div></button>
+      <button @click="setBlur(1)" v-if="blur !== 'blur(1px)'">Blur<div class="space"></div><div class="material-symbols-rounded">blur_on</div></button>
       </div>
       <div class="popupbuttons">
         <button @click="this.popup = null" class="button">Close</button>
@@ -139,7 +140,7 @@
       if (localStorage["blur"] == 0) {
         this.blur = "blur(0)"
       }
-
+      
       getBirthdays()
     },
     
@@ -152,6 +153,10 @@
       }
       if (this.username == "melody-sy") {
         this.mellie = "sy"
+      }
+
+      if (localStorage["animation"] == 0) {
+        this.animation = 0
       }
       
       const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
@@ -177,7 +182,8 @@
         location: null,
         popup: null,
         blur: "blur(1px)",
-        users: users
+        animation: null,
+        users: null
   	  }
     }
   }
@@ -199,7 +205,6 @@
   --plnk: #573c57;
   --plnkh: #392839;
   --imp: #d22727;
-  --brkb: 4px dotted var(--brk);
 }
 
 [data-theme="dark"] {
@@ -233,9 +238,7 @@
   --plnk: magenta;
   --plnkh: yellow;
   --imp: red;
-  --brkb: 4px solid var(--brk);
 }
-
   
 .hz-move,
 .hz-enter-active {
@@ -273,7 +276,7 @@
   opacity: 0;
 }
 
-space {
+.space {
   width: 5px;
 }
 
@@ -287,9 +290,15 @@ space {
   line-break: anywhere;
 }
 
+.pagesearch {
+  display: flex;
+  height: fit-content;
+}
+
 .toolbar {
   display: flex;
   margin: 0 10px;
+  overflow: auto;
 }
 
 .tools {
@@ -302,6 +311,23 @@ space {
   display: grid;
   align-content: center;
   position: relative;
+}
+
+.toolsselect {
+  background-color: var(--sb);
+  width: 100%;
+  border: none;
+  color: var(--txt) !important;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 0 15px;
+  display: grid;
+  align-content: center;
+  position: relative;
+}
+
+ul .tools {
+  width: 100%;
 }
 
 .tools .material-symbols-rounded {
@@ -587,6 +613,7 @@ textarea {
   display: grid;
   overflow: scroll;
   justify-items: center;
+  align-content: baseline;
   position: relative;
 }
 
@@ -610,18 +637,6 @@ textarea {
 .currnext img {
   width: 60px;
   height: 60px;
-}
-
-.container {
-  display: grid;
-}
-  
-.queue {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  align-items: center;
-  margin: 20px;
 }
 
 .greeting {
@@ -798,6 +813,10 @@ textarea {
   border-radius: 5px;
 }
 
+iframe {
+  width: 100%;
+}
+
 .posts {
   display: grid;
   align-content: center;
@@ -871,20 +890,19 @@ textarea {
 
 .reactbutton, .reactbuttonactive {
   position: relative;
-  background-color: var(--acclt);
-  padding: 5px 7px 7px 7px;
+  padding: 2px 5px 5px 5px;
   margin-right: 5px;
   display: inline-block;
-  font-size: larger;
+  font-size: x-large;
   font-weight: bolder;
   text-decoration: none;
   text-shadow: #0005 0 1px 2px;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 5px;
 }
 
 .reactbutton span, .reactbuttonactive span {
-  font-size: small;
+  font-size: medium;
 }  
 
 .reactbuttonactive {
@@ -896,11 +914,58 @@ textarea {
   display: flex;
 }
 
+.noposts {
+  justify-self: center;
+  background-color: var(--sb);
+  border: 2px solid var(--acc);
+  padding: 5px 40px;
+  margin: 20px;
+  border-radius: 5px;
+}
+
 .pages {
   background-color: var(--sb);
   display: flex;
   height: fit-content;
   border-radius: 5px;
+}
+
+#type, #type summary {
+  background-color: var(--sb);
+  color: var(--txt);
+  margin: 0;
+  border-radius: 0 5px 5px 0;
+}
+
+#clearSearch {
+  background-color: var(--sb);
+  color: var(--acc2) !important;
+  outline: none;
+  font-size: small;
+  border-radius: 5px;
+  margin: 0;
+}
+
+.searchButton {
+  background-color: var(--sb);
+  color: var(--txt) !important;
+  padding: 5px;
+  font-size: large;
+  border-radius: 0;
+  margin: 0;
+  outline: none !important;
+}
+
+.searchButton:hover {
+  outline: none;
+}
+
+.search {
+  margin: 0;
+  outline: none;
+  color: var(--txt);
+  font-weight: bold;
+  border-radius: 5px 0 0 5px;
 }
 
 .reactbutton:hover {
@@ -1076,7 +1141,9 @@ button .material-symbols-rounded {
 .break {
   display: inline-block;
   width: 40%;
-  border-bottom: var(--brkb);
+  height: 2px;
+  background-color: var(--acc);
+  border-radius: 5px;
   margin: 15px
 }
 
@@ -1171,22 +1238,50 @@ button .material-symbols-rounded {
     grid-template-columns: none;
   }
   .promptButton {
-    padding: 0;
+    background-color: var(--acclt);
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 5px 2px;
+  }
+  .promptButton .material-symbols-rounded {
+    color: var(--txtstr);
   }
   .users a {
     white-space: unset;
   }
   .reactions {
+    display: grid;
+    justify-items: center;
     justify-content: center;
   }
   .reactbutton, .reactbuttonactive {
-    padding: 10px 6px;
+    margin: 1px;
+    padding: 3px;
   }
   .reactbutton span, .reactbuttonactive span {
     display: none;
   }
   .post img {
     max-width: 200px;
+  }
+  .pagesearch {
+    display: grid;
+  }
+  .pages {
+    justify-self: center;
+    margin-bottom: 2px;
+    overflow: scroll;
+    width: 100%;
+  }
+  .currentpage, .nextpage {
+    padding: 12px;
+  }
+  .search {
+    width: 100%;
+    padding: 15px;
+  }
+  .users span {
+    white-space: break-spaces;
   }
 }
 </style>

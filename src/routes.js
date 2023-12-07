@@ -1,5 +1,5 @@
 import Home from './pages/Home.vue'
-import Settings from './pages/Settings.vue'
+import Resources from './pages/Resources.vue'
 import NotFound from './pages/404.vue'
 
 import HivezineHome from './pages/hivezine/HivezineHome.vue'
@@ -35,8 +35,8 @@ export const routes = [
       },
   
       {
-        path: '/settings',
-        component: Settings,
+        path: '/resources',
+        component: Resources,
       },
       { 
         path: '/:path(.*)',
