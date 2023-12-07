@@ -59,9 +59,9 @@ app.get('/api/login', async (req, res) => {
   }
 
   const { hzdata } = await supabase.from('managers').select('data').eq("id", 2)
-  const managers = await hzdata[0].data
-  for (var i = 0; i < managers.length; i++) {
-    if (managers[i].name == json.username) {
+  const writers = await hzdata[0].data
+  for (var i = 0; i < writers.length; i++) {
+    if (writers[i].name == json.username) {
         writer = true
       }
     }
