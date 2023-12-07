@@ -1,8 +1,8 @@
 <template>
   <h1 class="greeting">Our Managers</h1>
   <div>
-    <button v-if="level == 'manager'" class="button" @click="prompt('add')">Add Managers</button>
-    <button v-if="level == 'manager'" class="button">Add/Edit Bio</button>
+    <button v-if="manager == true" class="button" @click="prompt('add')">Add Managers</button>
+    <button v-if="manager == true" class="button">Add/Edit Bio</button>
   </div>
   
   <div class="managers">
@@ -22,16 +22,16 @@
           </a>
           <div class='useroptions'>
             <div>
-              <div v-if="level == 'manager' && index !== 0" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
+              <div v-if="manager == true && index !== 0" @click="prompt('move', user.name, managers[0].name)" class="promote"><div class="material-symbols-rounded">star</div>
               </div>
-              <div v-if="level == 'manager'" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
+              <div v-if="manager == true" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
               </div>
             </div>
 
             <div>
-              <div v-if="level == 'manager' && index !== 0" @click="move(user.name, 'up')" class="promote"><div class="material-symbols-rounded">expand_less</div>
+              <div v-if="manager == true && index !== 0" @click="move(user.name, 'up')" class="promote"><div class="material-symbols-rounded">expand_less</div>
               </div>
-              <div v-if="level == 'manager' && index !== managers.length - 1" @click="move(user.name, 'down')" class="promote"><div class="material-symbols-rounded">expand_more</div>
+              <div v-if="manager == true && index !== managers.length - 1" @click="move(user.name, 'down')" class="promote"><div class="material-symbols-rounded">expand_more</div>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-  import { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, level, loading, popup } from '@/lib/managers.js'
+  import { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, loading, popup } from '@/lib/managers.js'
   import { useMeta } from 'vue-meta'
 export default {  
   created() {
@@ -113,7 +113,7 @@ export default {
   
   data() {
   	return {
-      level: level,
+      manager: manager,
       hostnext: hostnext,
       next: next,
       list: list,

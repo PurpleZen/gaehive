@@ -5,13 +5,13 @@
   const next = ref([])
   const list = ref([])
   const managers = ref([])
-  const level = ref([])
+  const manager = ref([])
   const loading = ref([])
   const popup = ref()
 
   async function getManagers() {
     if (localStorage['user']) {
-        level.value = JSON.parse(localStorage['user']).level
+        manager.value = JSON.parse(localStorage['user']).manager
     }
     const { data } = await supabase.from('managers').select('data').eq("id", 1)
     hostnext.value = data[0].data.slice(0, 2)
@@ -109,4 +109,4 @@
     getManagers()
   }
     
-  export { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, level, loading, popup }
+  export { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, loading, popup }

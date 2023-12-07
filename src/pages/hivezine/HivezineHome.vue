@@ -6,7 +6,7 @@
       <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
     </div>
     
-    <div v-if="username && level == 'manager' || level == 'writer'" class="posts">
+    <div v-if="username && manager || writer" class="posts">
       <div v-if="newpost == 'writing'" class="post">
       <div class="title">
         <div class="username">
@@ -178,7 +178,8 @@
         error: null,
         username: username,
         id: id,
-        level: null,
+        manager: null,
+        writer: null,
         list: null,
         title: "",
         titlepreview: "",
@@ -204,7 +205,7 @@
        title: 'Gaehive • Hivezine • Page 1'
       })
       if (localStorage['user']) {
-        this.level = JSON.parse(localStorage['user']).level
+        this.manager = JSON.parse(localStorage['user']).manager
       }
       getPages()
     },

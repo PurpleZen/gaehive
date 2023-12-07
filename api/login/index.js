@@ -44,21 +44,35 @@ app.get('/api/login', async (req, res) => {
   const id = userdata.id
 
   var manager = false
-  const { data } = await supabase.from('managers').select('data')
-  const managers = await data[0].data
+  var writer = false
+  const { mngdata } = await supabase.from('managers').select('data').eq("id", 1)
+  const managers = await mngdata[0].data
   for (var i = 0; i < managers.length; i++) {
     if (managers[i].name == json.username) {
         manager = true
+        writer = true
       }
     }
   if (json.username == "LegoManiac04") {
     manager = true
+    writer = true
+  }
+
+  const { hzdata } = await supabase.from('managers').select('data').eq("id", 2)
+  const managers = await hzdata[0].data
+  for (var i = 0; i < managers.length; i++) {
+    if (managers[i].name == json.username) {
+        writer = true
+      }
+    }
+  if (json.username == "LegoManiac04") {
+    writer = true
   }
 
   if (json.valid) {
-    const token = jwt.sign({ name: json.username, role: "authenticated", manager: manager }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
+    const token = jwt.sign({ name: json.username, role: "authenticated", manager: manager, writer: writer }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
     res.cookie('mytoken', token, cookieOptions);
-    res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager})))
+    res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})))
   } else {
     return res.json({ token: "invalid" })
   }
