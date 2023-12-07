@@ -45,8 +45,8 @@ app.get('/api/login', async (req, res) => {
 
   var manager = false
   var writer = false
-  const { mngdata } = await supabase.from('managers').select('data').eq("id", 1)
-  const managers = await mngdata[0].data
+  var { data } = await supabase.from('managers').select('data').eq("id", 1)
+  const managers = await data[0].data
   for (var i = 0; i < managers.length; i++) {
     if (managers[i].name == json.username) {
         manager = true
@@ -54,8 +54,8 @@ app.get('/api/login', async (req, res) => {
       }
     }
   
-  const { hzdata } = await supabase.from('managers').select('data').eq("id", 2)
-  const writers = await hzdata[0].data
+  var { data } = await supabase.from('managers').select('data').eq("id", 2)
+  const writers = await data[0].data
   for (var i = 0; i < writers.length; i++) {
     if (writers[i].name == json.username) {
         writer = true
