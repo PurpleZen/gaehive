@@ -10,7 +10,7 @@
       <router-link v-if="username && manager == 'true' || admin == 'true' || writer == 'true'" to="/hivezine/writers" class="button">Edit Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
     </div>
-    <div class="writers">
+    <!-- div class="writers">
           <div class="title">Our Writers:</div>
           <div class="hzlist">
             <TransitionGroup name="mng">
@@ -63,6 +63,23 @@
     <div v-for="(item, index) in this.pages" :key="item">
     <router-link :to="'/hivezine/' + (item + 1)" :class="{reactbuttonactive: this.page == item + 1, reactbutton: this.page !== item + 1}">{{ item + 1 }}</router-link>
     </div>
+  </div -->
+    <div class="posts">
+      <div class="post">
+        <div class="title">
+          <div class="pinnedPost">
+            <div class="material-symbols-rounded">push_pin</div>
+            Website Features Down? Here's Why:
+          </div>
+          <div class='username'>
+            <span>
+              <a href="https://scratch.mit.edu/users/LegoManiac04">LegoManiac04</a> on December 24, 2023
+            </span>
+            <img src="https://uploads.scratch.mit.edu/get_image/user/21629747_500x500.png">
+          </div>
+        </div>
+        <div class='content'>With changes to <a href="https://blog.replit.com/hosting-changes">Replit's hosting</a> at the beginning of January 2024, this site will be unable to fully operate. Features such as logging in, the host queue, and the Hiveine will be permanently down starting today.<br><br>These changes are incredibly disappointing, as Replit will no longer be a service where novice coders can host their code for free at the capacity that they have previously. I'm not going to pay Replit for a spotty service for a hobby project.<br><br>I have, however, been slowly migrating and remaking the Gaehive website to be better, cleaner, and to no longer rely on Replit. <i>Ver 2</i> of the Gaehive Website will release sometime in the first half of 2024 <sub><sup>(probably lol)</sup></sub> and will use Supabase for features like the Hivezine and host queue. I'll keep y'all updated on the Gaehive Studio!</div>
+      </div>
     </div>
   </div>
   </div>
@@ -96,7 +113,6 @@
       this.$watch(
         () => this.$route.params,
         () => {
-          this.getPosts()
         },
         { immediate: true }
       )
@@ -112,24 +128,7 @@
         this.writer = JSON.parse(localStorage['user']).writer 
       }
 
-      if (!localStorage["writers"]) {
-        this.noWriterData()
-      } else {
-        this.getWriterData()
-      }
-
-      const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/list')
-      this.data = await postdata.json()
-
-      for (var i = 0; i < Math.ceil(this.data.length / 10); i++) {
-        if (!this.pages) {
-          this.pages = [i];
-        } else {
-          this.pages.splice(i, 0, i);
-        }
-    }
-      
-      this.getPosts()
+    
       
       this.loading = false
     },

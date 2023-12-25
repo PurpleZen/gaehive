@@ -6,23 +6,22 @@
         <h3>Welome to the official Gaehive website! This website was built by <a href="https://scratch.mit.edu/users/LegoManiac04/">LegoManiac04</a> for the Scratch Studio known as the Gaehive. Here, you can find useful links, as well as some useful and fun tools, like the Hivezine and the host queue!</h3>
         <span><i>To follow Scratch Community Guidelines, all "user-generated" content on this site is fetched and stored from Scratch comments. Users cannot generate any content on this website. For more information, please check out <router-link to="/docs/how-we-follow-guidelines">this page</router-link>.</i></span>
 
-        <div v-if="loading" class="loader">Loading...</div>
         
         <div class="posts">
-          <div class="post" v-for="(item, index) in this.posts">
+          <div class="post">
             <div class="title">
               <div class="pinnedPost">
                 <div class="material-symbols-rounded">push_pin</div>
-                <router-link :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
+                Website Features Down? Here's Why:
               </div>
               <div class='username'>
                 <span>
-                  <a :href="'https://scratch.mit.edu/users/' + item.user ">{{ item.user }}</a> on {{ item.date }}
+                  <a href="https://scratch.mit.edu/users/LegoManiac04">LegoManiac04</a> on December 24, 2023
                 </span>
-                <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
+                <img src="https://uploads.scratch.mit.edu/get_image/user/21629747_500x500.png">
               </div>
             </div>
-            <div class='content' v-html=item.post></div>
+            <div class='content'>With changes to <a href="https://blog.replit.com/hosting-changes">Replit's hosting</a> at the beginning of January 2024, this site will be unable to fully operate. Features such as logging in, the host queue, and the Hiveine will be permanently down starting today.<br><br>These changes are incredibly disappointing, as Replit will no longer be a service where novice coders can host their code for free at the capacity that they have previously. I'm not going to pay Replit for a spotty service for a hobby project.<br><br>I have, however, been slowly migrating and remaking the Gaehive website to be better, cleaner, and to no longer rely on Replit. <i>Ver 2</i> of the Gaehive Website will release sometime in the first half of 2024 <sub><sup>(probably lol)</sup></sub> and will use Supabase for features like the Hivezine and host queue. I'll keep y'all updated on the Gaehive Studio!</div>
           </div>
         </div>
     
@@ -54,11 +53,6 @@
     async mounted() {
       this.loading = true
 
-      if (!localStorage["pin"]) {
-        this.noPostData()
-      } else {
-      this.getPostData()
-      }
       
     },
     methods: {

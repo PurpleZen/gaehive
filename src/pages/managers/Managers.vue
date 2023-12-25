@@ -7,7 +7,7 @@
         <span v-if=!loading>The Gaehive Scratch studio has around <b @click.right="this.secret()" style="font-family:serif">{{ this.active }}</b> active managers that help keep the studio a safe and welcoming place for all. Managers rotate the role of Studio Host daily, giving them all opportunities to edit the studio and have some fun!<br>Here you can see the host queue and meet our wonderful managers!<b v-if="username && manager == 'true' || admin == 'true'"><br>Managers: You can click the star button on users to make them show as the current host!</b></span>
         
         <router-link v-if="username && manager == 'true' || admin == 'true'" to="/managers/edit" class="button">Edit Managers</router-link>
-        <div v-if=!loading class="break"></div>
+        <!-- div v-if=!loading class="break"></div>
         <TransitionGroup name="mng">
         <div v-for="(item, index) in this.hosts" :key="item.name">
           <div class="users" v-if="index == 0"><a :href="'https://scratch.mit.edu/users/' + item.name" ><img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.id + '_500x500.png'"><span>{{ item.name }} is currently host</span></a></div>
@@ -25,6 +25,23 @@
               </div>
             </div>
             </TransitionGroup>
+          </div>
+      </div -->
+        <div class="posts">
+          <div class="post">
+            <div class="title">
+              <div class="pinnedPost">
+                <div class="material-symbols-rounded">push_pin</div>
+                Website Features Down? Here's Why:
+              </div>
+              <div class='username'>
+                <span>
+                  <a href="https://scratch.mit.edu/users/LegoManiac04">LegoManiac04</a> on December 24, 2023
+                </span>
+                <img src="https://uploads.scratch.mit.edu/get_image/user/21629747_500x500.png">
+              </div>
+            </div>
+            <div class='content'>With changes to <a href="https://blog.replit.com/hosting-changes">Replit's hosting</a> at the beginning of January 2024, this site will be unable to fully operate. Features such as logging in, the host queue, and the Hiveine will be permanently down starting today.<br><br>These changes are incredibly disappointing, as Replit will no longer be a service where novice coders can host their code for free at the capacity that they have previously. I'm not going to pay Replit for a spotty service for a hobby project.<br><br>I have, however, been slowly migrating and remaking the Gaehive website to be better, cleaner, and to no longer rely on Replit. <i>Ver 2</i> of the Gaehive Website will release sometime in the first half of 2024 <sub><sup>(probably lol)</sup></sub> and will use Supabase for features like the Hivezine and host queue. I'll keep y'all updated on the Gaehive Studio!</div>
           </div>
         </div>
       </div>
@@ -51,7 +68,6 @@
     
     async mounted() {
       
-      this.loading = true
 
       if (localStorage['user']) {
         this.username = JSON.parse(localStorage['user']).username.toLowerCase()
@@ -59,11 +75,8 @@
         this.admin = JSON.parse(localStorage['user']).admin
       }
 
-      if (!localStorage["managers"]) {
-        this.noManagerData()
-      } else {
-      this.getManagerData()
-      }
+    
+      
     },
     
     methods: {
