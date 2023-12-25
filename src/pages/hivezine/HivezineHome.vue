@@ -6,7 +6,7 @@
       <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
     </div>
     
-    <div v-if="username && manager || writer" class="posts">
+    <div v-if="username && writer" class="posts">
       <div v-if="newpost == 'writing'" class="post">
       <div class="title">
         <div class="username">
@@ -206,6 +206,7 @@
       })
       if (localStorage['user']) {
         this.manager = JSON.parse(localStorage['user']).manager
+        this.writer = JSON.parse(localStorage['user']).writer
       }
       getPages()
     },
