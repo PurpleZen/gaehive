@@ -3,7 +3,7 @@
  
     <div>
       <router-link class="button" to="/hivezine/writers">Writers</router-link>
-      <a href="https://scratch.mit.edu/studios/33685506/comments" class="button">Studio</a>
+      <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
     </div>
     
     <div v-if="username && manager || writer" class="posts">

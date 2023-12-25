@@ -20,6 +20,8 @@
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
         <div class='username'>
+          <router-link class="promptButton" to="/hivezine"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">View More</span></router-link>
+          <div class="space"></div>
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
           

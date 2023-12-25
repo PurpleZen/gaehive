@@ -37,6 +37,6 @@
 }
 
 .notfound h2 {
-  margin: -40px 0 0 0;
+  margin: -30px 0 0 0;
 }
 </style>

@@ -14,7 +14,7 @@
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
       <img v-if="!username" src="/favicon.ico">
       <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-      <h2 @click.right="this.secret = true" v-if="!username">Welcome</h2>
+      <h2 @click.right="this.secret = true" v-if="!username">Hello :)</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
@@ -58,7 +58,9 @@
       <button @click="setBlur(1)" v-if="blur !== 'blur(1px)'">Blur<div class="space"></div><div class="material-symbols-rounded">blur_on</div></button>
       </div>
       <div class="popupbuttons">
-        <button @click="this.popup = null" class="button">Close</button>
+        <div class="reactions">
+          <button @click="this.popup = null" class="button">Close</button>
+        </div>
       </div>
     </div>
   </div>
@@ -183,7 +185,7 @@
         popup: null,
         blur: "blur(1px)",
         animation: null,
-        users: null
+        users: users
   	  }
     }
   }
@@ -274,6 +276,14 @@
 .popup-enter-from,
 .popup-leave-to {
   opacity: 0;
+}
+
+.centerpage {
+  display: grid;
+  align-items: center;
+  height: calc(100vh - 20px);
+  justify-items: center;
+  width: 100%;
 }
 
 .space {
@@ -514,7 +524,7 @@ textarea {
 }
 
 .sidebar h2 {
-  font-family: 'Leckerli One';
+  font-family: 'Agbalumo';
   font-size: larger;
   color: var(--acc2);
   margin: 0 0 0 8px;
@@ -642,7 +652,7 @@ textarea {
 .greeting {
   margin-top: 50px;
   margin-bottom: 5px;
-  font-family: 'Leckerli One';
+  font-family: 'Agbalumo';
   color: var(--acc2);
   text-shadow: var(--acc) 2px 2px;
 }
@@ -768,7 +778,7 @@ textarea {
   margin-left: 10px;
   cursor: initial;
   background: none;
-  font-family: Leckerli One;
+  font-family: Agbalumo;
   color: var(--acc2) !important;
   text-shadow: var(--acclt) 1.5px 1.5px;
 }
@@ -838,7 +848,7 @@ iframe {
 }
 
 .titlename {
-  font-family: Leckerli One;
+  font-family: Agbalumo;
   font-size: larger;
   color: var(--acc2) !important;
   text-shadow: var(--acclt) 1.5px 1.5px;
@@ -1069,7 +1079,7 @@ button .material-symbols-rounded {
 .promptButton .tooltiptext {
   width: max-content;
   visibility: hidden;
-  background-color: var(--txt);
+  background-color: var(--acc);
   color: var(--btxt);
   text-align: center;
   padding: 5px 10px;
@@ -1081,8 +1091,24 @@ button .material-symbols-rounded {
   opacity: 0;
   transition: opacity 0.3s;
 }
+
+.promptButton .tooltiptextleft {
+  width: max-content;
+  visibility: hidden;
+  background-color: var(--acc);
+  color: var(--btxt);
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 6px;
+  position: absolute;
+  align-self: center;
+  z-index: 1;
+  left: 115%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
   
-.promptButton:hover .tooltiptext {
+.promptButton:hover .tooltiptext, .promptButton:hover .tooltiptextleft {
   visibility: visible;
   opacity: 1;
 }

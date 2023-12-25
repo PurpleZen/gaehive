@@ -1,6 +1,6 @@
 <template>
   <h1 class="greeting">Resources</h1>
-  <span>It's important for us to make sure you all have resources that can help you and others stay safe. Here you can find links to useful resources, as well as <a href='https://scratch.mit.edu/contact-us/'>Contact Us</a> templates for users who need help and for reporting trolls.
+  <span>It's important for us to make sure you all have resources that can help you and others stay safe. Here you can find links to useful resources, as well as <a href='https://scratch.mit.edu/contact-us/' target="_blank">Contact Us</a> templates for users who need help and for reporting trolls.
 <br><b>If you are in crisis or suicidal, please contact one of the hotlines listed below or your local emergency number. You are not alone.</b></span>
 
   <div class="titlename">
