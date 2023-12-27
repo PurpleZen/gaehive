@@ -54,7 +54,7 @@
         <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
       </ul>
     </details>
-    <button class="tools" v-if="post || title" @click="preview = !preview">
+    <button class="tools" v-if="edit[0].post || edit[0].title" @click="preview = !preview">
       <span v-if="!preview">Preview</span>
       <span v-else>Edit</span>
     </button>
@@ -82,7 +82,7 @@
       <button @click="this.newpost = 'writing'">Back</button>
       <div>
         <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
-        <button @click="addPost()">Post</button>
+        <button @click="editPost()">Finish</button>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-  import { getPostEdit, getPages, searchPosts, setReact, removeReact, addPost, reacting, post, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPostEdit, getPages, searchPosts, setReact, removeReact, editPost, reacting, post, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -139,8 +139,8 @@
         document.getElementById(element).innerHTML = "Copied!"
       },
       
-      addPost() {
-        addPost()
+      editPost() {
+        editPost()
       },
 
       closeDropdown() {
@@ -149,7 +149,7 @@
       jsonify() {
         this.newpost = "copying"
         this.json = []
-        var obj = {title: this.edit[0].title, post: this.edit[0].post}
+        var obj = {edit: this.edit[0].id, title: this.edit[0].title, post: this.edit[0].post}
         obj = JSON.stringify(obj)
       for (var i = 0; i < obj.length / 500; i++) {
          this.json.push(obj.slice(i * 500, (i + 1) * 500))
