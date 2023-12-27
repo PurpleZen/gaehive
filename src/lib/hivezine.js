@@ -192,7 +192,7 @@ async function addPost() {
   const { data, error } = await supabase
     .from('hivezine')
     .insert([
-      { data: [{'id': id, 'date': date, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
+      {id: id + 1, data: [{'id': id, 'date': date, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
     ])
     .select()
   
