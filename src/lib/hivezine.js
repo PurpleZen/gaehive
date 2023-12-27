@@ -90,12 +90,13 @@ async function getPost(id) {
   document.title = "Gaehive • Hivezine • " + post.value[0].title
 }
 
-async function getPostEdit(id) {
+async function getPostEdit(pid) {
   post.value = ([])
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
+    id.value = JSON.parse(localStorage['user']).id
   }
-  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  const { data } = await supabase.from('hivezine').select('data').eq("id", pid)
   post.value = data[0].data
 }
 
@@ -203,6 +204,47 @@ async function addPost() {
   }
 }
 
+async function editPost() {
+  let allElements = document.querySelectorAll('*')
+  for (var i = 0; i < allElements.length; i++) {
+    allElements[i].style.cursor = 'wait'
+  }
+
+  let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
+  let post = await postdata.json()
+
+  const d = new Date();
+  let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
+
+  let id = post[0].edit
+  let user = post[0].user
+  let uid = post[0].uid
+  let pid = post[0].pid
+  let title = JSON.parse(post[0].data).title
+  let newpost = JSON.parse(post[0].data).post
+
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
+  post.value = data[0].data
+
+  let date = post.value[0].date
+
+  if (user == post.value[0].user) {
+
+  const { data, error } = await supabase
+    .from('hivezine')
+    .insert([
+      {id: id + 1, data: [{'id': id, 'date': date, 'edited': editdate, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
+    ])
+    .select()
+
+  if (!location.pathname.split("/")[2]) {
+    getPosts(1)
+  } else {
+    getPosts(location.pathname.split("/")[2])
+  }
+  }
+}
+
 async function deletePost(id) {
   const { error } = await supabase
   .from('hivezine')
@@ -216,4 +258,4 @@ async function getWriters() {
   writers.value = data[0].data
 }
 
-export { getPosts, getPost, getPostEdit, searchPosts, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
+export { getPosts, getPost, getPostEdit, searchPosts, getPages, setReact, removeReact, addPost, editPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
