@@ -141,6 +141,7 @@
       
       editPost() {
         editPost()
+        this.$router.push({ path: "/hivezine", query: null })
       },
 
       closeDropdown() {

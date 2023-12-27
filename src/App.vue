@@ -409,6 +409,11 @@
     margin-top: 30px;
   }
 
+  .poweredby {
+    margin: 2px;
+    width: 35px;
+  }
+
   input {
     background-color: var(--sb);
     color: var(--plnk);

@@ -30,13 +30,13 @@
   background-clip: text;
   color: transparent !important;
   background-position: center;
-  background-size: 70%;
+  background-size: 100%;
   margin: 0px;
   font-family: 'Leckerli One';
   font-size: 150px;
 }
 
 .notfound h2 {
-  margin: -30px 0 0 0;
+  margin: -40px 0 20px 0;
 }
 </style>

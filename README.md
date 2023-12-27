@@ -1,5 +1,8 @@
-# Vue.js
+# The Gaehive Website 🏳️‍🌈🐝
 
-Vue.js is a library for building user interfaces in JavaScript. This template uses Vite to serve your app.
+Welcome to the repository for the Gaehive website!
+Here you can view the code that makes up the front-end of the website, as well as report bugs and suggest features.
 
-[Check out the official docs here](https://vuejs.org/).
+Feel free to create an Issue for any bug reports or suggested features. 🥰
+
+[Check out the Gaehive Website here!](https://gaehive.vercel.app/)
