@@ -232,16 +232,12 @@ async function editPost() {
 
   const { data, error } = await supabase
     .from('hivezine')
-    .insert([
-      {id: id + 1, data: [{'id': id, 'date': date, 'edited': editdate, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
+    .update([
+      {data: [{'id': id, 'date': date, 'edited': editdate, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
     ])
-    .select()
+    .eq('id', id + 1)
 
-  if (!location.pathname.split("/")[2]) {
     getPosts(1)
-  } else {
-    getPosts(location.pathname.split("/")[2])
-  }
   }
 }
 
