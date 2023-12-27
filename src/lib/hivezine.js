@@ -216,7 +216,7 @@ async function editPost() {
   const d = new Date();
   let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
 
-  let id = post[0].edit
+  let id = JSON.parse(post[0].data).edit
   let user = post[0].user
   let uid = post[0].uid
   let pid = post[0].pid
