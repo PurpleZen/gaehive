@@ -237,7 +237,7 @@ async function editPost() {
     ])
     .eq('id', id + 1)
 
-    getPosts(1)
+    getPost(id)
   }
 }
 
