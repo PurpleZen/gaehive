@@ -115,7 +115,7 @@
         </ul>
       </details>
         <div class="space"></div>
-        <button id="clearSearch" @click="clearSearch()">Clear</button>
+        <button class="clearbutton" @click="clearSearch()">Clear</button>
       </div>
     </div>
 
@@ -371,78 +371,3 @@
     }
   }
 </script>
-
-<style>
-  
- .tools details {
-    position: relative;
-    width: 300px;
-    margin-right: 1rem;
-  }
-
-.tools details[open] {
-    z-index: 1;
-  }
-
-.tools summary {
-    cursor: pointer;
-  font-size: smaller;
-    border-radius: 5px;
-    background-color: var(--acc);
-    list-style: none;
-  height: 100%;
-  align-items: center;
-  display: flex;
-  }
-
-.tools summary::-webkit-details-marker {
-    display: none;
-  }
-
-.tools details[open] summary:before {
-    content: '';
-    display: block;
-    width: 100vw;
-    height: 100vh;
-    background: transparent;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-.tools summary:after {
-    content: '';
-    display: inline-block;
-  margin: 5px 0px 10px 5px;
-    width: .5rem;
-    height: .5rem;
-    border-bottom: 2px solid currentColor;
-    border-left: 2px solid currentColor;
-    border-bottom-left-radius: 2px;
-    transform: rotate(45deg) translate(50%, 0%);
-    transform-origin: center center;
-    transition: transform ease-in-out 100ms
-  }
-
-.tools summary:focus {
-    outline: none;
-  }
-
-details[open] summary:after {
-    transform: rotate(-45deg) translate(0%, 0%);
-  }
-
-.tools ul {
-    width: auto;
-    background: var(--acc);
-    position: absolute;
-    box-sizing: border-box;
-    border-radius: 5px;
-    max-height: 200px;
-    overflow-y: auto;
-  margin-top: 5px;
-  }
-
-
-
-</style>

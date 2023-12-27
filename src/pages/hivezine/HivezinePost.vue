@@ -56,9 +56,9 @@
       <div class="postoptions">
       <a :href="'https://scratch.mit.edu/studios/33586934/comments#comments-' + item.pid" class="promptButton" target="_blank"><div class="material-symbols-rounded">forum</div><span class="tooltiptext">View Source</span></a>
           
-          <span @click="editPost()" v-if="item.user == username" class="promptButton"><div class="material-symbols-rounded">edit</div><span class="tooltiptext">Edit Post</span></span>
+          <router-link :to="'/hivezine/edit/' + item.id" v-if="item.user == username" class="promptButton"><div class="material-symbols-rounded">edit</div><span class="tooltiptext">Edit Post</span></router-link>
           
-          <span @click="this.popup = 'delete'" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">Delete Post</span></span>
+          <span v-if="writer" @click="this.popup = 'delete'" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">Delete Post</span></span>
       </div>
       </div>
     </div>
@@ -97,6 +97,10 @@
       getPost(JSON.parse(this.$route.params.id) +1)
       if (localStorage["blur"] == 0) {
         this.blur = "blur(0)"
+      }
+      if (localStorage['user']) {
+        this.manager = JSON.parse(localStorage['user']).manager
+        this.writer = JSON.parse(localStorage['user']).writer
       }
     },
 

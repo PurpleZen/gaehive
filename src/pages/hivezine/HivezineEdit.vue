@@ -1,0 +1,235 @@
+<template>
+<h1 class="greeting">Edit Post</h1>
+  
+<div v-if="username && writer" class="posts">
+  <div v-if="newpost == 'writing'" class="post">
+  <div class="title">
+    <div class="username">
+      <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
+      <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
+    </div>
+    <textarea v-model="edit[0].title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
+    <div class="titlename" v-if="preview" v-html="titlepreview"></div>
+  </div>
+  <div class="toolbar">
+    <button class="tools" @click="shortcut('b')">
+      <b>B</b>
+    </button>
+    <button class="tools" @click="shortcut('i')">
+      <i>I</i>
+    </button>
+    <button class="tools" @click="shortcut('u')">
+      <u>U</u>
+    </button>
+    <button class="tools" @click="shortcut('br')">
+      Br
+    </button>
+    <button class="tools" @click="shortcut('a')">
+      <div class="material-symbols-rounded">link</div>
+    </button>
+    <button class="tools" @click="shortcut('img')">
+      <div class="material-symbols-rounded">image</div>
+    </button>
+    <button class="tools" @click="shortcut('center')">
+      <div class="material-symbols-rounded">format_align_center</div>
+    </button>
+    <details id="headers" class="tools">
+      <summary>Headers</summary>
+      <ul class="list">
+        <button @click="shortcut('h1')" class="tools">h1</button>
+        <button @click="shortcut('h2')" class="tools">h2</button>
+        <button @click="shortcut('h3')" class="tools">h3</button>
+        <button @click="shortcut('h4')" class="tools">h4</button>
+        <button @click="shortcut('h5')" class="tools">h5</button>
+        <button @click="shortcut('h6')" class="tools">h6</button>
+      </ul>
+    </details>
+    <details id="emojis" class="tools">
+      <summary>Emojis</summary>
+      <ul class="list">
+        <button @click="shortcut(':happy:')" class="tools">😊</button>
+        <button @click="shortcut(':sad:')" class="tools">☹️</button>
+        <button @click="shortcut(':cool:')" class="tools">😎</button>
+        <button @click="shortcut(':hmm:')" class="tools">🤔</button>
+        <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
+      </ul>
+    </details>
+    <button class="tools" v-if="post || title" @click="preview = !preview">
+      <span v-if="!preview">Preview</span>
+      <span v-else>Edit</span>
+    </button>
+  </div>
+  <div class='content'>
+    <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @focus="expand(true)" @focusout="expand(false)" @keyup="updated()" v-if="!preview" v-model="edit[0].post" :style="'height:' + writing" placeholder="Write an awesome post!"></textarea>
+    <div v-if="preview" class="styledcontent" v-html="postpreview"></div>
+  </div>
+  <div class="reactions">
+    <h5 style="margin:10px 0">{{ edit[0].post.length }} characters</h5>
+    <button @click="jsonify()">Next</button>
+  </div>
+</div>
+  <div v-if="newpost == 'copying'" class="post">
+    <div class="content">
+        <div v-for="(item, index) in json" :key="item">
+          <h5 v-if="index == 0">First Comment <button :id="'button' + index" @click="copy(item, index)">Copy</button></h5>
+          <h5 v-else>Reply #{{ index }} <button :id="'button' + index" @click="copy(item, index)">Copy</button></h5>
+          <div class="json">
+            {{ item }} 
+          </div>
+        </div>
+    </div>
+    <div class="reactions">
+      <button @click="this.newpost = 'writing'">Back</button>
+      <div>
+        <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
+        <button @click="addPost()">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script>
+  import { getPostEdit, getPages, searchPosts, setReact, removeReact, addPost, reacting, post, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { useMeta } from 'vue-meta'
+  import symbcode from "@/data/symbcode.json"
+  import symbols from "@/data/symbols.json"
+
+  export default {
+    data() {
+      return {
+        loading: loading,
+        error: null,
+        username: username,
+        id: id,
+        manager: null,
+        writer: null,
+        list: null,
+        edit: post,
+        titlepreview: "",
+        postpreview: "",
+        preview: false,
+        data: null,
+        symbcode: null,
+        symbols: null,
+        page: 1,
+        pages: pages,
+        reacting: reacting,
+        writing: null,
+        newpost: 'writing',
+        json: [],
+        query: null,
+        type: "post"
+      }
+    },
+    created() {
+      useMeta({
+       title: 'Gaehive • Hivezine • Edit Post ' + this.$route.params.id
+      })
+      if (localStorage['user']) {
+        this.writer = JSON.parse(localStorage['user']).writer
+      }
+      getPostEdit(JSON.parse(this.$route.params.id) +1)
+    },
+
+    methods: {
+      copy(value, id) {
+        let element = "button" + id
+        navigator.clipboard.writeText(value)
+        document.getElementById(element).innerHTML = "Copied!"
+      },
+      
+      addPost() {
+        addPost()
+      },
+
+      closeDropdown() {
+        document.getElementById('type').open = false
+      },
+      jsonify() {
+        this.newpost = "copying"
+        this.json = []
+        var obj = {title: this.edit[0].title, post: this.edit[0].post}
+        obj = JSON.stringify(obj)
+      for (var i = 0; i < obj.length / 500; i++) {
+         this.json.push(obj.slice(i * 500, (i + 1) * 500))
+      }
+      },
+      updated() {
+        this.symbcode = (symbcode)
+        this.symbols = (symbols)
+
+        this.postpreview = this.edit[0].post
+        this.titlepreview = this.edit[0].title
+        this.symbcode.forEach(string => {
+          let regex = new RegExp(string, "g")
+          var i = this.symbcode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.symbols[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
+        })
+      },
+      expand(status) {
+        if (status == true) {
+          this.writing = "300px"  
+        } else {
+          if (!this.post) {
+            this.writing = null;
+          }
+        }
+      },
+      shortcut(type) {
+        if (type == "br") {
+          let textarea = document.getElementById('textarea')
+            textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+            this.post = textarea.value
+            textarea.focus()
+        } else if (type == "img") {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let jumpback = (textarea.value.length + 10) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + ' src=""' + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+          if (start == end) {
+            textarea.selectionStart = jumpback
+            textarea.selectionEnd = jumpback
+          }
+        } else if (type == "a") {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let jumpback = (textarea.value.length + 9) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + ' href=""' + '>' + textarea.value.slice(textarea.selectionStart, textarea.selectionEnd) + '</' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+            if (start == end) {
+              textarea.selectionStart = jumpback
+              textarea.selectionEnd = jumpback
+            }
+        } else if (type.includes(":")) {
+              let textarea = document.getElementById('textarea')
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + type + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+        } else {
+          let textarea = document.getElementById('textarea')
+          let start = textarea.selectionStart
+          let end = textarea.selectionEnd
+          let endtag = '</' + type + '>'
+          let jumpback = (textarea.value.length + endtag.length - 1) - (textarea.value.length - textarea.selectionEnd)
+          textarea.value = textarea.value.slice(0, textarea.selectionStart) + '<' + type + '>' + textarea.value.slice(textarea.selectionStart, textarea.selectionEnd) + '</' + type + '>' + textarea.value.slice(textarea.selectionEnd)
+          this.post = textarea.value
+          textarea.focus()
+          if (start == end) {
+            textarea.selectionStart = jumpback
+            textarea.selectionEnd = jumpback
+          }
+        }
+        this.updated()
+        document.getElementById("emojis").open = false
+        document.getElementById("headers").open = false
+      }
+    }
+  }
+</script>

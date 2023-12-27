@@ -47,7 +47,7 @@ async function getPosts(page) {
 }
 
 async function searchPosts(query, type) {
-  document.title = 'Gaehive | Hivezine | Search'
+  document.title = 'Gaehive • Hivezine • Search results for "' + query + '"'
   loading.value = true
   const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false })
   posts.value = ([])
@@ -88,6 +88,15 @@ async function getPost(id) {
         }
       })
   document.title = "Gaehive • Hivezine • " + post.value[0].title
+}
+
+async function getPostEdit(id) {
+  post.value = ([])
+  if (localStorage['user']) {
+    username.value = JSON.parse(localStorage['user']).username
+  }
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  post.value = data[0].data
 }
 
 async function setReact(type, id) {
@@ -207,4 +216,4 @@ async function getWriters() {
   writers.value = data[0].data
 }
 
-export { getPosts, getPost, searchPosts, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
+export { getPosts, getPost, getPostEdit, searchPosts, getPages, setReact, removeReact, addPost, deletePost, getWriters, writers, reacting, posts, post, loading, username, id, pages }
