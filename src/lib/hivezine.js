@@ -218,26 +218,31 @@ async function editPost() {
 
   let id = JSON.parse(post[0].data).edit
   let user = post[0].user
-  let uid = post[0].uid
-  let pid = post[0].pid
-  let title = JSON.parse(post[0].data).title
+  let newtitle = JSON.parse(post[0].data).title
   let newpost = JSON.parse(post[0].data).post
 
   const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
   post.value = data[0].data
 
-  let date = post.value[0].date
-
   if (user == post.value[0].user) {
+
+    post.value[0].post = newpost
+    post.value[0].title = newtitle
+    post.value[0].edited = editdate
 
   const { data, error } = await supabase
     .from('hivezine')
     .update([
-      {data: [{'id': id, 'date': date, 'edited': editdate, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
+      {data: post.value},
     ])
     .eq('id', id + 1)
 
-    getPost(id)
+    getPost(id + 1)
+
+    let allElements = document.querySelectorAll('*')
+    for (var i = 0; i < allElements.length; i++) {
+      allElements[i].style.cursor = ''
+    }
   }
 }
 
