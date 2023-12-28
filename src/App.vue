@@ -19,7 +19,7 @@
           <h1 class="greeting">The Gaehive Website</h1>
 
           <h3>Built for the Gaehive, a Scratch Studio and community supporting LGBTQ+ individuals.</h3>
-      <h2>Version 2 coming soon!</h2>
+      <h2>Version 2 coming early 2024!</h2><sub style="margin-top:-20px">hopefully lol</sub>
 
       <h3><a class="button" href="https://scratch.mit.edu/users/LegoManiac04/" target="_blank">Made with &lt;3 by LegoManiac04</a></h3>
 
