@@ -16,7 +16,7 @@
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('light')" v-if="this.theme == 'dark' && !this.secret || this.theme == '2000s-blog'">theme</a>
     <a class='sidelinks' style="cursor: pointer" @click="changeTheme('2000s-blog')" v-if="this.secret && this.theme !== '2000s-blog'">reset internet to 2004</a>
     <div class="loader-placehold"></div>
- 
+    <a class='login' @click="logIn()" v-if="!this.username">sign in</a>
     <a class='login' @click="logOut()" v-if="this.username">sign out</a>
     <a v-if="this.username" class="feedback" href="https://scratch.mit.edu/studios/33687618/comments">feedback</a>
   </div>
@@ -28,11 +28,11 @@
 <script>
   export default {
     methods: {
-      logIn() {
-        window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
-      btoa('https://' + location.hostname + '/login') +
-      '&name=the Gaehive website&authProject=867214083'
-    },
+      //logIn() {
+        //window.location = 'https://auth.itinerary.eu.org/auth/?redirect=' +
+      //btoa('https://' + location.hostname + '/login') +
+      //'&name=the Gaehive website&authProject=867214083'
+    //},
       logOut() {
         localStorage.removeItem("token")
         localStorage.removeItem("user")

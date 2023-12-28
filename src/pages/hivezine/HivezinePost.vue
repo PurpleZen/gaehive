@@ -84,7 +84,7 @@
 this.symbcode = (symbcode)
       this.symbols = (symbols)
         
-        const postdata = await fetch('https://gaehivecloset.fizzyizzy.repl.co/hivezine/post/' + this.$route.params.id)
+        const postdata = await fetch('/gaehivecloset-legacy/hivezine/%23' + this.$route.params.id + '.json')
         this.data = await postdata.json()
         
         this.symbcode.forEach(string => {
