@@ -20,7 +20,7 @@ async function newBirthdays() {
 
   const { data, error } = await supabase
     .from('birthdays')
-    .update({ users: birthdays.birthdays })
+    .update({ users: birthdays.birthdays.replaceAll("\n","").replaceAll(" ", "") })
     .eq("id", 1)
 
   getBirthdays()
