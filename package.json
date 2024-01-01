@@ -1,7 +1,6 @@
 {
   "name": "Gaehive",
   "version": "2",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
