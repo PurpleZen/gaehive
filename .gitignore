@@ -5,5 +5,3 @@ dist-ssr
 *.local
 .replit
 replit.nix
-workflow-alive.txt
-.github
