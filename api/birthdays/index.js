@@ -3,8 +3,10 @@ const rateLimit = require('express-rate-limit');
 const fetch = require('cross-fetch');
 
 import { createClient } from '@supabase/supabase-js'
+
 const supabaseUrl = process.env['VITE_SUPABASE_URL']
 const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
+
 const supabase = createClient(
   supabaseUrl,
   supabaseAnonKey,
@@ -31,7 +33,7 @@ app.use(apiRequestLimiter)
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
 app.get('/api/birthdays', async (req, res) => {
   fetch(
-    `https://api.scratch.mit.edu/studios/34421126/`,
+    `https://api.scratch.mit.edu/studios/34421126`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
@@ -39,16 +41,12 @@ app.get('/api/birthdays', async (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    var desc = data.description;
-
     const { error } = await supabase
-    .from('birthdays')
-    .update({ users: JSON.parse(desc) })
-    .eq("id", 1)
+      .from('birthdays')
+      .update({ users: JSON.parse(data.description) })
+      .eq("id", 1)
 
-    res.json({
-      birthdays: "updated"
-    })
+    res.json({ birthdays: "updated" })
   })
 });
 
