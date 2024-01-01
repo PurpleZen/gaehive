@@ -31,7 +31,7 @@ const apiRequestLimiter = rateLimit({
 app.use(apiRequestLimiter)
 
 // New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
-app.get('/api/birthdays', (req, res) => {
+app.get('/api/birthdays', async (req, res) => {
   fetch(
     `https://api.scratch.mit.edu/studios/34421126/`,
     {
@@ -43,7 +43,7 @@ app.get('/api/birthdays', (req, res) => {
 
     var desc = data.description;
 
-    const { err } = await supabase
+    const { error } = await supabase
     .from('birthdays')
     .update({ users: JSON.parse(desc) })
     .eq("id", 1)
