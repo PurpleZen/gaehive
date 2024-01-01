@@ -43,7 +43,7 @@ app.get('/api/birthdays', (req, res) => {
 
     var desc = data.description;
 
-    const { data, error } = await supabase
+    const { error } = await supabase
     .from('birthdays')
     .update({ users: JSON.parse(desc) })
     .eq("id", 1)
