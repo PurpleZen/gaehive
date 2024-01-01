@@ -1,5 +1,13 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/birthdays",
+      "schedule": "0 */2 * * *"
+    }
   ]
 }
