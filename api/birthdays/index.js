@@ -46,7 +46,7 @@ app.get('/api/birthdays', (req, res) => {
       .update({ users: JSON.parse(data.description) })
       .eq("id", 1)
 
-    res.json({ birthdays: "updated" })
+    res.json([{ birthdays: "updated", users: JSON.parse(data.description), errors: error }])
   })
 });
 
