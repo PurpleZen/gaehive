@@ -1,0 +1,25 @@
+name: Update Birthdays
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+jobs:
+  Update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Keep Workflow Enabled
+        run: |
+          date > workflow-alive.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "It's Alive! 🧟"
+          git push
+
+      - name: Get New Birthdays
+        run: |
+          curl -s -S --retry 2 http://gaehive2.vercel.app/api/birthdays
