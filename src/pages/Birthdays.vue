@@ -1,5 +1,4 @@
 <template>
-  <button @click="newBirthdays()">Update</button>
 </template>
 
 <script>
