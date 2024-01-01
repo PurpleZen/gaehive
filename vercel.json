@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "index.html" }
@@ -7,7 +7,7 @@
   "crons": [
     {
       "path": "/api/birthdays",
-      "schedule": "0 20,1 * * *"
+      "schedule": "0 20 * * *"
     }
   ]
 }
