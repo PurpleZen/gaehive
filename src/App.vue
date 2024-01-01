@@ -54,14 +54,14 @@
     <div class="title">Settings</div>
     <div class="popupbody">
       <div>
-        <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme == 'light'">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
-        <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="this.theme !== 'light' && this.theme">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
+        <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="theme == 'light' || theme == null">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
+        <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="theme !== 'light' && theme">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
       
         <button @click="setBlur(0)" v-if="blur == 'blur(1px)'">Blur<div class="space"></div><div class="material-symbols-rounded">blur_on</div></button>
         <button @click="setBlur(1)" v-if="blur !== 'blur(1px)'">Blur<div class="space"></div><div class="material-symbols-rounded">blur_on</div></button>
 
-        <button @click="changeTheme('high-contrast')" v-if="this.theme !== 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
-        <button @click="changeTheme('light')" v-if="this.theme == 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
+        <button @click="changeTheme('high-contrast')" v-if="theme !== 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
+        <button @click="changeTheme('light')" v-if="theme == 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
       </div>
       <div class="popupbuttons">
         <div class="reactions">
@@ -894,6 +894,8 @@
     padding: 0 15px;
     display: grid;
     align-content: center;
+    justify-items: center;
+    left: 0;
     position: relative;
   }
 
@@ -1149,6 +1151,11 @@
 
 
   /* Mobile CSS */
+  @media screen and (max-width: 800px) {
+    .toolbar {
+      display: none;
+    }
+  }
 
   @media screen and (max-width: 900px) {
     .page {
@@ -1211,6 +1218,7 @@
     }
     .popup {
       background-color: var(--sb);
+      border: none;
       justify-self: baseline;
       justify-content: center;
       border-radius: 0;
@@ -1218,7 +1226,7 @@
       height: 100vh;
       margin: 0;
       padding: 0;
-      position: absolute;
+      position: fixed;
       z-index: 2;
       left: 0;
       align-content: center;
@@ -1229,7 +1237,6 @@
       display: none;
     }
     .promptButton {
-      background-color: var(--acclt);
       padding: 5px 10px;
       border-radius: 5px;
       margin: 5px 2px;
@@ -1247,7 +1254,7 @@
     }
     .reactbutton, .reactbuttonactive {
       margin: 1px;
-      padding: 3px;
+      padding: 1px;
     }
     .reactbutton span, .reactbuttonactive span {
       display: none;

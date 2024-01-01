@@ -5,10 +5,12 @@
   <div v-if="newpost == 'writing'" class="post">
   <div class="title">
     <div class="username">
+      <router-link class="promptButton" :to="'/hivezine/post/' + this.$route.params.id"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">View More</span></router-link>
+      <div class="space"></div>
       <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
       <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
     </div>
-    <textarea v-model="edit[0].title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
+    <textarea v-html="edit[0].title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
     <div class="titlename" v-if="preview" v-html="titlepreview"></div>
   </div>
   <div class="toolbar">
@@ -52,6 +54,23 @@
         <button @click="shortcut(':cool:')" class="tools">😎</button>
         <button @click="shortcut(':hmm:')" class="tools">🤔</button>
         <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
+        <button @click="shortcut(':thumbsup:')" class="tools">👍</button>
+        <button @click="shortcut(':heart:')" class="tools">❤️</button>
+        <button @click="shortcut(':pride:')" class="tools">🏳️‍🌈</button>
+        <button @click="shortcut(':trans:')" class="tools">🏳️‍⚧️</button>
+        <button @click="shortcut(':nails:')" class="tools">💅</button>
+        <button @click="shortcut(':skull:')" class="tools">💀</button>
+        <button @click="shortcut(':sparkle:')" class="tools">✨</button>
+        <button @click="shortcut(':yay:')" class="tools">🎉</button>
+        <button @click="shortcut(':leaves:')" class="tools">🍂</button>
+        <button @click="shortcut(':pumpkin:')" class="tools">🎃</button>
+        <button @click="shortcut(':bat:')" class="tools">🦇</button>
+        <button @click="shortcut(':boo!:')" class="tools">👻</button>
+        <button @click="shortcut(':y:')" class="tools">🪿</button>
+        <button @click="shortcut(':quack:')" class="tools">🦆</button>
+        <button @click="shortcut(':eye::lip::eye:')" class="tools">👁️👄👁️</button>
+        <button @click="shortcut(':shrug:')" class="tools">¯\_(ツ)_/¯</button>
+        <button @click="shortcut(':pablo:')" class="tools">(͠≖ ͜ʖ͠≖)</button>
       </ul>
     </details>
     <button class="tools" v-if="edit[0].post || edit[0].title" @click="preview = !preview">
@@ -60,7 +79,7 @@
     </button>
   </div>
   <div class='content'>
-    <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @focus="expand(true)" @focusout="expand(false)" @keyup="updated()" v-if="!preview" v-model="edit[0].post" :style="'height:' + writing" placeholder="Write an awesome post!"></textarea>
+    <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @keyup="updated()" v-if="!preview" v-model="edit[0].post" style="height:300px" placeholder="Write an awesome post!"></textarea>
     <div v-if="preview" class="styledcontent" v-html="postpreview"></div>
   </div>
   <div class="reactions">
@@ -90,7 +109,7 @@
 </template>
 
 <script>
-  import { getPostEdit, getPages, searchPosts, setReact, removeReact, editPost, reacting, post, loading, username, id, pages } from '@/lib/hivezine.js'
+  import { getPostEdit, getPages, searchPosts, setReact, removeReact, editPost, reacting, post, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
   import symbcode from "@/data/symbcode.json"
   import symbols from "@/data/symbols.json"
@@ -98,8 +117,6 @@
   export default {
     data() {
       return {
-        loading: loading,
-        error: null,
         username: username,
         id: id,
         manager: null,
@@ -115,7 +132,6 @@
         page: 1,
         pages: pages,
         reacting: reacting,
-        writing: null,
         newpost: 'writing',
         json: [],
         query: null,
@@ -130,6 +146,12 @@
         this.writer = JSON.parse(localStorage['user']).writer
       }
       getPostEdit(JSON.parse(this.$route.params.id) +1)
+    },
+
+    mounted() {
+      this.updated()
+      this.edit[0].post = this.decodeHTML(this.edit[0].post)
+      this.edit[0].title = this.decodeHTML(this.edit[0].title)
     },
 
     methods: {
@@ -169,15 +191,7 @@
             this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
         })
       },
-      expand(status) {
-        if (status == true) {
-          this.writing = "300px"  
-        } else {
-          if (!this.post) {
-            this.writing = null;
-          }
-        }
-      },
+      
       shortcut(type) {
         if (type == "br") {
           let textarea = document.getElementById('textarea')
@@ -230,6 +244,12 @@
         this.updated()
         document.getElementById("emojis").open = false
         document.getElementById("headers").open = false
+      },
+
+      decodeHTML(html) {
+        var txt = document.createElement("textarea");
+        txt.innerHTML = html;
+        return txt.value;
       }
     }
   }

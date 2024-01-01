@@ -40,10 +40,7 @@ async function getPosts(page) {
       })
   loading.value = false
   reacting.value = false
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = ''
-  }
+  document.body.style.cursor = ''
 }
 
 async function searchPosts(query, type) {
@@ -66,14 +63,13 @@ async function searchPosts(query, type) {
       })
   loading.value = false
   reacting.value = false
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = ''
-  }
+  document.body.style.cursor = ''
 }
 
 async function getPost(id) {
-  post.value = ([])
+  if (reacting.value !== true) {
+    post.value = ([])
+  }
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
   }
@@ -88,6 +84,8 @@ async function getPost(id) {
         }
       })
   document.title = "Gaehive • Hivezine • " + post.value[0].title
+  reacting.value = false
+  document.body.style.cursor = ''
 }
 
 async function getPostEdit(pid) {
@@ -102,10 +100,7 @@ async function getPostEdit(pid) {
 
 async function setReact(type, id) {
   reacting.value = true
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = 'progress'
-  }
+  document.body.style.cursor = 'progress'
   
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
@@ -131,17 +126,18 @@ async function setReact(type, id) {
   .eq('id', id)
   if (!location.pathname.split("/")[2]) {
     getPosts(1)
-  } else {
+  } 
+  if (location.pathname.split("/")[2] && location.pathname.split("/")[2] !== "post") {
     getPosts(location.pathname.split("/")[2])
+  }
+  if (location.pathname.split("/")[2] == "post") {
+    getPost(id)
   }
 }
 
 async function removeReact(type, id) {
   reacting.value = true
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = 'progress'
-  }
+  document.body.style.cursor = 'progress'
   
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
@@ -164,16 +160,17 @@ async function removeReact(type, id) {
   .eq('id', id)
   if (!location.pathname.split("/")[2]) {
     getPosts(1)
-  } else {
+  } 
+  if (location.pathname.split("/")[2] && location.pathname.split("/")[2] !== "post") {
     getPosts(location.pathname.split("/")[2])
+  }
+  if (location.pathname.split("/")[2] == "post") {
+    getPost(id)
   }
 }
 
 async function addPost() {
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = 'wait'
-  }
+  document.body.style.cursor = 'wait'
   
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
@@ -205,10 +202,7 @@ async function addPost() {
 }
 
 async function editPost() {
-  let allElements = document.querySelectorAll('*')
-  for (var i = 0; i < allElements.length; i++) {
-    allElements[i].style.cursor = 'wait'
-  }
+  document.body.style.cursor = 'wait'
 
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
@@ -239,8 +233,7 @@ async function editPost() {
 
     getPost(id + 1)
 
-    let allElements = document.querySelectorAll('*')
-    for (var i = 0; i < allElements.length; i++) {
+      for (var i = 0; i < allElements.length; i++) {
       allElements[i].style.cursor = ''
     }
   }

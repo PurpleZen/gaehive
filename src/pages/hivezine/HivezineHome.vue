@@ -57,11 +57,34 @@
             <button @click="shortcut(':cool:')" class="tools">😎</button>
             <button @click="shortcut(':hmm:')" class="tools">🤔</button>
             <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
+            <button @click="shortcut(':thumbsup:')" class="tools">👍</button>
+            <button @click="shortcut(':heart:')" class="tools">❤️</button>
+            <button @click="shortcut(':pride:')" class="tools">🏳️‍🌈</button>
+            <button @click="shortcut(':trans:')" class="tools">🏳️‍⚧️</button>
+            <button @click="shortcut(':nails:')" class="tools">💅</button>
+            <button @click="shortcut(':skull:')" class="tools">💀</button>
+            <button @click="shortcut(':sparkle:')" class="tools">✨</button>
+            <button @click="shortcut(':yay:')" class="tools">🎉</button>
+            <button @click="shortcut(':leaves:')" class="tools">🍂</button>
+            <button @click="shortcut(':pumpkin:')" class="tools">🎃</button>
+            <button @click="shortcut(':bat:')" class="tools">🦇</button>
+            <button @click="shortcut(':boo!:')" class="tools">👻</button>
+            <button @click="shortcut(':y:')" class="tools">🪿</button>
+            <button @click="shortcut(':quack:')" class="tools">🦆</button>
+            <button @click="shortcut(':eye::lip::eye:')" class="tools">👁️👄👁️</button>
+            <button @click="shortcut(':shrug:')" class="tools">¯\_(ツ)_/¯</button>
+            <button @click="shortcut(':pablo:')" class="tools">(͠≖ ͜ʖ͠≖)</button>
           </ul>
         </details>
         <button class="tools" v-if="post || title" @click="preview = !preview">
           <span v-if="!preview">Preview</span>
           <span v-else>Edit</span>
+        </button>
+        <button class="tools" v-if='JSON.stringify(draft) !== `{"title":"","post":""}` && draft !== null && !preview' @click="loadDraft()">
+          <span>Draft</span>
+        </button>
+        <button class="tools" v-if='this.post || this.title' @click="clear()">
+            <div class="material-symbols-rounded">delete</div>
         </button>
       </div>
       <div class='content'>
@@ -187,6 +210,7 @@
         post: "",
         postpreview: "",
         preview: false,
+        draft: null,
         data: null,
         symbcode: null,
         symbols: null,
@@ -208,7 +232,11 @@
         this.manager = JSON.parse(localStorage['user']).manager
         this.writer = JSON.parse(localStorage['user']).writer
       }
+      if (localStorage['draft']) {
+        this.draft = JSON.parse(localStorage['draft'])
+      }
       getPages()
+      
     },
     mounted() {
       if (!this.$route.params.pg) {
@@ -289,6 +317,7 @@
       }
       },
       updated() {
+        localStorage.setItem("draft", JSON.stringify({'title': this.title, 'post': this.post}));
         this.symbcode = (symbcode)
         this.symbols = (symbols)
 
@@ -367,6 +396,12 @@
         document.body.scrollTop = 0;
         document.getElementsByClassName("pages")[0].scrollIntoView()
         document.getElementsByClassName("page")[0].scrollTop = document.getElementsByClassName("page")[0].scrollTop - 10
+      },
+
+      loadDraft() {
+        this.title = JSON.parse(localStorage['draft']).title
+        this.post = JSON.parse(localStorage['draft']).post
+        this.updated()
       }
     }
   }

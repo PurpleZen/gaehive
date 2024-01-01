@@ -9,6 +9,8 @@ import HivezineWriters from './pages/hivezine/HivezineWriters.vue'
 
 import Managers from './pages/managers/Managers.vue'
 
+import Birthdays from './pages/Birthdays.vue'
+
 export const routes = [
       { 
         path: '/', 
@@ -44,10 +46,16 @@ export const routes = [
         path: '/resources',
         component: Resources,
       },
+
+  { 
+    path: '/birthdays',
+    component: Birthdays
+  },
+  
       { 
         path: '/:path(.*)',
         component: NotFound
-      },
+      }
 
   
   

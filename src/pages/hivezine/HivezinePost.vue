@@ -30,29 +30,29 @@
       </div>
       <div class='content' v-html=item.post>
       </div>
-      <div class="reactions">
-      <div v-if=username>
+      <div v-if=username class="reactions">
+        <div>
         <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">😻<span>{{ item.love }}</span></div>
-        <div v-if="contains(item.loveby)" class="reactbuttonactive">😻<span>{{ item.love }}</span></div>
+        <div v-if="contains(item.loveby)" class="reactbuttonactive" @click="removeReact('love', item.id)">😻<span>{{ item.love }}</span></div>
 
         <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">😺<span>{{ item.like }}</span></div>
-        <div v-if="contains(item.likeby)" class="reactbuttonactive">😺<span>{{ item.like }}</span></div>
+        <div v-if="contains(item.likeby)" class="reactbuttonactive" @click="removeReact('like', item.id)">😺<span>{{ item.like }}</span></div>
 
         <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😹<span>{{ item.laugh }}</span></div>
-        <div v-if="contains(item.laughby)" class="reactbuttonactive">😹<span>{{ item.laugh }}</span></div>
+        <div v-if="contains(item.laughby)" class="reactbuttonactive" @click="removeReact('laugh', item.id)">😹<span>{{ item.laugh }}</span></div>
 
         <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">🙀<span>{{ item.wow }}</span></div>
-        <div v-if="contains(item.wowby)" class="reactbuttonactive">🙀<span>{{ item.wow }}</span></div>
+        <div v-if="contains(item.wowby)" class="reactbuttonactive" @click="removeReact('wow', item.id)">🙀<span>{{ item.wow }}</span></div>
 
         <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😿<span>{{ item.sad }}</span></div>
-        <div v-if="contains(item.sadby)" class="reactbuttonactive">😿<span>{{ item.sad }}</span></div>
+        <div v-if="contains(item.sadby)" class="reactbuttonactive" @click="removeReact('sad', item.id)">😿<span>{{ item.sad }}</span></div>
 
         <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🌈<span>{{ item.yay }}</span></div>
-        <div v-if="contains(item.yayby)" class="reactbuttonactive">🌈<span>{{ item.yay }}</span></div>
+        <div v-if="contains(item.yayby)" class="reactbuttonactive" @click="removeReact('yay', item.id)">🌈<span>{{ item.yay }}</span></div>
 
         <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
-        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive">🐸<span>{{ item.frog }}</span></div>
-      </div>
+        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive" @click="removeReact('frog', item.id)">🐸<span>{{ item.frog }}</span></div>
+        </div>
       <div class="postoptions">
       <a :href="'https://scratch.mit.edu/studios/33586934/comments#comments-' + item.pid" class="promptButton" target="_blank"><div class="material-symbols-rounded">forum</div><span class="tooltiptext">View Source</span></a>
           
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import { getPost, getPages, post, deletePost, loading, username, pages } from '@/lib/hivezine.js'
+  import { getPost, getPages, post, deletePost, loading, username, pages, setReact, removeReact, reacting } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
 
   export default {
@@ -87,14 +87,14 @@
         symbols: null,
         page: 1,
         pages: pages,
-        reacting: false,
+        reacting: reacting,
         popup: null,
         blur: "blur(1px)"
       }
     },
     
     created() {
-      getPost(JSON.parse(this.$route.params.id) +1)
+      getPost(JSON.parse(this.$route.params.id) +1)      
       if (localStorage["blur"] == 0) {
         this.blur = "blur(0)"
       }
@@ -118,7 +118,17 @@
       deletePost() {
         deletePost(JSON.parse(this.$route.params.id) +1)
         this.$router.push({ path: "/hivezine", query: null })
-      }
+      },
+      react(type, post) {
+        if (this.reacting == false) {
+          setReact(type, post + 1)
+        }
+      },
+      removeReact(type, post) {
+        if (this.reacting == false) {
+          removeReact(type, post + 1)
+        }
+      },
     }
   }
 </script>
