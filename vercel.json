@@ -1,9 +1,7 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
-},
-{
+  ],
   "crons": [{
     "path": "/api/birthdays",
     "schedule": "0 * * * *"
