@@ -24,7 +24,7 @@ app.get('/api/birthdays', (req, res) => {
     }
   ).then((response)=>{return response.json();}).then(data=>{
 
-    var desc = data[0].description;
+    var desc = data.description;
 
     res.json({
       birthdays: desc
