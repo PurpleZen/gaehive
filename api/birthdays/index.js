@@ -1,6 +1,9 @@
 const app = require('express')();
+const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const fetch = require('cross-fetch');
+
+const token = jwt.sign({ role: "authenticated", from: "server" }, process.env['SUPABASE_JWT'], { expiresIn: '1m' });
 
 import { createClient } from '@supabase/supabase-js'
 
@@ -15,6 +18,11 @@ const supabase = createClient(
       autoRefreshToken: false,
       detectSessionInUrl: false,
       persistSession: false,
+    },
+    global: { 
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     }
   }
 )
