@@ -2,6 +2,23 @@ const app = require('express')();
 const rateLimit = require('express-rate-limit');
 const fetch = require('cross-fetch');
 
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env['VITE_SUPABASE_URL']
+const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
+
+const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      persistSession: false,
+    }
+  }
+)
+
 // Limit how many requests can be made to prevent users from potentially spamming the Scratch servers.
 const apiRequestLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
@@ -26,8 +43,13 @@ app.get('/api/birthdays', (req, res) => {
 
     var desc = data.description;
 
+    const { data, error } = await supabase
+    .from('birthdays')
+    .update({ users: JSON.parse(desc) })
+    .eq("id", 1)
+
     res.json({
-      birthdays: desc
+      birthdays: "updated"
     })
   })
 });
