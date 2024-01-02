@@ -4,7 +4,27 @@ const fetch = require('cross-fetch');
 
 const token = jwt.sign({ role: "authenticated", cron: process.env['CRON_SECRET'] }, process.env['SUPABASE_JWT'], { expiresIn: '1m' });
 
-import { supabase } from '@/lib/supabaseClient'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env['VITE_SUPABASE_URL']
+const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
+
+const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      persistSession: false,
+    },
+    global: { 
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  }
+)
 
 app.get('/api/birthdays', (req, res) => {
   const authHeader = req.headers.authorization;
