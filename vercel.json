@@ -7,7 +7,11 @@
   "crons": [
     {
       "path": "/api/birthdays",
-      "schedule": "0 12 * * *"
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/birthdays",
+      "schedule": "0 15 * * *"
     }
   ]
 }
