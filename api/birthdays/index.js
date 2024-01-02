@@ -26,7 +26,6 @@ const supabase = createClient(
   }
 )
 
-// New posts are fetched from the studio here, compiled, and sent back to the backend server to be stored!
 app.get('/api/birthdays', (req, res) => {
   const authHeader = req.headers.get('authorization');
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
