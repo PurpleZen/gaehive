@@ -1,10 +1,9 @@
 const app = require('express')();
 const jwt = require('jsonwebtoken');
 const fetch = require('cross-fetch');
+const { createClient } = require('@supabase/supabase-js')
 
 const token = jwt.sign({ role: "authenticated", cron: process.env['CRON_SECRET'] }, process.env['SUPABASE_JWT'], { expiresIn: '1m' });
-
-import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env['VITE_SUPABASE_URL']
 const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']

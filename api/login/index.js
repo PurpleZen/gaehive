@@ -1,6 +1,7 @@
 const app = require('express')();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const { createClient } = require('@supabase/supabase-js')
 
 app.use(cookieParser());
 
@@ -12,22 +13,20 @@ const cookieOptions = {
   maxAge: 7 * 24 * 3600 * 1000
 };
 
-import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = process.env['VITE_SUPABASE_URL']
+const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
 
-  const supabaseUrl = process.env['VITE_SUPABASE_URL']
-  const supabaseAnonKey = process.env['VITE_SUPABASE_ANON_KEY']
-
-  const supabase = createClient(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
-      auth: {
-        autoRefreshToken: false,
-        detectSessionInUrl: false,
-        persistSession: false,
-      }
+const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      persistSession: false,
     }
-  )
+  }
+)
 
 app.get('/api/login', async (req, res) => {
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
