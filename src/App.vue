@@ -232,3 +232,11 @@
     outline: var(--acclt) solid 2px;
   }
 </style>
+
+<script>
+  export default {
+    created() {
+      localStorage.clear() 
+    }
+  }
+</script>
