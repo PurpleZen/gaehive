@@ -218,9 +218,9 @@
   }
 
   [data-theme="dark"] {
-    --bg: #221f1b;
-    --sb: #483332;
-    --acc: #ff7a1b;
+    --bg: #1b2425;
+    --sb: #324842;
+    --acc: #d2b958;
     --acc2: #fff;
     --acclt: #0006;
     --brk: #ffb30094;

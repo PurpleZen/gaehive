@@ -330,6 +330,10 @@
             this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
         })
       },
+      clear() {
+        this.title = ""
+        this.post = ""
+      },
       expand(status) {
         if (status == true) {
           this.writing = "300px"  
