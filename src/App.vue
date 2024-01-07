@@ -28,8 +28,8 @@
     <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
     <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
 
-    <router-link  v-if="location !== 'birthdays' || active && username" class='sidebutton' to="/birthdays">Birthdays</router-link>
-    <router-link v-if="location == 'birthdays' && !active && username" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
+    <router-link  v-if="location !== 'birthdays' || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
+    <router-link v-if="location == 'birthdays' && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
     
     <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
     <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
@@ -210,8 +210,6 @@
     --txt: #444;
     --txtstr: #000;
     --btxt: #fee5a1;
-    --slnk: #676700;
-    --slnkh: #484800;
     --plnk: #573c57;
     --plnkh: #392839;
     --imp: #d22727;
@@ -227,10 +225,8 @@
     --txt: #E7B148;
     --txtstr: #fff;
     --btxt: #483332;
-    --slnk: #F8DE7E;
-    --slnkh: #C6B164;
     --plnk: #FF9900;
-    --plnkh: #CC7A00;
+    --plnkh: #fcfcfc;
     --imp: #d22727;
   }
 
@@ -244,8 +240,6 @@
     --txt: #000;
     --txtstr: #000;
     --btxt: #fff;
-    --slnk: #676700;
-    --slnkh: #484800;
     --plnk: #0010ff;
     --plnkh: #f00;
     --imp: #f00;
@@ -893,8 +887,7 @@
     margin: 2px;
     padding: 0 15px;
     display: grid;
-    align-content: center;
-    justify-items: center;
+    place-items: center;
     left: 0;
     position: relative;
   }
@@ -958,13 +951,13 @@
     }
 
   .tools ul {
-      width: auto;
-      background: var(--acc);
-      position: absolute;
-      box-sizing: border-box;
-      border-radius: 5px;
-      max-height: 200px;
-      overflow-y: auto;
+    width: auto;
+    background: var(--acc);
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
     margin-top: 5px;
     }
 
@@ -981,7 +974,7 @@
     margin: 2px;
     padding: 0 15px;
     display: grid;
-    align-content: center;
+    place-items: center;
     position: relative;
   }
 
@@ -1149,6 +1142,62 @@
     color: var(--btxt);
   }
 
+  
+  /* Birthdays */
+  .birthdays {
+    display: flex;
+    overflow: scroll;
+    padding: 5px 0 0 0;
+  }
+
+  .birthdate {
+    font-family: Agbalumo;
+    font-size: larger;
+    color: var(--acc2) !important;
+    text-shadow: var(--acclt) 1.5px 1.5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--acclt);
+    width: 100%;
+  }
+
+  .birthdayRow {
+    margin-bottom: 20px;
+    width: 70%;
+    justify-content: center;
+    text-align: center;
+    display: grid;
+    background-color: var(--sb);
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .birthdayUsers {
+    cursor: pointer;
+    background-color: var(--bg);
+    margin: 5px;
+    border-radius: 5px;
+    overflow: clip;
+    transition: scale ease 0.2s;
+  }
+
+  .birthdayUsers:hover {
+    outline: 3px solid var(--acclt);
+    scale: 1.01;
+  }
+
+  .birthdayUsers a {
+    width: 100%;
+    color: var(--txt);
+    text-decoration: none;
+    display: flex;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .birthdayUsers span {
+    white-space: nowrap;
+  }
+  
 
   /* Mobile CSS */
   @media screen and (max-width: 800px) {
