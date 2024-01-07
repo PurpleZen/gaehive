@@ -1,7 +1,7 @@
   <template>
     <h1 class="greeting">The Hivezine</h1>
  
-    <div>
+    <div class="headerButtons">
       <router-link class="button" to="/hivezine/writers">Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
     </div>
@@ -184,7 +184,7 @@
     </div>
     
     <div class="pages">
-      <router-link @click="scrollTop" v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+      <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
 </template>
 
@@ -395,11 +395,6 @@
         this.updated()
         document.getElementById("emojis").open = false
         document.getElementById("headers").open = false
-      },
-      scrollTop() {
-        document.body.scrollTop = 0;
-        document.getElementsByClassName("pages")[0].scrollIntoView()
-        document.getElementsByClassName("page")[0].scrollTop = document.getElementsByClassName("page")[0].scrollTop - 10
       },
 
       loadDraft() {

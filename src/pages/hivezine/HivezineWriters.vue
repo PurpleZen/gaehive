@@ -1,6 +1,6 @@
 <template>
   <h1 class="greeting">Hivezine Writers</h1>
-  <div>
+  <div class="headerButtons">
     <button v-if="manager" class="button" @click="prompt('add')">Add Writers</button>
   </div>
 

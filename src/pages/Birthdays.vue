@@ -1,9 +1,14 @@
 <template>
   <h1 class="greeting">Birthdays</h1>
   <a href="https://scratch.mit.edu/studios/34421126/comments" target="_blank"><button>Studio</button></a>
+  <div>
+    <a class="jumpToMonth" v-for="(month) in months" :key="month.id" :href='"#" + month.toLowerCase()'>
+      {{ month }}
+    </a>
+  </div>
 
   <template v-for="(month, monthIndex) in months" :key="month.id">
-  <div class="titlename">
+  <div :id='month.toLowerCase()' class="titlename">
     <h2>{{ month }}</h2>
   </div>
     <template v-for="(item, index) in list" :key="item.id">
@@ -23,18 +28,21 @@
 </template>
 
 <script>
+  import { useMeta } from 'vue-meta'
   import { getBirthdayList, list } from '@/lib/birthdays.js'
-
   export default {
     data() {
       return {
         list: list,
-        months: ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         shortMonths: ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
       }
     },
 
     created() {
+      useMeta({
+        title: 'Gaehive • Birthdays'
+      });
       getBirthdayList()
     },
     

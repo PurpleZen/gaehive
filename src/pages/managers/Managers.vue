@@ -1,6 +1,6 @@
 <template>
   <h1 class="greeting">Our Managers</h1>
-  <div>
+  <div class="headerButtons">
     <button v-if="manager == true" class="button" @click="prompt('add')">Add Managers</button>
     <button v-if="manager == true" class="button">Add/Edit Bio</button>
   </div>

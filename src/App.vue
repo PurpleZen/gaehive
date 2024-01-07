@@ -28,8 +28,8 @@
     <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
     <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
 
-    <router-link  v-if="location !== 'birthdays' || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
-    <router-link v-if="location == 'birthdays' && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
+    <router-link  v-if="location !== 'birthdays' && username || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
+    <router-link v-if="location == 'birthdays' && username && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
     
     <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
     <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
@@ -372,7 +372,7 @@
   }
 
   .greeting {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 5px;
     font-family: 'Agbalumo';
     color: var(--acc2);
@@ -418,6 +418,10 @@
     border-radius: 5px;
     font-family: inherit;
     text-align: center;
+  }
+
+  .headerButtons {
+    margin-bottom: 5px;
   }
 
   .button, button {
@@ -1144,6 +1148,18 @@
 
   
   /* Birthdays */
+  .jumpToMonth {
+    margin: 2px;
+    padding: 3px;
+    font-size: smaller;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .jumpToMonth:hover {
+    outline: 2px solid var(--acclt);
+  }
+  
   .birthdays {
     display: flex;
     overflow: scroll;
