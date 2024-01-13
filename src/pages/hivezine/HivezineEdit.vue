@@ -150,12 +150,8 @@
 
     mounted() {
       this.updated()
-      var txt = document.createElement("textarea")
-      txt.innerHTML = this.edit[0].post
-      this.edit[0].post = txt.value
-      var txt = document.createElement("textarea")
-      txt.innerHTML = this.edit[0].title
-      this.edit[0].title = txt.value
+      this.edit[0].post = this.decodeHTML(this.edit[0].post)
+      this.edit[0].title = this.decodeHTML(this.edit[0].title)
     },
 
     methods: {
@@ -253,7 +249,7 @@
       decodeHTML(html) {
         var txt = document.createElement("textarea");
         txt.innerHTML = html;
-        return txt.value;
+        return txt.innerText;
       }
     }
   }
