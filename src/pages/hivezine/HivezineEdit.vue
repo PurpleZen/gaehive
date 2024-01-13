@@ -1,7 +1,5 @@
 <template>
 <h1 class="greeting">Edit Post</h1>
-
-  <button @click="test()">test</button>
   
 <div v-if="username && writer" class="posts">
   <div v-if="newpost == 'writing'" class="post">
@@ -152,7 +150,6 @@
 
     mounted() {
       this.updated()
-      
     },
 
     methods: {
@@ -160,11 +157,6 @@
         let element = "button" + id
         navigator.clipboard.writeText(value)
         document.getElementById(element).innerHTML = "Copied!"
-      },
-
-      test() {
-        this.edit[0].post = this.decodeHTML(this.edit[0].post)
-        this.edit[0].title = this.decodeHTML(this.edit[0].title)
       },
       
       editPost() {

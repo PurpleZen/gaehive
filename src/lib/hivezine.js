@@ -96,7 +96,15 @@ async function getPostEdit(pid) {
   }
   const { data } = await supabase.from('hivezine').select('data').eq("id", pid)
   post.value = data[0].data
-}
+
+  var txt = document.createElement("textarea")
+  txt.innerHTML = post.value[0].title 
+  post.value[0].title = txt.value
+
+  var txt = document.createElement("textarea")
+  txt.innerHTML = post.value[0].post 
+  post.value[0].post = txt.value
+  }
 
 async function setReact(type, id) {
   reacting.value = true
