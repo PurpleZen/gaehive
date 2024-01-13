@@ -150,8 +150,12 @@
 
     mounted() {
       this.updated()
-      this.edit[0].post = this.decodeHTML(this.edit[0].post)
-      this.edit[0].title = this.decodeHTML(this.edit[0].title)
+      var txt = document.createElement("textarea")
+      txt.innerHTML = this.edit[0].post
+      this.edit[0].post = txt.value
+      var txt = document.createElement("textarea")
+      txt.innerHTML = this.edit[0].title
+      this.edit[0].title = txt.value
     },
 
     methods: {
