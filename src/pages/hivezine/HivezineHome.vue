@@ -52,28 +52,7 @@
         <details id="emojis" class="tools">
           <summary>Emojis</summary>
           <ul class="list">
-            <button @click="shortcut(':happy:')" class="tools">😊</button>
-            <button @click="shortcut(':sad:')" class="tools">☹️</button>
-            <button @click="shortcut(':cool:')" class="tools">😎</button>
-            <button @click="shortcut(':hmm:')" class="tools">🤔</button>
-            <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
-            <button @click="shortcut(':thumbsup:')" class="tools">👍</button>
-            <button @click="shortcut(':heart:')" class="tools">❤️</button>
-            <button @click="shortcut(':pride:')" class="tools">🏳️‍🌈</button>
-            <button @click="shortcut(':trans:')" class="tools">🏳️‍⚧️</button>
-            <button @click="shortcut(':nails:')" class="tools">💅</button>
-            <button @click="shortcut(':skull:')" class="tools">💀</button>
-            <button @click="shortcut(':sparkle:')" class="tools">✨</button>
-            <button @click="shortcut(':yay:')" class="tools">🎉</button>
-            <button @click="shortcut(':leaves:')" class="tools">🍂</button>
-            <button @click="shortcut(':pumpkin:')" class="tools">🎃</button>
-            <button @click="shortcut(':bat:')" class="tools">🦇</button>
-            <button @click="shortcut(':boo!:')" class="tools">👻</button>
-            <button @click="shortcut(':y:')" class="tools">🪿</button>
-            <button @click="shortcut(':quack:')" class="tools">🦆</button>
-            <button @click="shortcut(':eye::lip::eye:')" class="tools">👁️👄👁️</button>
-            <button @click="shortcut(':shrug:')" class="tools">¯\_(ツ)_/¯</button>
-            <button @click="shortcut(':pablo:')" class="tools">(͠≖ ͜ʖ͠≖)</button>
+            <button v-for="(item, index) in emojis" :key="item" @click="shortcut(emojicode[index])" class="tools">{{ item }}</button>
           </ul>
         </details>
         <button class="tools" v-if="post || title" @click="preview = !preview">
@@ -157,111 +136,111 @@
       </div>
       <div v-if=username class="reactions">
         <div>
-        <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">😻<span>{{ item.love }}</span>
-          <div class="tooltiptexttop" v-if="item.loveby && item.loveby.length > 0">
-            <p v-for="(item, index) in item.loveby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.loveby)" class="reactbutton" @click="react('love', item.id)">❤️<span>{{ item.love }}</span>
+            <div class="tooltiptexttop" v-if="item.loveby && item.loveby.length > 0">
+              <p v-for="(item, index) in item.loveby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.loveby)" class="reactbuttonactive" @click="removeReact('love', item.id)">😻<span>{{ item.love }}</span>
-          <div class="tooltiptexttop" v-if="item.loveby && item.loveby.length > 0">
-            <p v-for="(item, index) in item.loveby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.loveby)" class="reactbuttonactive" @click="removeReact('love', item.id)">❤️<span>{{ item.love }}</span>
+            <div class="tooltiptexttop" v-if="item.loveby && item.loveby.length > 0">
+              <p v-for="(item, index) in item.loveby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">😺<span>{{ item.like }}</span>
-          <div class="tooltiptexttop" v-if="item.likeby && item.likeby.length > 0">
-            <p v-for="(item, index) in item.likeby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.likeby)" class="reactbutton" @click="react('like', item.id)">👍<span>{{ item.like }}</span>
+            <div class="tooltiptexttop" v-if="item.likeby && item.likeby.length > 0">
+              <p v-for="(item, index) in item.likeby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.likeby)" class="reactbuttonactive" @click="removeReact('like', item.id)">😺<span>{{ item.like }}</span>
-          <div class="tooltiptexttop" v-if="item.likeby && item.likeby.length > 0">
-            <p v-for="(item, index) in item.likeby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.likeby)" class="reactbuttonactive" @click="removeReact('like', item.id)">👍<span>{{ item.like }}</span>
+            <div class="tooltiptexttop" v-if="item.likeby && item.likeby.length > 0">
+              <p v-for="(item, index) in item.likeby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😹<span>{{ item.laugh }}</span>
-          <div class="tooltiptexttop" v-if="item.laughby && item.laughby.length > 0">
-            <p v-for="(item, index) in item.laughby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.laughby)" class="reactbutton" @click="react('laugh', item.id)">😹<span>{{ item.laugh }}</span>
+            <div class="tooltiptexttop" v-if="item.laughby && item.laughby.length > 0">
+              <p v-for="(item, index) in item.laughby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.laughby)" class="reactbuttonactive" @click="removeReact('laugh', item.id)">😹<span>{{ item.laugh }}</span>
-          <div class="tooltiptexttop" v-if="item.laughby && item.laughby.length > 0">
-            <p v-for="(item, index) in item.laughby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.laughby)" class="reactbuttonactive" @click="removeReact('laugh', item.id)">😹<span>{{ item.laugh }}</span>
+            <div class="tooltiptexttop" v-if="item.laughby && item.laughby.length > 0">
+              <p v-for="(item, index) in item.laughby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">🙀<span>{{ item.wow }}</span>
-          <div class="tooltiptexttop" v-if="item.wowby && item.wowby.length > 0">
-            <p v-for="(item, index) in item.wowby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.wowby)" class="reactbutton" @click="react('wow', item.id)">🙀<span>{{ item.wow }}</span>
+            <div class="tooltiptexttop" v-if="item.wowby && item.wowby.length > 0">
+              <p v-for="(item, index) in item.wowby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.wowby)" class="reactbuttonactive" @click="removeReact('wow', item.id)">🙀<span>{{ item.wow }}</span>
-          <div class="tooltiptexttop" v-if="item.wowby && item.wowby.length > 0">
-            <p v-for="(item, index) in item.wowby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.wowby)" class="reactbuttonactive" @click="removeReact('wow', item.id)">🙀<span>{{ item.wow }}</span>
+            <div class="tooltiptexttop" v-if="item.wowby && item.wowby.length > 0">
+              <p v-for="(item, index) in item.wowby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😿<span>{{ item.sad }}</span>
-          <div class="tooltiptexttop" v-if="item.sadby && item.sadby.length > 0">
-            <p v-for="(item, index) in item.sadby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.sadby)" class="reactbutton" @click="react('sad', item.id)">😿<span>{{ item.sad }}</span>
+            <div class="tooltiptexttop" v-if="item.sadby && item.sadby.length > 0">
+              <p v-for="(item, index) in item.sadby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.sadby)" class="reactbuttonactive" @click="removeReact('sad', item.id)">😿<span>{{ item.sad }}</span>
-          <div class="tooltiptexttop" v-if="item.sadby && item.sadby.length > 0">
-            <p v-for="(item, index) in item.sadby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.sadby)" class="reactbuttonactive" @click="removeReact('sad', item.id)">😿<span>{{ item.sad }}</span>
+            <div class="tooltiptexttop" v-if="item.sadby && item.sadby.length > 0">
+              <p v-for="(item, index) in item.sadby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🌈<span>{{ item.yay }}</span>
-          <div class="tooltiptexttop" v-if="item.yayby && item.yayby.length > 0">
-            <p v-for="(item, index) in item.yayby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.yayby)" class="reactbutton" @click="react('yay', item.id)">🎉<span>{{ item.yay }}</span>
+            <div class="tooltiptexttop" v-if="item.yayby && item.yayby.length > 0">
+              <p v-for="(item, index) in item.yayby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="contains(item.yayby)" class="reactbuttonactive" @click="removeReact('yay', item.id)">🌈<span>{{ item.yay }}</span>
-          <div class="tooltiptexttop" v-if="item.yayby && item.sadby.length > 0">
-            <p v-for="(item, index) in item.yayby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="contains(item.yayby)" class="reactbuttonactive" @click="removeReact('yay', item.id)">🎉<span>{{ item.yay }}</span>
+            <div class="tooltiptexttop" v-if="item.yayby && item.sadby.length > 0">
+              <p v-for="(item, index) in item.yayby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span>
-          <div class="tooltiptexttop" v-if="item.frogby && item.frogby.length > 0">
-            <p v-for="(item, index) in item.frogby" :key="item.id">
-              {{ item }}
-            </p>
+          <div v-if="!contains(item.frogby) && secret(item.post)" class="reactbutton" @click="react('frog', item.id)">🐸<span>{{ item.frog }}</span>
+            <div class="tooltiptexttop" v-if="item.frogby && item.frogby.length > 0">
+              <p v-for="(item, index) in item.frogby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
+          </div>
+          <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive" @click="removeReact('frog', item.id)">🐸<span>{{ item.frog }}</span>
+            <div class="tooltiptexttop" v-if="item.frogby && item.frogby.length > 0">
+              <p v-for="(item, index) in item.frogby" :key="item.id">
+                {{ item }}
+              </p>
+            </div>
           </div>
         </div>
-        <div v-if="contains(item.frogby) && secret(item.post)" class="reactbuttonactive" @click="removeReact('frog', item.id)">🐸<span>{{ item.frog }}</span>
-          <div class="tooltiptexttop" v-if="item.frogby && item.frogby.length > 0">
-            <p v-for="(item, index) in item.frogby" :key="item.id">
-              {{ item }}
-            </p>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
       </TransitionGroup>
@@ -275,8 +254,10 @@
 <script>
   import { getPosts, getPages, searchPosts, setReact, removeReact, addPost, reacting, posts, loading, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
-  import symbcode from "@/data/symbcode.json"
-  import symbols from "@/data/symbols.json"
+  import emojicode from "@/data/emojicode.json"
+  import emojis from "@/data/emojis.json"
+  import filtercode from "@/data/filtercode.json"
+  import filter from "@/data/filter.json"
 
   export default {
     data() {
@@ -296,8 +277,10 @@
         preview: false,
         draft: null,
         data: null,
-        symbcode: null,
-        symbols: null,
+        emojicode: emojicode,
+        emojis: emojis,
+        filtercode: filtercode,
+        filter: filter,
         page: 1,
         pages: pages,
         reacting: reacting,
@@ -402,16 +385,20 @@
       },
       updated() {
         localStorage.setItem("draft", JSON.stringify({'title': this.title, 'post': this.post}));
-        this.symbcode = (symbcode)
-        this.symbols = (symbols)
 
         this.postpreview = this.post
         this.titlepreview = this.title
-        this.symbcode.forEach(string => {
+        this.emojicode.forEach(string => {
           let regex = new RegExp(string, "g")
-          var i = this.symbcode.indexOf(string)
-            this.postpreview = this.postpreview.replace(regex, this.symbols[i]);
-            this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
+          var i = this.emojicode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.emojis[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.emojis[i]);
+        })
+        this.filtercode.forEach(string => {
+          let regex = new RegExp(string, "g")
+          var i = this.filtercode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.filter[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.filter[i]);
         })
       },
       clear() {

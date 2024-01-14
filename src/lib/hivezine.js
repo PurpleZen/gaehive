@@ -1,8 +1,10 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 
-import symbcode from "@/data/symbcode.json"
-import symbols from "@/data/symbols.json"
+import emojicode from "@/data/emojicode.json"
+import emojis from "@/data/emojis.json"
+import filtercode from "@/data/filtercode.json"
+import filter from "@/data/filter.json"
 
 const loading = ref([])
 const posts = ref([])
@@ -30,12 +32,27 @@ async function getPosts(page) {
   for ( var i = 0; i < data.length; i++){
     posts.value = posts.value.concat(data[i].data)
   }
-  symbcode.forEach(string => {
-    var is = symbcode.indexOf(string)
+  emojicode.forEach(string => {
+    var is = emojicode.indexOf(string)
     for ( var i = 0; i < posts.value.length; i++){
       let regex = new RegExp(string, "g")
-      posts.value[i].title = posts.value[i].title.replace(regex, symbols[is]);
-      posts.value[i].post = posts.value[i].post.replace(regex, symbols[is]);
+      posts.value[i].title = posts.value[i].title.replace(regex, emojis[is]);
+      posts.value[i].post = posts.value[i].post.replace(regex, emojis[is]);
+      
+      var txt = document.createElement("textarea")
+      txt.innerHTML = posts.value[i].title 
+      posts.value[i].title = txt.value
+      var txt = document.createElement("textarea")
+      txt.innerHTML = posts.value[i].post 
+      posts.value[i].post = txt.value
+        }
+      })
+  filtercode.forEach(string => {
+    var is = filtercode.indexOf(string)
+    for ( var i = 0; i < posts.value.length; i++){
+      let regex = new RegExp(string, "g")
+      posts.value[i].title = posts.value[i].title.replace(regex, filter[is]);
+      posts.value[i].post = posts.value[i].post.replace(regex, filter[is])
         }
       })
   loading.value = false
@@ -53,12 +70,27 @@ async function searchPosts(query, type) {
     posts.value = posts.value.concat(data[i].data)
     }
   }
-  symbcode.forEach(string => {
-    var is = symbcode.indexOf(string)
+  emojicode.forEach(string => {
+    var is = emojicode.indexOf(string)
     for ( var i = 0; i < posts.value.length; i++){
       let regex = new RegExp(string, "g")
-      posts.value[i].title = posts.value[i].title.replace(regex, symbols[is]);
-      posts.value[i].post = posts.value[i].post.replace(regex, symbols[is]);
+      posts.value[i].title = posts.value[i].title.replace(regex, emojis[is]);
+      posts.value[i].post = posts.value[i].post.replace(regex, emojis[is]);
+
+      var txt = document.createElement("textarea")
+      txt.innerHTML = posts.value[i].title 
+      posts.value[i].title = txt.value
+      var txt = document.createElement("textarea")
+      txt.innerHTML = posts.value[i].post 
+      posts.value[i].post = txt.value
+        }
+      })
+  filtercode.forEach(string => {
+    var is = filtercode.indexOf(string)
+    for ( var i = 0; i < posts.value.length; i++){
+      let regex = new RegExp(string, "g")
+      posts.value[i].title = posts.value[i].title.replace(regex, filter[is]);
+      posts.value[i].post = posts.value[i].post.replace(regex, filter[is])
         }
       })
   loading.value = false
@@ -75,12 +107,27 @@ async function getPost(id) {
   }
   const { data } = await supabase.from('hivezine').select('data').eq("id", id)
   post.value = data[0].data
-  symbcode.forEach(string => {
-    var is = symbcode.indexOf(string)
+  emojicode.forEach(string => {
+    var is = emojicode.indexOf(string)
     for ( var i = 0; i < post.value.length; i++){
       let regex = new RegExp(string, "g")
-      post.value[i].title = post.value[i].title.replace(regex, symbols[is]);
-      post.value[i].post = post.value[i].post.replace(regex, symbols[is]);
+      post.value[i].title = post.value[i].title.replace(regex, emojis[is]);
+      post.value[i].post = post.value[i].post.replace(regex, emojis[is])
+      
+      var txt = document.createElement("textarea")
+      txt.innerHTML = post.value[i].title 
+      post.value[i].title = txt.value
+      var txt = document.createElement("textarea")
+      txt.innerHTML = post.value[i].post 
+      post.value[i].post = txt.value
+        }
+      })
+  filtercode.forEach(string => {
+    var is = filtercode.indexOf(string)
+    for ( var i = 0; i < post.value.length; i++){
+      let regex = new RegExp(string, "g")
+      post.value[i].title = post.value[i].title.replace(regex, filter[is]);
+      post.value[i].post = post.value[i].post.replace(regex, filter[is])
         }
       })
   document.title = "Gaehive • Hivezine • " + post.value[0].title
@@ -100,7 +147,6 @@ async function getPostEdit(pid) {
   var txt = document.createElement("textarea")
   txt.innerHTML = post.value[0].title 
   post.value[0].title = txt.value
-
   var txt = document.createElement("textarea")
   txt.innerHTML = post.value[0].post 
   post.value[0].post = txt.value

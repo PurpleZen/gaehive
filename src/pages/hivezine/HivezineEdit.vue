@@ -5,79 +5,64 @@
   <div v-if="newpost == 'writing'" class="post">
   <div class="title">
     <div class="username">
-      <router-link class="promptButton" :to="'/hivezine/post/' + this.$route.params.id"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">View More</span></router-link>
+      <router-link class="promptButton" :to="'/hivezine/post/' + this.$route.params.id"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">Cancel Edit</span></router-link>
       <div class="space"></div>
       <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
       <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>
     </div>
-    <textarea v-html="edit[0].title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
+    <textarea v-model="edit[0].title" v-if="!preview" @keyup="updated()" class="titlename" placeholder="Write an awesome title!" rows=1></textarea>
     <div class="titlename" v-if="preview" v-html="titlepreview"></div>
   </div>
-  <div class="toolbar">
-    <button class="tools" @click="shortcut('b')">
-      <b>B</b>
-    </button>
-    <button class="tools" @click="shortcut('i')">
-      <i>I</i>
-    </button>
-    <button class="tools" @click="shortcut('u')">
-      <u>U</u>
-    </button>
-    <button class="tools" @click="shortcut('br')">
-      Br
-    </button>
-    <button class="tools" @click="shortcut('a')">
-      <div class="material-symbols-rounded">link</div>
-    </button>
-    <button class="tools" @click="shortcut('img')">
-      <div class="material-symbols-rounded">image</div>
-    </button>
-    <button class="tools" @click="shortcut('center')">
-      <div class="material-symbols-rounded">format_align_center</div>
-    </button>
-    <details id="headers" class="tools">
-      <summary>Headers</summary>
-      <ul class="list">
-        <button @click="shortcut('h1')" class="tools">h1</button>
-        <button @click="shortcut('h2')" class="tools">h2</button>
-        <button @click="shortcut('h3')" class="tools">h3</button>
-        <button @click="shortcut('h4')" class="tools">h4</button>
-        <button @click="shortcut('h5')" class="tools">h5</button>
-        <button @click="shortcut('h6')" class="tools">h6</button>
-      </ul>
-    </details>
-    <details id="emojis" class="tools">
-      <summary>Emojis</summary>
-      <ul class="list">
-        <button @click="shortcut(':happy:')" class="tools">😊</button>
-        <button @click="shortcut(':sad:')" class="tools">☹️</button>
-        <button @click="shortcut(':cool:')" class="tools">😎</button>
-        <button @click="shortcut(':hmm:')" class="tools">🤔</button>
-        <button @click="shortcut(':crylaugh:')" class="tools">😂</button>
-        <button @click="shortcut(':thumbsup:')" class="tools">👍</button>
-        <button @click="shortcut(':heart:')" class="tools">❤️</button>
-        <button @click="shortcut(':pride:')" class="tools">🏳️‍🌈</button>
-        <button @click="shortcut(':trans:')" class="tools">🏳️‍⚧️</button>
-        <button @click="shortcut(':nails:')" class="tools">💅</button>
-        <button @click="shortcut(':skull:')" class="tools">💀</button>
-        <button @click="shortcut(':sparkle:')" class="tools">✨</button>
-        <button @click="shortcut(':yay:')" class="tools">🎉</button>
-        <button @click="shortcut(':leaves:')" class="tools">🍂</button>
-        <button @click="shortcut(':pumpkin:')" class="tools">🎃</button>
-        <button @click="shortcut(':bat:')" class="tools">🦇</button>
-        <button @click="shortcut(':boo!:')" class="tools">👻</button>
-        <button @click="shortcut(':y:')" class="tools">🪿</button>
-        <button @click="shortcut(':quack:')" class="tools">🦆</button>
-        <button @click="shortcut(':eye::lip::eye:')" class="tools">👁️👄👁️</button>
-        <button @click="shortcut(':shrug:')" class="tools">¯\_(ツ)_/¯</button>
-        <button @click="shortcut(':pablo:')" class="tools">(͠≖ ͜ʖ͠≖)</button>
-      </ul>
-    </details>
-    <button class="tools" v-if="edit[0].post || edit[0].title" @click="preview = !preview">
-      <span v-if="!preview">Preview</span>
-      <span v-else>Edit</span>
-    </button>
-  </div>
+    <div class="toolbar">
+      <button class="tools" @click="shortcut('b')">
+        <b>B</b>
+      </button>
+      <button class="tools" @click="shortcut('i')">
+        <i>I</i>
+      </button>
+      <button class="tools" @click="shortcut('u')">
+        <u>U</u>
+      </button>
+      <button class="tools" @click="shortcut('br')">
+        Br
+      </button>
+      <button class="tools" @click="shortcut('a')">
+        <div class="material-symbols-rounded">link</div>
+      </button>
+      <button class="tools" @click="shortcut('img')">
+        <div class="material-symbols-rounded">image</div>
+      </button>
+      <button class="tools" @click="shortcut('center')">
+        <div class="material-symbols-rounded">format_align_center</div>
+      </button>
+      <details id="headers" class="tools">
+        <summary>Headers</summary>
+        <ul class="list">
+          <button @click="shortcut('h1')" class="tools">h1</button>
+          <button @click="shortcut('h2')" class="tools">h2</button>
+          <button @click="shortcut('h3')" class="tools">h3</button>
+          <button @click="shortcut('h4')" class="tools">h4</button>
+          <button @click="shortcut('h5')" class="tools">h5</button>
+          <button @click="shortcut('h6')" class="tools">h6</button>
+        </ul>
+      </details>
+      <details id="emojis" class="tools">
+        <summary>Emojis</summary>
+        <ul class="list">
+          <button v-for="(item, index) in emojis" :key="item" @click="shortcut(emojicode[index])" class="tools">{{ item }}</button>
+        </ul>
+      </details>
+      <button class="tools" v-if="edit[0].post || edit[0].title" @click="preview = !preview">
+        <span v-if="!preview">Preview</span>
+        <span v-else>Edit</span>
+      </button>
+      <button class="tools" v-if='JSON.stringify(draft) !== `{"title":"","post":""}` && draft !== null && !preview' @click="loadDraft()">
+        <span>Draft</span>
+      </button>
+      <button class="tools" v-if='this.edit[0].post || this.edit[0].title' @click="clear()">
+          <div class="material-symbols-rounded">delete</div>
+      </button>
+    </div>
   <div class='content'>
     <textarea id="textarea" @keydown.ctrl.b.prevent="shortcut('b')" @keydown.ctrl.i.prevent="shortcut('i')" @keydown.ctrl.u.prevent="shortcut('u')" @keydown.ctrl.enter.prevent="shortcut('br')" @keyup="updated()" v-if="!preview" v-model="edit[0].post" style="height:300px" placeholder="Write an awesome post!"></textarea>
     <div v-if="preview" class="styledcontent" v-html="postpreview"></div>
@@ -111,8 +96,10 @@
 <script>
   import { getPostEdit, getPages, searchPosts, setReact, removeReact, editPost, reacting, post, username, id, pages } from '@/lib/hivezine.js'
   import { useMeta } from 'vue-meta'
-  import symbcode from "@/data/symbcode.json"
-  import symbols from "@/data/symbols.json"
+  import emojicode from "@/data/emojicode.json"
+  import emojis from "@/data/emojis.json"
+  import filtercode from "@/data/filtercode.json"
+  import filter from "@/data/filter.json"
 
   export default {
     data() {
@@ -127,8 +114,10 @@
         postpreview: "",
         preview: false,
         data: null,
-        symbcode: null,
-        symbols: null,
+        emojicode: emojicode,
+        emojis: emojis,
+        filtercode: filtercode,
+        filter: filter,
         page: 1,
         pages: pages,
         reacting: reacting,
@@ -167,6 +156,7 @@
       closeDropdown() {
         document.getElementById('type').open = false
       },
+      
       jsonify() {
         this.newpost = "copying"
         this.json = []
@@ -174,19 +164,25 @@
         obj = JSON.stringify(obj)
       for (var i = 0; i < obj.length / 500; i++) {
          this.json.push(obj.slice(i * 500, (i + 1) * 500))
-      }
+        }
       },
+      
       updated() {
-        this.symbcode = (symbcode)
-        this.symbols = (symbols)
+        localStorage.setItem("edit_draft", JSON.stringify({'title': this.edit[0].post, 'post': this.edit[0].post}));
 
         this.postpreview = this.edit[0].post
         this.titlepreview = this.edit[0].title
-        this.symbcode.forEach(string => {
+        this.emojicode.forEach(string => {
           let regex = new RegExp(string, "g")
-          var i = this.symbcode.indexOf(string)
-            this.postpreview = this.postpreview.replace(regex, this.symbols[i]);
-            this.titlepreview = this.titlepreview.replace(regex, this.symbols[i]);
+          var i = this.emojicode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.emojis[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.emojis[i]);
+        })
+        this.filtercode.forEach(string => {
+          let regex = new RegExp(string, "g")
+          var i = this.filtercode.indexOf(string)
+            this.postpreview = this.postpreview.replace(regex, this.filter[i]);
+            this.titlepreview = this.titlepreview.replace(regex, this.filter[i]);
         })
       },
       
@@ -242,12 +238,6 @@
         this.updated()
         document.getElementById("emojis").open = false
         document.getElementById("headers").open = false
-      },
-
-      decodeHTML(html) {
-        var txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.innerText;
       }
     }
   }
