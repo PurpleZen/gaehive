@@ -28,7 +28,17 @@ const supabase = createClient(
 app.get('/api/birthdays', (req, res) => {
   const authHeader = req.headers.authorization;
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    res.json({ status: "unauthorized" })
+    fetch(
+      `https://api.scratch.mit.edu/studios/34421126`,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 Gaehive",
+        },
+      }
+    ).then((response)=>{return response.json();}).then(async data=>{
+
+      res.json({ status: "unauthorized", list: JSON.parse(data.description) })
+    })
   } else {
     fetch(
       `https://api.scratch.mit.edu/studios/34421126`,

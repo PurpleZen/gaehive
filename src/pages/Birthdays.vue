@@ -1,30 +1,34 @@
 <template>
   <h1 class="greeting">Birthdays</h1>
   <a href="https://scratch.mit.edu/studios/34421126/comments" target="_blank"><button>Studio</button></a>
-  <div>
-    <a class="jumpToMonth" v-for="(month) in months" :key="month.id" :href='"#" + month.toLowerCase()'>
+  <div class="jumpToContainer">
+    <a class="jumpToMonth" v-for="(month) in months" :key="month" :href='"#" + month.toLowerCase()'>
       {{ month }}
     </a>
   </div>
 
-  <template v-for="(month, monthIndex) in months" :key="month.id">
-  <div :id='month.toLowerCase()' class="titlename">
-    <h2>{{ month }}</h2>
-  </div>
-    <template v-for="(item, index) in list" :key="item.id">
-      <div class="birthdayRow" v-if="index.slice(0,3) == shortMonths[monthIndex]">
-        <div class="birthdate">{{ month }} {{ index.slice(3) }}{{ getOrdinal(index.slice(3)) }}</div>
-        <div class="birthdays">
-          <template v-for="(user) in item" :key="user.id">
-            <div class="birthdayUsers"><a :href='"https://scratch.mit.edu/users/" + user' target="_blank">@{{ user }}</a></div>
-          </template>
-        </div>
-      </div>
-    </template>
-    <div v-if="!noBirthdays(monthIndex)" class="birthdayRow">
-      <div>No Birthdays</div>
+  <div class="months" v-for="(month, monthIndex) in months" :key="month">
+    <TransitionGroup name="bday">
+    <div :id='month.toLowerCase()' class="titlename">
+      <h2>{{ month }}</h2>
     </div>
-</template>
+
+      <template v-for="(item, index) in list" :key="item">
+        <div class="birthdayRow" v-if="index.slice(0,3) == shortMonths[monthIndex]">
+          <div class="birthdate">{{ month }} {{ index.slice(3) }}{{ getOrdinal(index.slice(3)) }}</div>
+          <div class="birthdays">
+            <template v-for="(user) in item" :key="user">
+              <div class="birthdayUsers"><a :href='"https://scratch.mit.edu/users/" + user' target="_blank">@{{ user }}</a></div>
+            </template>
+          </div>
+        </div>
+      </template>
+
+      <div v-if="!noBirthdays(monthIndex)" class="birthdayRow">
+        <div>No Birthdays</div>
+      </div>
+    </TransitionGroup>
+  </div>
 </template>
 
 <script>

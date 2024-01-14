@@ -2,7 +2,7 @@ import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 
 const users = ref()
-const list = ref()
+const list = ref([])
 
 let date = new Date() 
 let months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]

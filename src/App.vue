@@ -313,6 +313,20 @@
     opacity: 0;
   }
 
+  .bday-enter-active,
+  .bday-leave-active{
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+  .bday-enter-from,
+  .bday-leave-to {
+    transform: scale(110%) rotateX(-90deg);
+    opacity: 0;
+  }
+  .bday-leave-active {
+    position: absolute;
+    width: calc(100% - 10px);
+  }
+
   /* Page */
   html, body {
     color: var(--txt);
@@ -517,7 +531,31 @@
     transition: opacity 0.3s;
   }
 
-  .promptButton:hover .tooltiptext, .promptButton:hover .tooltiptextleft {
+  .reactbutton .tooltiptexttop, .reactbuttonactive .tooltiptexttop {
+    font-size: small;
+    font-weight: normal;
+    text-shadow: none;
+    cursor: initial;
+    width: max-content;
+    visibility: hidden;
+    background-color: var(--acc);
+    color: var(--btxt);
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltiptexttop p {
+    margin: 0;
+  }
+
+  .promptButton:hover .tooltiptext, .promptButton:hover .tooltiptextleft, .reactbutton:hover .tooltiptexttop, .reactbuttonactive:hover .tooltiptexttop {
     visibility: visible;
     opacity: 1;
   }
@@ -1148,12 +1186,22 @@
 
   
   /* Birthdays */
+  .jumpToContainer {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+    background-color: var(--sb);
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
   .jumpToMonth {
     margin: 2px;
     padding: 3px;
     font-size: smaller;
     cursor: pointer;
     border-radius: 5px;
+    text-decoration: none;
   }
 
   .jumpToMonth:hover {
@@ -1176,9 +1224,13 @@
     width: 100%;
   }
 
+  .months {
+    position: relative;
+    width: 70%
+  }
+
   .birthdayRow {
     margin-bottom: 20px;
-    width: 70%;
     justify-content: center;
     text-align: center;
     display: grid;
@@ -1192,7 +1244,7 @@
     background-color: var(--bg);
     margin: 5px;
     border-radius: 5px;
-    overflow: clip;
+    white-space: nowrap;
     transition: scale ease 0.2s;
   }
 
@@ -1345,6 +1397,9 @@
     }
     .users span {
       white-space: break-spaces;
+    }
+    .jumpToContainer {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
