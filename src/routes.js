@@ -11,52 +11,62 @@ import Managers from './pages/managers/Managers.vue'
 
 import Birthdays from './pages/Birthdays.vue'
 
+import DocsHome from './pages/docs/DocsHome.vue'
+import ScratchGuidelines from './pages/docs/ScratchGuidelines.vue'
+
 export const routes = [
-      { 
-        path: '/', 
-        component: Home,
-      },
-      
-      {
-        path: '/managers',
-        component: Managers,
-      },
-
-      {
-        path: '/hivezine/:pg*',
-        component: HivezineHome,
-      },
-
-      {
-        path: '/hivezine/post/:id',
-        component: HivezinePost,
-      },
-
-  {
-    path: '/hivezine/edit/:id',
-    component: HivezineEdit,
+  { 
+    path: '/', 
+    component: Home,
   },
 
-      {
-        path: '/hivezine/writers',
-        component: HivezineWriters,
-      },
-  
-      {
-        path: '/resources',
-        component: Resources,
-      },
+  {
+    path: '/managers',
+    component: Managers,
+  },
+
+  {
+    path: '/hivezine/:pg*',
+    component: HivezineHome,
+  },
+
+  {
+    path: '/hivezine/post/:id',
+    component: HivezinePost,
+  },
+
+  {
+  path: '/hivezine/edit/:id',
+  component: HivezineEdit,
+  },
+
+  {
+    path: '/hivezine/writers',
+    component: HivezineWriters,
+  },
+
+  {
+    path: '/resources',
+    component: Resources,
+  },
 
   { 
     path: '/birthdays',
     component: Birthdays
   },
-  
-      { 
-        path: '/:path(.*)',
-        component: NotFound
-      }
 
-  
-  
+  {
+    path: '/docs',
+    component: DocsHome
+  },
+
+  {
+    path: '/docs/us-and-scratch-guidelines',
+    component: ScratchGuidelines
+  },
+
+  { 
+    path: '/:path(.*)',
+    component: NotFound
+  }
 ]

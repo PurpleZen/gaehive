@@ -28,18 +28,20 @@
     <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
     <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
 
-    <router-link  v-if="location !== 'birthdays' && username || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
-    <router-link v-if="location == 'birthdays' && username && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
+    <router-link  v-if="location !== 'birthdays' || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
+    <router-link v-if="location == 'birthdays' && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
     
     <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
     <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
-    
-    <a tabindex=0 class='sidebutton' @click="this.popup = 'settings'" @keydown.enter="this.popup = 'settings'">Settings</a>
 
-    <a v-if="username" class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
+    <router-link v-if="location !== 'docs' || active" class='sidebutton' to="/docs">Docs</router-link>
+    <router-link v-if="location == 'docs' && !active" class='sidebuttonactive' to="/docs">Docs</router-link>
+
+    <a class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
       
     <div class="block-break"></div>
-    
+
+    <button class="login" @click="this.popup = 'settings'" @keydown.enter="this.popup = 'settings'">Settings <div class="material-symbols-rounded">settings</div></button>
     <button class='login' @click="logIn()" v-if="!this.username">Sign in <div class="material-symbols-rounded">login</div></button>
     <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
   </div>
@@ -1254,12 +1256,10 @@
   }
 
   .birthdayUsers a {
-    width: 100%;
     color: var(--txt);
     text-decoration: none;
     display: flex;
     padding: 20px;
-    overflow: hidden;
   }
 
   .birthdayUsers span {
