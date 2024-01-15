@@ -219,7 +219,7 @@
             </div>
           </div>
           <div v-if="contains(item.yayby)" class="reactbuttonactive" @click="removeReact('yay', item.id)">🎉<span>{{ item.yay }}</span>
-            <div class="tooltiptexttop" v-if="item.yayby && item.sadby.length > 0">
+            <div class="tooltiptexttop" v-if="item.yayby && item.yayby.length > 0">
               <p v-for="(item, index) in item.yayby" :key="item.id">
                 {{ item }}
               </p>
