@@ -278,20 +278,27 @@ async function editPost() {
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
 
-  let id = JSON.parse(post[0].data).edit
-
   const d = new Date();
   let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
 
-  const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
-  let user = data[0].data[0].user
+  let id = JSON.parse(post[0].data).edit
+  let user = post[0].user
+  let newtitle = JSON.parse(post[0].data).title
+  let newpost = JSON.parse(post[0].data).post
 
-  if (user == post[0].user) {
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
+  post.value = data[0].data
+
+  if (user == post.value[0].user) {
+
+    post.value[0].post = newpost
+    post.value[0].title = newtitle
+    post.value[0].edited = editdate
 
   const { data, error } = await supabase
     .from('hivezine')
     .update([
-      {data: JSON.parse(post[0].data)},
+      {data: post.value},
     ])
     .eq('id', id + 1)
 
