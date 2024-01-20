@@ -252,7 +252,7 @@ async function addPost() {
   var { data, error } = await supabase
   .from('reactions')
   .insert([
-    {id: id + 1, data: null },
+    {id: id + 1, data: [{}] },
   ])
   .select()
 
@@ -279,24 +279,12 @@ async function editPost() {
   const d = new Date();
   let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
 
-  let id = JSON.parse(post[0].data).edit
-  let user = post[0].user
-  let newtitle = JSON.parse(post[0].data).title
-  let newpost = JSON.parse(post[0].data).post
-
-  const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
-  post.value = data[0].data
-
   if (user == post.value[0].user) {
-
-    post.value[0].post = newpost
-    post.value[0].title = newtitle
-    post.value[0].edited = editdate
 
   const { data, error } = await supabase
     .from('hivezine')
     .update([
-      {data: post.value},
+      {data: JSON.parse(post[0].data)},
     ])
     .eq('id', id + 1)
 
@@ -309,7 +297,12 @@ async function editPost() {
 }
 
 async function deletePost(id) {
-  const { error } = await supabase
+  var { error } = await supabase
+  .from('reactions')
+  .update({ data: null })
+  .eq('id', id)
+  
+  var { error } = await supabase
   .from('hivezine')
   .update({ data: null })
   .eq('id', id)
