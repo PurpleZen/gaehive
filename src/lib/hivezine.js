@@ -249,14 +249,14 @@ async function addPost() {
   let title = JSON.parse(post[0].data).title
   let newpost = JSON.parse(post[0].data).post
 
-  const { data, error } = await supabase
+  var { data, error } = await supabase
   .from('reactions')
   .insert([
     {id: id + 1, data: null },
   ])
   .select()
 
-  const { data, error } = await supabase
+  var { data, error } = await supabase
     .from('hivezine')
     .insert([
       {id: id + 1, data: [{'id': id, 'date': date, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
