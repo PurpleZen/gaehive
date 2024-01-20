@@ -1,6 +1,8 @@
 import { ref, onMounted } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 
+import { router } from '@/main.js'
+
 import emojicode from "@/data/emojicode.json"
 import emojis from "@/data/emojis.json"
 import filtercode from "@/data/filtercode.json"
@@ -288,6 +290,7 @@ async function editPost() {
     ])
     .eq('id', id + 1)
 
+    router.push({ path: "/hivezine/post/" + id, query: null })
     getPost(id + 1)
 
       for (var i = 0; i < allElements.length; i++) {
@@ -306,6 +309,8 @@ async function deletePost(id) {
   .from('hivezine')
   .update({ data: null })
   .eq('id', id)
+  router.push({ path: "/hivezine", query: null })
+
   getPosts(1)
 }
 

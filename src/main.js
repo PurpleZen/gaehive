@@ -6,7 +6,7 @@ import { createMetaManager  } from 'vue-meta';
 
 const app = createApp(App)
 
-const router = createRouter({
+export const router = createRouter({
   history: createWebHistory(),
   routes,
   scrollBehavior(to, from) {

@@ -199,7 +199,6 @@
       },
       deletePost() {
         deletePost(JSON.parse(this.$route.params.id) +1)
-        this.$router.push({ path: "/hivezine", query: null })
       },
       react(type, post) {
         if (this.reacting == false) {

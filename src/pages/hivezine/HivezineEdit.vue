@@ -150,7 +150,6 @@
       
       editPost() {
         editPost()
-        this.$router.push({ path: "/hivezine/post/" + this.$route.params.id, query: null })
       },
 
       closeDropdown() {
