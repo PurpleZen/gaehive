@@ -278,6 +278,8 @@ async function editPost() {
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
 
+  let id = JSON.parse(post[0].data).edit
+
   const d = new Date();
   let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
 
