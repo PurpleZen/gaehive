@@ -281,7 +281,10 @@ async function editPost() {
   const d = new Date();
   let editdate = d.toLocaleDateString("en-US", {month:'short', day: '2-digit', year:'numeric', hour:'2-digit', hour12:'true', minute:'2-digit', timeZoneName:'short'})
 
-  if (user == post.value[0].user) {
+  const { data } = await supabase.from('hivezine').select('data').eq("id", id + 1)
+  let user = data[0].data[0].user
+
+  if (user == post[0].user) {
 
   const { data, error } = await supabase
     .from('hivezine')
