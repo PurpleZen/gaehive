@@ -14,7 +14,7 @@
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
       <img v-if="!username" src="/favicon.ico">
       <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-      <h2 @click.right="this.secret = true" v-if="!username">Hello :)</h2>
+      <h2 @click.right="this.secret = true" v-if="!username">Hello 🏳️‍🌈</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
