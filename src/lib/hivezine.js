@@ -27,11 +27,19 @@ async function getPosts(page) {
     username.value = JSON.parse(localStorage['user']).username
     id.value = JSON.parse(localStorage['user']).id
   }
-  const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false }).range((page - 1) * 10, (page * 10) - 1)
+    const { data: hivezine, error } = await supabase
+    .from('hivezine')
+    .select(`
+      data,
+      reactions (
+        data
+      )
+    `).not('data', 'is', null).order("id", { ascending: false }).range((page - 1) * 10, (page * 10) - 1)
   posts.value = ([])
-  for ( var i = 0; i < data.length; i++){
-    posts.value = posts.value.concat(data[i].data)
+  for ( var i = 0; i < hivezine.length; i++){
+    posts.value = posts.value.concat(Object.assign({}, ...hivezine[i].data, ...hivezine[i].reactions.data))
   }
+  
   emojicode.forEach(string => {
     var is = emojicode.indexOf(string)
     for ( var i = 0; i < posts.value.length; i++){
@@ -159,7 +167,7 @@ async function setReact(type, id) {
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
   }
-  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  const { data } = await supabase.from('reactions').select('data').eq("id", id)
   let react = data[0].data
   
   if (react[0][type]) {
@@ -175,7 +183,7 @@ async function setReact(type, id) {
     react[0][by] = [username.value]
   }
   const { error } = await supabase
-  .from('hivezine')
+  .from('reactions')
   .update({ data: react })
   .eq('id', id)
   if (!location.pathname.split("/")[2]) {
@@ -196,7 +204,7 @@ async function removeReact(type, id) {
   if (localStorage['user']) {
     username.value = JSON.parse(localStorage['user']).username
   }
-  const { data } = await supabase.from('hivezine').select('data').eq("id", id)
+  const { data } = await supabase.from('reactions').select('data').eq("id", id)
   let react = data[0].data
   
   if (react[0][type] > 1) {
@@ -209,7 +217,7 @@ async function removeReact(type, id) {
   react[0][by].splice(react[0][by].indexOf(username.value), 1)
   
   const { error } = await supabase
-  .from('hivezine')
+  .from('reactions')
   .update({ data: react })
   .eq('id', id)
   if (!location.pathname.split("/")[2]) {
@@ -241,12 +249,16 @@ async function addPost() {
   let title = JSON.parse(post[0].data).title
   let newpost = JSON.parse(post[0].data).post
 
-  const { data, error } = await supabase
-    .from('hivezine')
-    .insert([
+  const { data: hivezine, error } = await supabase
+  .from('hivezine')
+  .insert(
+    [
       {id: id + 1, data: [{'id': id, 'date': date, 'user': user, 'uid': uid, 'title': title, 'post': newpost, 'pid': pid}] },
-    ])
-    .select()
+    ],
+    `reactions` (
+      {id: id + 1, data: null }
+    )
+  )
   
   if (!location.pathname.split("/")[2]) {
     getPosts(1)
