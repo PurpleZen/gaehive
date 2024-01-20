@@ -291,7 +291,7 @@ async function editPost() {
   const { data, error } = await supabase
     .from('hivezine')
     .update([
-      {data: post[0].data},
+      {data: JSON.parse(post[0].data)},
     ])
     .eq('id', id + 1)
 
