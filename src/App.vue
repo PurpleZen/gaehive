@@ -77,7 +77,13 @@
   <div v-if="popup == 'scratchdb'" class="popup">
     <div class="title">ScratchDB is offline!</div>
     <div class="popupbody">
-      Some Website features like logging in and adding new writers and managers will not work.
+      The following website features are currently unavailable:
+      <ul>
+        <li>Website Sign in</li>
+        <li>Adding new Managers</li>
+        <li>Adding new Writers</li>
+        <li>Adding new Birthdays</li>
+      </ul>
       <div class="popupbuttons">
         <button @click="this.popup = null" class="button">OK</button>
       </div>
