@@ -310,7 +310,13 @@
         this.username = JSON.parse(localStorage['user']).username
         this.id = JSON.parse(localStorage['user']).id
       }
+      
+      if (!this.$route.params.pg) {
+        this.page = 1
+      } else {
       this.page = this.$route.params.pg
+      }
+      
       if (this.$route.query.q) {
         this.query = this.$route.query.q
         this.type = this.$route.query.filter
