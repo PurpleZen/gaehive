@@ -1,6 +1,7 @@
 const app = require('express')();
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 const { createClient } = require('@supabase/supabase-js')
 
 app.use(cookieParser());
@@ -69,7 +70,7 @@ app.get('/api/login', async (req, res) => {
       return res.json({ token: "invalid" })
     }
     } catch(error) {
-    return res.send("Whoops! Looks like ScratchDB is offline. Please try again later. <a href='/'>Back</a>.");
+    return res.sendFile(path.join(__dirname, 'error.html'));
     }
 });
 
