@@ -35,8 +35,11 @@ app.get('/api/login', async (req, res) => {
   try {
     const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
   } catch(error) {
-    alert('Whoops!\nLooks like ScratchDB is offline. Please try again later.')
-    res.redirect('/')
+    return res.json({ message: "Whoops! Looks like ScratchDB is offline. Please try again later." });
+    setTimeout(redirect, 3000);
+    function redirect() {
+      res.redirect('/')
+    }
   }
   const userdata = await userinfo.json();
   const id = userdata.id
