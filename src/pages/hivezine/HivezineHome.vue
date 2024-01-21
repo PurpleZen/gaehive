@@ -97,7 +97,7 @@
 
     <div class="pagesearch">
       <div class="pages">
-        <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+        <router-link @click=this.getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
       </div>
       <div class="space"></div>
       <div v-if="pages" style="display:flex">
@@ -247,7 +247,7 @@
     </div>
     
     <div class="pages">
-      <router-link v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+      <router-link @click=getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
 </template>
 
@@ -264,8 +264,8 @@
       return {
         loading: loading,
         error: null,
-        username: username,
-        id: id,
+        username: null,
+        id: null,
         manager: null,
         writer: null,
         list: null,
@@ -306,25 +306,20 @@
       
     },
     mounted() {
-      if (!this.$route.params.pg) {
+      if (localStorage['user']) {
+        this.username = JSON.parse(localStorage['user']).username
+        this.id = JSON.parse(localStorage['user']).id
+      }
+      this.page = this.$route.params.pg
+      if (this.$route.query.q) {
+        this.query = this.$route.query.q
+        this.type = this.$route.query.filter
+        searchPosts(this.$route.query.q, this.$route.query.filter)
+      } else if (!this.$route.params.pg) {
         getPosts(1)
       } else {
         getPosts(this.$route.params.pg[0])
       }
-      this.$watch(
-        () => this.$route.params.pg,
-        () => {
-          if (!this.$route.params.id) {
-          if (this.$route.params.pg) {
-            this.page = this.$route.params.pg
-            getPosts(this.$route.params.pg)
-          } else {
-            getPosts(1)
-          }
-          }
-        },
-        { immediate: true }
-      )
     },
 
     methods: {
@@ -353,10 +348,15 @@
           removeReact(type, post + 1)
         }
       },
+      getPosts(pg) {
+        this.page = pg
+        getPosts(pg)
+      },
       addPost() {
         addPost()
       },
       searchPosts(query, type) {
+        this.$router.push({ query: {q: query, filter: type} })
         searchPosts(query, type)
       },
       clearSearch() {
@@ -368,6 +368,7 @@
           getPosts(1)
         }
         }
+        this.$router.push({ query: null })
         this.query = null
         this.type = "post"
       },

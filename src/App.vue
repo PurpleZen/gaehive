@@ -11,10 +11,10 @@
     <div class="block-break"></div>
     
     <div class="hello">
-      <img v-if="username" :src="'https://uploads.scratch.mit.edu/users/avatars/' + id + '.png'">
+      <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
       <img v-if="!username" src="/favicon.ico">
       <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-      <h2 @click.right="this.secret = true" v-if="!username">Hello :]</h2>
+      <h2 @click.right="this.secret = true" v-if="!username">Hello <3</h2>
     </div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
@@ -169,11 +169,9 @@
         this.animation = 0
       }
       
-      const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
-    
       try {
-        const userdata = await userinfo.json();
-      } catch(err) {
+        const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
+      } catch(error) {
         this.popup = "scratchdb"
       }
       

@@ -25,10 +25,6 @@ async function getPages() {
 async function getPosts(page) {
   document.title = 'Gaehive • Hivezine • Page ' + page
   loading.value = true
-  if (localStorage['user']) {
-    username.value = JSON.parse(localStorage['user']).username
-    id.value = JSON.parse(localStorage['user']).id
-  }
     const { data: hivezine, error } = await supabase
     .from('hivezine')
     .select(`
@@ -248,8 +244,12 @@ async function addPost() {
   let user = post[0].user
   let uid = post[0].uid
   let pid = post[0].pid
-  let title = JSON.parse(post[0].data).title
+  var title = JSON.parse(post[0].data).title
   let newpost = JSON.parse(post[0].data).post
+
+  if (title == null) {
+    var title = user + "'s Post"
+  }
 
   var { data, error } = await supabase
   .from('reactions')
