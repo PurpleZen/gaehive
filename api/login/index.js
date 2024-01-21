@@ -33,48 +33,44 @@ app.get('/api/login', async (req, res) => {
   const json = await result.json();
 
   try {
-    const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
-  } catch(error) {
-    return res.json({ message: "Whoops! Looks like ScratchDB is offline. Please try again later." });
-    setTimeout(redirect, 3000);
-    function redirect() {
-      res.redirect('/')
-    }
-  }
-  const userdata = await userinfo.json();
-  const id = userdata.id
+    const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + json.username);
+    const userdata = await userinfo.json();
+    const id = userdata.id
 
-  var manager = false
-  var writer = false
-  var { data } = await supabase.from('managers').select('data').eq("id", 1)
-  const managers = await data[0].data
-  for (var i = 0; i < managers.length; i++) {
-    if (managers[i].name == json.username) {
-        manager = true
-        writer = true
+    var manager = false
+    var writer = false
+    var { data } = await supabase.from('managers').select('data').eq("id", 1)
+    const managers = await data[0].data
+    for (var i = 0; i < managers.length; i++) {
+      if (managers[i].name == json.username) {
+          manager = true
+          writer = true
+        }
       }
-    }
-  
-  var { data } = await supabase.from('managers').select('data').eq("id", 2)
-  const writers = await data[0].data
-  for (var i = 0; i < writers.length; i++) {
-    if (writers[i].name == json.username) {
-        writer = true
+
+    var { data } = await supabase.from('managers').select('data').eq("id", 2)
+    const writers = await data[0].data
+    for (var i = 0; i < writers.length; i++) {
+      if (writers[i].name == json.username) {
+          writer = true
+        }
       }
+
+    if (json.username == "LegoManiac04") {
+      manager = true
+      writer = true
     }
 
-  if (json.username == "LegoManiac04") {
-    manager = true
-    writer = true
-  }
-
-  if (json.valid) {
-    const token = jwt.sign({ name: json.username, role: "authenticated", manager: manager, writer: writer }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
-    res.cookie('mytoken', token, cookieOptions);
-    res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})))
-  } else {
-    return res.json({ token: "invalid" })
-  }
+    if (json.valid) {
+      const token = jwt.sign({ name: json.username, role: "authenticated", manager: manager, writer: writer }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
+      res.cookie('mytoken', token, cookieOptions);
+      res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})))
+    } else {
+      return res.json({ token: "invalid" })
+    }
+    } catch(error) {
+    return res.send("Whoops! Looks like ScratchDB is offline. Please try again later. <a href='/'>Back</a>.");
+    }
 });
 
 
