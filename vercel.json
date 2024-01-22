@@ -2,7 +2,6 @@
   "version": 2,
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "index.html" },
-    { "src": "/api/(.*)", "status": 504, "dest": "/api/login/error.html" }
+    { "src": "/(.*)", "dest": "index.html" }
   ]
 }
