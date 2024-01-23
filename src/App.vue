@@ -176,7 +176,9 @@
       }
       
       try {
-        const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04');
+        const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04', {
+          signal: AbortSignal.timeout(5000)
+        });
       } catch(error) {
         this.popup = "scratchdb"
       }
