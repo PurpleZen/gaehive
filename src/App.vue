@@ -335,6 +335,17 @@
     position: absolute;
     width: calc(100% - 10px);
   }
+  
+  @font-face {
+    font-family: AdobeBlank;
+    src: url(AdobeBlank.otf.woff);
+  }
+
+  .material-symbols-rounded {
+    font-family: 'Material Symbols Rounded', 'AdobeBlank';
+    letter-spacing: -3.4px;
+    margin-right: 3.4px;
+  }
 
   /* Page */
   html, body {

@@ -251,7 +251,7 @@ async function addPost() {
   var title = JSON.parse(post[0].data).title
   let newpost = JSON.parse(post[0].data).post
 
-  if (title == null) {
+  if (title == "") {
     var title = user + "'s Post"
   }
 
