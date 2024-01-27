@@ -231,6 +231,10 @@ async function removeReact(type, id) {
 
 async function addPost() {
   loading.value = true
+
+  if (localStorage['user']) {
+    username.value = JSON.parse(localStorage['user']).username
+  }
   
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()
