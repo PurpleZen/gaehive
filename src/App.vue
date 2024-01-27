@@ -7,15 +7,15 @@
     <span class="mobilemenu">Menu</span>
     
     <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
-    
-    <div class="block-break"></div>
-    
+        
     <div class="hello">
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
       <img v-if="!username" src="/favicon.ico">
-      <h2 @click.right="this.secret = true" v-if="username">Hello{{ mellie }},<br>{{ username }}</h2>
-      <h2 @click.right="this.secret = true" v-if="!username">Hello <3</h2>
+      <h5 v-if="username">Hello{{ mellie }},<br>{{ username }}</h5>
+      <h5 v-if="!username">Hello! 🐝</h5>
     </div>
+
+    <div class="block-break"></div>
 
     <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
     
@@ -41,9 +41,11 @@
       
     <div class="block-break"></div>
 
-    <button class="login" @click="this.popup = 'settings'" @keydown.enter="this.popup = 'settings'">Settings <div class="material-symbols-rounded">settings</div></button>
-    <button class='login' @click="logIn()" v-if="!this.username">Sign in <div class="material-symbols-rounded">login</div></button>
-    <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
+    <div class="loginSettingsBox">
+      <button class="login" @click="this.popup = 'settings'" @keydown.enter="this.popup = 'settings'">Settings <div class="material-symbols-rounded">settings</div></button>
+      <button class='login' @click="logIn()" v-if="!this.username">Sign in <div class="material-symbols-rounded">login</div></button>
+      <button class='login' @click="logOut()" v-if="this.username">Sign out <div class="material-symbols-rounded">logout</div></button>
+    </div>
   </div>
   <div class="page">
 
@@ -55,6 +57,7 @@
   <div v-if="popup == 'settings'" class="popup">
     <div class="title">Settings</div>
     <div class="popupbody">
+      Change website settings.
       <div>
         <button @click="changeTheme('dark')" @click.right.prevent="changeTheme('2000s-blog')" v-if="theme == 'light' || theme == null">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
         <button @click="changeTheme('light')" @click.right.prevent="changeTheme('2000s-blog')" v-if="theme !== 'light' && theme">Theme<div class="space"></div><div class="material-symbols-rounded">palette</div></button>
@@ -65,10 +68,8 @@
         <button @click="changeTheme('high-contrast')" v-if="theme !== 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
         <button @click="changeTheme('light')" v-if="theme == 'high-contrast'">High Contrast<div class="space"></div><div class="material-symbols-rounded">contrast</div></button>
       </div>
-      <div class="popupbuttons">
-        <div class="reactions">
+        <div class="popupbuttons">
           <button @click="this.popup = null" class="button">Close</button>
-        </div>
       </div>
     </div>
   </div>
@@ -215,7 +216,7 @@
     --acc2: #483248;
     --acclt: #ee824b66;
     --brk: #0006;
-    --txt: #444;
+    --txt: #293f56;
     --txtstr: #000;
     --btxt: #fee5a1;
     --plnk: #573c57;
@@ -446,6 +447,10 @@
     margin-bottom: 5px;
   }
 
+  .buttonarea {
+    display: flex;
+  }
+
   .button, button {
     width: fit-content;
     display: inline-flex;
@@ -568,17 +573,31 @@
     opacity: 1;
   }
 
+  .loader {
+    height: 20px;
+    border: var(--acclt) solid 3px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border-bottom: transparent solid 3px;
+    animation: rotate 1s infinite;
+    margin: 6px;
+    align-self: center;
+    display: inline-flex;
+  }
+
   
   /* Sidebar */
   
   .sidebar {
     background-color: var(--sb);
-    width: 20%;
-    padding: 30px;
+    padding: 60px;
+    border-radius: 0 20px 20px 0;
     flex-shrink: 0;
     display: grid;
+    justify-content: center;
     align-content: center;
     transition: all ease 0.2s;
+    overflow: clip;
     z-index: 2;
   }
 
@@ -596,15 +615,27 @@
   }
 
   .hello {
-    display: flex;
-    align-items: center;
-    margin: 0 0 10px 5px;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+  }
+
+  .hello h5 {
+    margin: 0;
+    color: var(--acc2);
+    font-family: agbalumo;
+    text-align: center;
+    line-height: 20px;
+    font-size: 20px;
   }
 
   .hello img {
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    border: var(--sb) solid 6px;
+    outline: var(--acc) solid 3px;
+    margin: 10px;
   }
 
   .sidebutton {
@@ -613,13 +644,14 @@
     color: var(--txt);
     text-decoration: none;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px 0 0 10px;
     cursor: pointer;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 2.2vh;
     text-align: left;
     padding: 5px 15px;
     margin-bottom: 2px;
+    margin-right: -60px;
     transition: padding linear 0.05s;
   }
 
@@ -629,14 +661,15 @@
     color: var(--btxt);
     text-decoration: none;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px 0 0 10px;
     cursor: pointer;
     font-family: inherit;
-    font-size: inherit;
+    font-size: 2.2vh;
     text-align: left;
     padding: 5px 15px;
     padding-left: 20px;
     margin-bottom: 2px;
+    margin-right: -60px;
   }
 
   .sidebutton:hover {
@@ -645,12 +678,18 @@
     color: var(--txtstr);
   }
 
+  .loginSettingsBox{
+    display: flex;
+    margin: 0 -20px 0 -20px;
+    justify-content: center;
+  }
+
   .login {
     display: flex;
     background-color: var(--acc);
     color: var(--btxt);
     font-family: inherit;
-    font-size: 12px;
+    font-size: 1.6vh;
     padding: 5px 11px;
     margin-left: 5px;
     align-items: center;
@@ -673,6 +712,7 @@
   .birthday {
     font-size: small;
     font-weight: bold;
+    text-align: center;
   }
 
   .birthday a {
@@ -695,17 +735,23 @@
 
   .popup {
     position: fixed;
-    background-color: var(--sb);
-    border: 1px solid var(--acc);
+    background-color: var(--txt);
+    color: var(--sb);
+    box-shadow: #0005 0 0 50px;
+    padding: 10px;
     margin: 10px;
     justify-self: center;
     align-self: center;
-    border-radius: 5px;
+    border-radius: 20px;
     z-index: 1;
   }
 
+  .popup .title {
+    color: var(--sb);
+    font-weight: bold;
+  }
+
   .popupbody {
-    display: grid;
     margin: 0 10px;
     align-items: center;
     justify-content: center;
@@ -716,8 +762,15 @@
     justify-content: center;
   }
 
+  .popupbuttons button {
+    width: 100%;
+    justify-content: center;
+  }
+
   .popup button {
     margin: 10px 5px;
+    background-color: var(--bg);
+    color: var(--txt);
   }
 
   .popup input {
@@ -1280,6 +1333,15 @@
     }
   }
 
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   @media screen and (max-width: 900px) {
     .page {
       overflow: initial;
@@ -1292,13 +1354,13 @@
     }
     .sidebar {
       width: 30px;
+      padding: 0;
       height: 100vh;
       margin: 0;
-      padding: 0;
       overflow: clip;
       position: absolute;
-      justify-items: center;
       text-align: center;
+      justify-items: center;
     }
     .sidebar h2 {
       font-size: medium;
@@ -1311,11 +1373,17 @@
     .sidebar:hover div, .sidebar:hover a, .sidebar:hover button {
       visibility: initial;
     }
+    .sidebutton, .sidebuttonactive {
+      margin: 0;
+      border-radius: 10px;
+      padding: 5px 15px;
+    }
     .sidebar:hover .mobilemenu {
       justify-self: left;
     }
     .sidebar:hover {
-      width: 70%;
+      width: initial;
+      padding: 0 60px;
       box-shadow: #0005 0 0 20px;
     }
     .birthday {
@@ -1325,8 +1393,8 @@
     .hello {
       display: block;
     }
-    .sidebuttonactive {
-      padding-left: 15px;
+    .loginSettingsBox {
+      display: grid;
     }
     .login {
       margin-left: 0;

@@ -46,8 +46,9 @@
 
   <!--move-->
   <div v-if="popup == 'move'" class="popup">
-    <div class="title">Are you sure you want to make {{ this.user }} host?</div>
+    <div class="title">Change Host</div>
     <div class="popupbody">
+      Are you sure you want to make {{ this.user }} host?
       <div class="popupbuttons">
         <button @click="this.transfer(this.user, this.host)" class="button">Yes</button>
         <button @click="this.popup = null" class="button">No</button>
@@ -58,8 +59,9 @@
 
   <!--remove-->
   <div v-if="popup == 'remove'" class="popup">
-    <div class="title">Are you sure you want to remove {{ this.user }}?</div>
+    <div class="title">Remove User</div>
     <div class="popupbody">
+      Are you sure you want to remove {{ this.user }}?
       <div class="popupbuttons">
         <button @click="this.remove(this.user)" class="button">Yes</button>
         <button @click="this.popup = null" class="button">No</button>
@@ -70,8 +72,9 @@
 
   <!--add-->
   <div v-if="popup == 'add'" class="popup">
-    <div class="title">Add a new manager</div>
+    <div class="title">Add User</div>
     <div class="popupbody">
+      Add a new user to the queue.<br>
       <input id="new" placeholder="username" @keyup.enter="newManager()">
       <div class="popupbuttons">
         <button @click="newManager()" class="button">OK</button>
@@ -83,9 +86,10 @@
 
   <!--error-->
   <div v-if="popup == 'error'" class="popup">
-    <div class="title">Oh noes, looks like something went wrong 😿</div>
+    <div class="title">Oh Noes!</div>
     <div class="popupbody">
-      <div>
+      Looks like something went wrong 😿
+      <div class="popupbuttons">
         <button @click="this.popup = null" class="button">Ok</button>
       </div>
     </div>
@@ -95,7 +99,7 @@
 </template>
 
 <script>
-  import { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, loading, popup } from '@/lib/managers.js'
+  import { loading, getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, popup } from '@/lib/managers.js'
   import { useMeta } from 'vue-meta'
 export default {  
   created() {
@@ -113,12 +117,12 @@ export default {
   
   data() {
   	return {
+      loading: loading,
       manager: manager,
       hostnext: hostnext,
       next: next,
       list: list,
       managers: managers,
-      loading: loading,
       popup: popup,
       confirm: null,
       host: null,

@@ -109,4 +109,4 @@
     getManagers()
   }
     
-  export { getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, loading, popup }
+  export { loading, getManagers, newManager, transfer, move, remove, hostnext, next, list, managers, manager, popup }

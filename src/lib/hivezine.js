@@ -230,7 +230,7 @@ async function removeReact(type, id) {
 }
 
 async function addPost() {
-  document.body.style.cursor = 'wait'
+  loading.value = true
   
   let postdata = await fetch("https://gaehive2.vercel.app/api/hivezine?username=" + username.value)
   let post = await postdata.json()

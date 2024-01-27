@@ -87,9 +87,10 @@
         </div>
         <div class="reactions">
           <button @click="this.newpost = 'writing'">Back</button>
-          <div>
+          <div class="buttonarea">
             <a href="https://scratch.mit.edu/studios/33586934/comments" target="_blank"><button>Studio</button></a>
             <button @click="addPost()">Post</button>
+            <div v-if="loading == true" class="loader"></div>
           </div>
         </div>
       </div>
