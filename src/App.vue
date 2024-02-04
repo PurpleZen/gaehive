@@ -13,7 +13,7 @@
       <img v-if="!username" src="/favicon.ico">
       <h5 v-if="username">Hello{{ mellie }},<br>{{ username }}</h5>
       <h5 v-if="!username">Hello! 🐝</h5>
-      <sub>{{ this.status }}</sub>
+      <sub class="status">{{ this.status }}</sub>
     </div>
 
     <div class="block-break"></div>
@@ -656,6 +656,12 @@
     border: var(--sb) solid 6px;
     outline: var(--acc) solid 3px;
     margin: 10px;
+  }
+
+  .status {
+    margin-bottom: -15px;
+    color: var(--acc2);
+    font-weight: bold;
   }
 
   .sidebutton {
