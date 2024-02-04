@@ -13,6 +13,7 @@
       <img v-if="!username" src="/favicon.ico">
       <h5 v-if="username">Hello{{ mellie }},<br>{{ username }}</h5>
       <h5 v-if="!username">Hello! 🐝</h5>
+      <sub>{{ this.status }}</sub>
     </div>
 
     <div class="block-break"></div>
@@ -167,6 +168,13 @@
       if (localStorage['user']) {
         this.username = JSON.parse(localStorage['user']).username
         this.id = JSON.parse(localStorage['user']).id
+        if (JSON.parse(localStorage['user']).manager == true) {
+          this.status = "Manager"
+        } else if (JSON.parse(localStorage['user']).manager == false && JSON.parse(localStorage['user']).writer == true) {
+          this.status = "Writer"
+        } else {
+          this.status = "User"
+        }
       }
       if (this.username == "melody-sy") {
         this.mellie = "sy"
@@ -200,7 +208,8 @@
         popup: null,
         blur: "blur(1px)",
         animation: null,
-        users: users
+        users: users,
+        status: null
   	  }
     }
   }
@@ -809,14 +818,25 @@
 
   .post {
     display: grid;
+    position: relative;
     height: fit-content;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     scrollbar-width: none;
     color: var(--txt);
     font-family: 'Manrope';
     background-color: var(--sb);
+  }
+
+  .post::before {
+    position: absolute;
+    left: -10px;
+    border-radius: 3px 0 0 100%;
+    background-color: var(--sb);
+    width: 17px;
+    height: 20px;
+    content: "";
   }
 
   .post img, .post video {
