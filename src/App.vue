@@ -476,7 +476,7 @@
     text-align: left;
     padding: 5px 15px;
     margin: 5px 3px;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   button .material-symbols-rounded {
@@ -702,9 +702,9 @@
     font-family: inherit;
     font-size: 1.6vh;
     padding: 5px 11px;
-    margin-left: 5px;
+    margin: 2px;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 10px;
     width: fit-content;
     text-decoration: none;
     cursor: pointer;
@@ -742,6 +742,7 @@
     z-index: 1;
     width: 100%;
     height: 100%;
+    top: 0;
   }
 
   .popup {
@@ -809,7 +810,7 @@
   .post {
     display: grid;
     height: fit-content;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     scrollbar-width: none;
@@ -925,26 +926,29 @@
   }
 
   .noposts {
+    display: flex;
     justify-self: center;
+    align-items: center;
+    justify-content: center;
     background-color: var(--sb);
     border: 2px solid var(--acc);
     padding: 5px 40px;
     margin: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .pages {
     background-color: var(--sb);
     display: flex;
     height: fit-content;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   #type, #type summary {
     background-color: var(--sb);
     color: var(--txt);
     margin: 0;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 10px 10px 0;
   }
 
   .searchButton {
@@ -966,7 +970,7 @@
     color: var(--acc2) !important;
     outline: none;
     font-size: small;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 0;
   }
 
@@ -975,7 +979,7 @@
     outline: none;
     color: var(--txt);
     font-weight: bold;
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
   }
 
   .reactbutton:hover {
@@ -997,7 +1001,7 @@
     background-color: var(--acc);
     border: none;
     color: var(--btxt);
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 2px;
     padding: 0 15px;
     display: grid;
@@ -1019,7 +1023,7 @@
   .tools summary {
       cursor: pointer;
     font-size: smaller;
-      border-radius: 5px;
+      border-radius: 10px;
       background-color: var(--acc);
       list-style: none;
     height: 100%;
@@ -1069,11 +1073,11 @@
     background: var(--acc);
     position: absolute;
     box-sizing: border-box;
-    border-radius: 5px;
+    border-radius: 10px;
     max-height: 200px;
     overflow-y: auto;
     margin-top: 5px;
-    }
+  }
 
   .toolbar .tools:hover {
     outline: var(--acclt) solid 2px;
@@ -1084,7 +1088,7 @@
     width: 100%;
     border: none;
     color: var(--txt) !important;
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 2px;
     padding: 0 15px;
     display: grid;
@@ -1129,11 +1133,11 @@
   }
 
   .currentpage:last-child, .nextpage:last-child {
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 10px 10px 0;
   }
 
   .currentpage:first-child, .nextpage:first-child {
-    border-radius: 5px 0 0 5px;
+    border-radius: 10px 0 0 10px;
   }
 
   .nextpage:hover {
@@ -1389,6 +1393,10 @@
       border-radius: 10px;
       padding: 5px 15px;
     }
+    .sidebutton:hover {
+      margin: 0;
+      padding: 5px 15px;
+    }
     .sidebar:hover .mobilemenu {
       justify-self: left;
     }
@@ -1419,24 +1427,9 @@
       left: -5px;
     }
     .popup {
-      background-color: var(--sb);
-      border: none;
-      justify-self: baseline;
-      justify-content: center;
-      border-radius: 0;
-      width: 70%;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
+      margin: 40px;
       position: fixed;
       z-index: 2;
-      left: 0;
-      align-content: center;
-      display: grid;
-      box-shadow: #0005 0 0 20px;
-    }
-    .popupbg {
-      display: none;
     }
     .promptButton {
       padding: 5px 10px;

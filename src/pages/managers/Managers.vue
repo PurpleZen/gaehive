@@ -1,7 +1,7 @@
 <template>
   <h1 class="greeting">Our Managers</h1>
   <div class="headerButtons">
-    <button v-if="manager == true" class="button" @click="prompt('add')">Add Managers</button>
+    <button v-if="manager == true" class="button" @click="prompt('add'); focus('new')">Add Managers</button>
     <button v-if="manager == true" class="button">Add/Edit Bio</button>
   </div>
   
@@ -148,6 +148,11 @@ export default {
       this.user = user
       this.host = host
       
+    },
+    focus(id) {
+      this.$nextTick(() => {
+        document.getElementById(id).focus()
+      });
     }
   }
 }

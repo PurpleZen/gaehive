@@ -30,6 +30,7 @@ const supabase = createClient(
 )
 
 app.get('/api/login', async (req, res) => {
+  document.title = "Gaehive • Almost there!"
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
 

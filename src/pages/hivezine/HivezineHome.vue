@@ -124,7 +124,10 @@
 
     <div class="posts">
     <TransitionGroup name="hz">
-        <div v-if="posts == '' && pages" class="noposts">No results 😿</div>
+        <div v-if="posts == ''" class="noposts">
+          <template v-if="this.$route.query.q !== undefined">No results 😿</template>
+          <template v-else>Posts Loading<div class=loader></div></template>
+</div>
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
         <div class='username'>
