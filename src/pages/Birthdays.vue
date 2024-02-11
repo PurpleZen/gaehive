@@ -18,7 +18,18 @@
           <div class="birthdate">{{ month }} {{ index.slice(3) }}{{ getOrdinal(index.slice(3)) }}</div>
           <div class="birthdays">
             <template v-for="(user) in item" :key="user">
-              <div class="birthdayUsers"><a :href='"https://scratch.mit.edu/users/" + user' target="_blank">@{{ user }}</a></div>
+              <div class="birthdayUsers">
+                <a :href="'https://scratch.mit.edu/users/' + user.name" target="_blank">
+                  <img class="usersimg" :src="'https://uploads.scratch.mit.edu/get_image/user/' + user.id + '_500x500.png'">
+                  <div class="userinfo">
+                    <span class="name">{{ user.name }}</span><br>
+                  </div>
+                </a>
+                <div class='useroptions'>
+                  <div v-if="level == 'manager'" @click="prompt('remove', user.name)" class="remove"><div class="material-symbols-rounded">remove</div>
+                  </div>
+                </div>
+              </div>
             </template>
           </div>
         </div>

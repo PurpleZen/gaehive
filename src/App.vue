@@ -2,11 +2,11 @@
   <metainfo>
     <template v-slot:title="{ content }"></template>
   </metainfo>
-  <div class="sidebar">
+  <div class="sidebar" id="sidebar">
     
     <span class="mobilemenu">Menu</span>
-    
-    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
+
+    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item.name }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
         
     <div class="hello">
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
@@ -16,31 +16,35 @@
       <sub class="status">{{ this.status }}</sub>
     </div>
 
-    <div class="block-break"></div>
+    <div class="sidelinks">
+      <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
 
-    <a class='sidebutton' href="https://scratch.mit.edu/studios/5842709/comments" target="_blank">Scratch Studio</a>
-    
-    <router-link v-if="location !== '' || active" class='sidebutton' to="/">About</router-link>
-    <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">About</router-link>
-    
-    <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">Hivezine</router-link>
-    <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">Hivezine</router-link>
-    
-    <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
-    <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
+      <router-link v-if="location !== '' || active" class='sidebutton' to="/">About</router-link>
+      <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">About</router-link>
 
-    <router-link  v-if="location !== 'birthdays' || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
-    <router-link v-if="location == 'birthdays' && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
-    
-    <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
-    <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
+      <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">Hivezine</router-link>
+      <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">Hivezine</router-link>
 
-    <router-link v-if="location !== 'docs' || active" class='sidebutton' to="/docs">Docs</router-link>
-    <router-link v-if="location == 'docs' && !active" class='sidebuttonactive' to="/docs">Docs</router-link>
+      <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
+      <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
 
-    <a class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
-      
-    <div class="block-break"></div>
+      <router-link  v-if="location !== 'bandwagon' || active" class='sidebutton' to="/bandwagon">Daily Bandwagon</router-link>
+      <router-link v-if="location == 'bandwagon' && !active" class='sidebuttonactive' to="/bandwagon">Daily Bandwagon</router-link>
+
+      <router-link  v-if="location !== 'euphoria' || active" class='sidebutton' to="/euphoria">Euphoria Machine</router-link>
+      <router-link v-if="location == 'euphoria' && !active" class='sidebuttonactive' to="/euphoria">Euphoria Machine</router-link>
+
+      <router-link  v-if="location !== 'birthdays' || active" class='sidebutton' to="/birthdays">Birthdays</router-link>
+      <router-link v-if="location == 'birthdays' && !active" class='sidebuttonactive' to="/birthdays">Birthdays</router-link>
+
+      <router-link v-if="location !== 'resources' || active" class='sidebutton' to="/resources">Resources</router-link>
+      <router-link v-if="location == 'resources' && !active" class='sidebuttonactive' to="/resources">Resources</router-link>
+
+      <router-link v-if="location !== 'docs' || active" class='sidebutton' to="/docs">Docs</router-link>
+      <router-link v-if="location == 'docs' && !active" class='sidebuttonactive' to="/docs">Docs</router-link>
+
+      <a class="sidebutton" href="https://scratch.mit.edu/studios/33687618/comments" target="_blank">Feedback</a>
+    </div>
 
     <div class="loginSettingsBox">
       <button class="login" @click="this.popup = 'settings'" @keydown.enter="this.popup = 'settings'">Settings <div class="material-symbols-rounded">settings</div></button>
@@ -137,7 +141,7 @@
       color() {
        document.querySelector(":root").style.setProperty("--acc", document.getElementById("color").value)
         document.querySelector(":root").style.setProperty("--btxt", document.getElementById("buttoncolor").value)
-      }
+      },
     },
 
     watch:{
@@ -220,27 +224,27 @@
   
   :root {
     --bg: #f6b93c;
-    --sb: #fee5a1;
+    --sb: #ffe098;
     --acc: #e58c3f;
     --acc2: #483248;
     --acclt: #ee824b66;
     --brk: #0006;
-    --txt: #293f56;
+    --txt: #473241;
     --txtstr: #000;
     --btxt: #fee5a1;
-    --plnk: #573c57;
-    --plnkh: #392839;
+    --plnk: #3c4c57;
+    --plnkh: #283039;
     --imp: #d22727;
   }
 
   [data-theme="dark"] {
-    --bg: #1b2425;
-    --sb: #324842;
-    --acc: #d2b958;
+    --bg: #231b25;
+    --sb: #0a0e0c;
+    --acc: #e7a933;
     --acc2: #fff;
-    --acclt: #0006;
+    --acclt: #00000066;
     --brk: #ffb30094;
-    --txt: #E7B148;
+    --txt: #da981a;
     --txtstr: #fff;
     --btxt: #483332;
     --plnk: #FF9900;
@@ -345,16 +349,6 @@
     width: calc(100% - 10px);
   }
   
-  @font-face {
-    font-family: AdobeBlank;
-    src: url(AdobeBlank.otf.woff);
-  }
-
-  .material-symbols-rounded {
-    font-family: 'Material Symbols Rounded', 'AdobeBlank';
-    letter-spacing: -3.4px;
-    margin-right: 3.4px;
-  }
 
   /* Page */
   html, body {
@@ -394,7 +388,7 @@
 
   .page {
     width: 100%;
-    padding: 0 20px 20px 20px;
+    padding: 0 50px 50px 50px;
     display: grid;
     overflow: scroll;
     justify-items: center;
@@ -609,16 +603,15 @@
   /* Sidebar */
   
   .sidebar {
+    width: 15%;
     background-color: var(--sb);
-    padding: 60px;
+    padding: 50px;
     border-radius: 0 20px 20px 0;
-    flex-shrink: 0;
     display: grid;
     justify-content: center;
-    align-content: center;
-    transition: all ease 0.2s;
+    align-content: space-around;
     overflow: clip;
-    z-index: 2;
+    transition: all ease 0.1s;
   }
 
   .sidebar h2 {
@@ -664,6 +657,10 @@
     font-weight: bold;
   }
 
+  .sidelinks {
+    display: grid;
+  }
+
   .sidebutton {
     display: inline-block;
     background-color: transparent;
@@ -673,35 +670,57 @@
     border-radius: 10px 0 0 10px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 2.2vh;
+    font-size: 14px;
     text-align: left;
     padding: 5px 15px;
-    margin-bottom: 2px;
-    margin-right: -60px;
-    transition: padding linear 0.05s;
+    margin-right: -100%;
+    transition: all ease 0.05s;
   }
 
   .sidebuttonactive {
     display: inline-block;
-    background-color: var(--acc);
-    color: var(--btxt);
+    background-color: var(--bg);
+    color: var(--txt);
+    font-weight: bold;
     text-decoration: none;
     border: none;
     border-radius: 10px 0 0 10px;
     cursor: pointer;
     font-family: inherit;
-    font-size: 2.2vh;
+    font-size: 14px;
     text-align: left;
     padding: 5px 15px;
     padding-left: 20px;
-    margin-bottom: 2px;
-    margin-right: -60px;
+    margin-right: -100%;
+    position: relative;
   }
 
   .sidebutton:hover {
     padding-left: 20px;
     background-color: var(--acclt);
     color: var(--txtstr);
+  }
+
+  .sidebuttonactive::before,
+  .sidebuttonactive::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    animation: blobin ease 0.2s;
+    right: 83px;
+  }
+  .sidebuttonactive::before {
+    bottom: 19.5px;
+    border-bottom: 10px solid var(--bg);
+    border-right: 10px solid var(--bg);
+    border-bottom-right-radius: 20px;
+  }
+  .sidebuttonactive::after {
+    top: 19.5px;
+    border-top: 10px solid var(--bg);
+    border-right: 10px solid var(--bg);
+    border-top-right-radius: 20px;
   }
 
   .loginSettingsBox{
@@ -715,13 +734,14 @@
     background-color: var(--acc);
     color: var(--btxt);
     font-family: inherit;
-    font-size: 1.6vh;
+    font-size: 10px;
     padding: 5px 11px;
     margin: 2px;
     align-items: center;
     border-radius: 10px;
     width: fit-content;
     text-decoration: none;
+    white-space: nowrap;
     cursor: pointer;
     border: none;
   }
@@ -729,6 +749,7 @@
   .login .material-symbols-rounded {
     font-size: inherit !important;
     margin-left: 5px;
+    margin-bottom: -1.7px;
   }
 
   .login:hover {
@@ -736,9 +757,10 @@
   }
 
   .birthday {
-    font-size: small;
+    font-size: x-small;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 10px;
   }
 
   .birthday a {
@@ -758,6 +780,7 @@
     width: 100%;
     height: 100%;
     top: 0;
+    left: 0;
   }
 
   .popup {
@@ -867,11 +890,12 @@
   }
 
   .title a, .titlename {
-    justify-self: center;
     color: var(--txt);
     text-decoration: none;
     text-align: center;
     padding: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   .titlename {
@@ -1098,6 +1122,8 @@
     width: auto;
     background: var(--acc);
     position: absolute;
+    z-index: 1;
+    left: 0;
     box-sizing: border-box;
     border-radius: 10px;
     max-height: 200px;
@@ -1219,7 +1245,7 @@
     cursor: pointer;
     background-color: var(--sb);
     margin: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     overflow: clip;
     transition: scale ease 0.2s;
   }
@@ -1278,12 +1304,12 @@
 
   .remove:hover {
     background-color: var(--imp);
-    color: var(--btxt);
+    color: var(--sb);
   }
 
   .promote:hover {
     background-color: var(--acc);
-    color: var(--btxt);
+    color: var(--sb);
   }
 
   
@@ -1293,7 +1319,7 @@
     grid-template-columns: repeat(6, 1fr);
     text-align: center;
     background-color: var(--sb);
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 10px;
   }
   
@@ -1302,7 +1328,7 @@
     padding: 3px;
     font-size: smaller;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none;
   }
 
@@ -1338,16 +1364,27 @@
     display: grid;
     background-color: var(--sb);
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .birthdayUsers {
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
     background-color: var(--bg);
     margin: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
+    border-radius: 10px;
+    overflow: clip;
     transition: scale ease 0.2s;
+  }
+
+  .birthdayUsers a {
+    width: 100%;
+    color: var(--txt);
+    text-decoration: none;
+    align-items: center;
+    padding: 10px;
+    overflow: hidden;
   }
 
   .birthdayUsers:hover {
@@ -1383,12 +1420,20 @@
     }
   }
 
+  @keyframes blobin {
+    from {
+      right: 70px;
+    }
+    to {
+      right: 83px;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     .page {
       overflow: initial;
       transition: none;
-      padding: 10px;
-      padding-left: 40px;
+      padding: 10px 20px 10px 50px;
     }
     .greeting {
       font-size: xx-large;
@@ -1402,6 +1447,7 @@
       position: absolute;
       text-align: center;
       justify-items: center;
+      z-index: 2;
     }
     .sidebar h2 {
       font-size: medium;
@@ -1418,6 +1464,9 @@
       margin: 0;
       border-radius: 10px;
       padding: 5px 15px;
+    }
+    .sidebuttonactive::before, .sidebuttonactive::after {
+      border: none;
     }
     .sidebutton:hover {
       margin: 0;

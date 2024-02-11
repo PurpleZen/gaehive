@@ -11,6 +11,8 @@ import Managers from './pages/managers/Managers.vue'
 
 import Birthdays from './pages/Birthdays.vue'
 
+import Euphoria from './pages/Euphoria.vue'
+
 import DocsHome from './pages/docs/DocsHome.vue'
 import ScratchGuidelines from './pages/docs/ScratchGuidelines.vue'
 
@@ -53,6 +55,11 @@ export const routes = [
   { 
     path: '/birthdays',
     component: Birthdays
+  },
+
+  {
+    path: '/euphoria',
+    component: Euphoria
   },
 
   {
