@@ -603,7 +603,6 @@
   /* Sidebar */
   
   .sidebar {
-    width: 15%;
     background-color: var(--sb);
     padding: 50px;
     border-radius: 0 20px 20px 0;
@@ -673,8 +672,10 @@
     font-size: 14px;
     text-align: left;
     padding: 5px 15px;
-    margin-right: -100%;
+    padding-right: 50px;
+    margin-right: -50px;
     transition: all ease 0.05s;
+    white-space: nowrap;
   }
 
   .sidebuttonactive {
@@ -691,12 +692,13 @@
     text-align: left;
     padding: 5px 15px;
     padding-left: 20px;
-    margin-right: -100%;
+    margin-right: -50px;
     position: relative;
   }
 
   .sidebutton:hover {
     padding-left: 20px;
+    padding-right: 45px;
     background-color: var(--acclt);
     color: var(--txtstr);
   }
@@ -708,7 +710,7 @@
     width: 20px;
     height: 20px;
     animation: blobin ease 0.2s;
-    right: 83px;
+    right: -10px;
   }
   .sidebuttonactive::before {
     bottom: 19.5px;
@@ -1422,10 +1424,10 @@
 
   @keyframes blobin {
     from {
-      right: 70px;
+      right: -100px;
     }
     to {
-      right: 83px;
+      right: -10px;
     }
   }
 
