@@ -727,7 +727,6 @@
 
   .loginSettingsBox{
     display: flex;
-    margin: 0 -20px 0 -20px;
     justify-content: center;
   }
 
@@ -749,6 +748,8 @@
   }
 
   .login .material-symbols-rounded {
+    width: 10px;
+    overflow: clip;
     font-size: inherit !important;
     margin-left: 5px;
     margin-bottom: -1.7px;
@@ -1161,6 +1162,8 @@
 
   .tools .material-symbols-rounded {
     font-size: inherit;
+    width: 16px;
+    overflow: clip;
   }
 
   .list {

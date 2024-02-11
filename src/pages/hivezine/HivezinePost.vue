@@ -145,6 +145,11 @@
           <span v-if="writer" @click="this.popup = 'delete'" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">Delete Post</span></span>
       </div>
       </div>
+      <div v-if=!username class="reactions" style="justify-content: right;">
+        <div class="postoptions">
+        <a :href="'https://scratch.mit.edu/studios/33586934/comments#comments-' + item.pid" class="promptButton" target="_blank"><div class="material-symbols-rounded">forum</div><span class="tooltiptext">View Source</span></a>
+        </div>
+      </div>
     </div>
       </TransitionGroup>
     </div>
