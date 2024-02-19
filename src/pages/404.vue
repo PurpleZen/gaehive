@@ -32,8 +32,9 @@
   background-position: center;
   background-size: 100%;
   margin: 0px;
-  font-family: 'Leckerli One';
+  font-family: serif;
   font-size: 150px;
+  filter: drop-shadow(0px 0px 5px #0005);
 }
 
 .notfound h2 {

@@ -172,14 +172,21 @@
       if (localStorage['user']) {
         this.username = JSON.parse(localStorage['user']).username
         this.id = JSON.parse(localStorage['user']).id
-        if (JSON.parse(localStorage['user']).manager == true) {
+        
+        if (JSON.parse(localStorage['user']).admin == true) {
+          this.status = "Admin"
+          
+        } else if (JSON.parse(localStorage['user']).admin == true) {
           this.status = "Manager"
+          
         } else if (JSON.parse(localStorage['user']).manager == false && JSON.parse(localStorage['user']).writer == true) {
           this.status = "Writer"
+          
         } else {
           this.status = "User"
         }
       }
+      
       if (this.username == "melody-sy") {
         this.mellie = "sy"
       }
@@ -227,13 +234,13 @@
     --sb: #ffe098;
     --acc: #e58c3f;
     --acc2: #483248;
-    --acclt: #ee824b66;
+    --acclt: #d18d6a66;
     --brk: #0006;
     --txt: #473241;
     --txtstr: #000;
     --btxt: #fee5a1;
-    --plnk: #3c4c57;
-    --plnkh: #283039;
+    --plnk: #732e6e;
+    --plnkh: #4c1e47;
     --imp: #d22727;
   }
 
@@ -242,7 +249,7 @@
     --sb: #0a0e0c;
     --acc: #e7a933;
     --acc2: #fff;
-    --acclt: #00000066;
+    --acclt: #55433966;
     --brk: #ffb30094;
     --txt: #da981a;
     --txtstr: #fff;
@@ -709,7 +716,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    animation: blobin ease 0.2s;
+    animation: blobin ease 0.1s;
     right: -10px;
   }
   .sidebuttonactive::before {
@@ -1427,7 +1434,7 @@
 
   @keyframes blobin {
     from {
-      right: -100px;
+      right: -20px;
     }
     to {
       right: -10px;

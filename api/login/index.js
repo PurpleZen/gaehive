@@ -42,6 +42,7 @@ app.get('/api/login', async (req, res) => {
 
     var manager = false
     var writer = false
+    var admin - false
     var { data } = await supabase.from('managers').select('data').eq("id", 1)
     const managers = await data[0].data
     for (var i = 0; i < managers.length; i++) {
@@ -59,9 +60,10 @@ app.get('/api/login', async (req, res) => {
         }
       }
 
-    if (json.username == "LegoManiac04") {
+    if (json.username == "LegoManiac04" || json.username == "DogCatPuppyLover") {
       manager = true
       writer = true
+      admin = true
     }
 
     if (json.valid) {
