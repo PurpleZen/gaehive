@@ -175,13 +175,10 @@
         
         if (JSON.parse(localStorage['user']).admin == true) {
           this.status = "Admin"
-          
-        } else if (JSON.parse(localStorage['user']).admin == true) {
-          this.status = "Manager"
-          
-        } else if (JSON.parse(localStorage['user']).manager == false && JSON.parse(localStorage['user']).writer == true) {
+        } else if (JSON.parse(localStorage['user']).manager == true) {
+          this.status = "Manager"  
+        } else if (JSON.parse(localStorage['user']).writer == true) {
           this.status = "Writer"
-          
         } else {
           this.status = "User"
         }
