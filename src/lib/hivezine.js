@@ -69,11 +69,18 @@ async function getPosts(page) {
 async function searchPosts(query, type) {
   document.title = 'Gaehive • Hivezine • Search results for "' + query + '"'
   loading.value = true
-  const { data } = await supabase.from('hivezine').select('data').not('data', 'is', null).order("id", { ascending: false })
+    const { data: hivezine, error } = await supabase
+    .from('hivezine')
+    .select(`
+      data,
+      reactions (
+        data
+      )
+    `).not('data', 'is', null).order("id", { ascending: false })
   posts.value = ([])
-  for ( var i = 0; i < data.length; i++){
-    if (JSON.stringify(data[i].data[0][type]).toLowerCase().includes(query.toLowerCase())) {
-    posts.value = posts.value.concat(data[i].data)
+  for ( var i = 0; i < hivezine.length; i++){
+    if (JSON.stringify(hivezine[i].data[0][type]).toLowerCase().includes(query.toLowerCase())) {
+      posts.value = posts.value.concat(Object.assign({}, ...hivezine[i].data, ...hivezine[i].reactions.data))
     }
   }
   emojicode.forEach(string => {

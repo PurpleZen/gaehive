@@ -42,7 +42,6 @@ app.get('/api/login', async (req, res) => {
 
     var manager = false
     var writer = false
-    var admin = false
     var { data } = await supabase.from('managers').select('data').eq("id", 1)
     const managers = await data[0].data
     for (var i = 0; i < managers.length; i++) {
@@ -63,13 +62,12 @@ app.get('/api/login', async (req, res) => {
     if (json.username == "LegoManiac04" || json.username == "DogCatPuppyLover") {
       manager = true
       writer = true
-      admin = true
     }
 
     if (json.valid) {
       const token = jwt.sign({ name: json.username, role: "authenticated", manager: manager, writer: writer }, process.env['SUPABASE_JWT'], { expiresIn: '14 days' });
       res.cookie('mytoken', token, cookieOptions);
-      res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})))
+      res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})));
     } else {
       return res.json({ token: "invalid" })
     }

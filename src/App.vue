@@ -5,8 +5,6 @@
   <div class="sidebar" id="sidebar">
     
     <span class="mobilemenu">Menu</span>
-
-    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item" target="_blank">{{ item.name }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
         
     <div class="hello">
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
@@ -53,6 +51,8 @@
     </div>
   </div>
   <div class="page">
+
+    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item.name" target="_blank">{{ item.name }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
 
   <!--popups-->
   <TransitionGroup name="popup">
@@ -173,9 +173,7 @@
         this.username = JSON.parse(localStorage['user']).username
         this.id = JSON.parse(localStorage['user']).id
         
-        if (JSON.parse(localStorage['user']).admin == true) {
-          this.status = "Admin"
-        } else if (JSON.parse(localStorage['user']).manager == true) {
+        if (JSON.parse(localStorage['user']).manager == true) {
           this.status = "Manager"  
         } else if (JSON.parse(localStorage['user']).writer == true) {
           this.status = "Writer"
@@ -199,6 +197,12 @@
       } catch(error) {
         this.popup = "scratchdb"
       }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.keyCode == 27) {
+          this.popup = null;
+        }
+      });
       
     },
     
@@ -603,6 +607,21 @@
     display: inline-flex;
   }
 
+  .box {
+    display: grid;
+    width: 100%;
+    justify-items: center;
+    background-color: var(--sb);
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .box input {
+    background-color: var(--bg);
+    color: var(--txt);
+  }
+  
   
   /* Sidebar */
   
@@ -767,12 +786,20 @@
     font-size: x-small;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 10px;
+    position: absolute;
+    background-color: var(--sb);
+    padding: 5px 15px;
+    border-radius: 0 0 10px 10px;
+    animation: slidedown ease 0.5s;
   }
 
   .birthday a {
-    color: var(--acc2);
+    color: var(--plnk);
     text-decoration: none;
+  }
+
+  .birthday a:hover {
+    text-decoration: underline;
   }
 
 
@@ -859,6 +886,7 @@
     border-radius: 0 10px 10px 10px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-right: -10px;
     scrollbar-width: none;
     color: var(--txt);
     font-family: 'Manrope';
@@ -1329,6 +1357,7 @@
     text-align: center;
     background-color: var(--sb);
     border-radius: 10px;
+    margin: 10px;
     padding: 10px;
   }
   
@@ -1435,6 +1464,15 @@
     }
     to {
       right: -10px;
+    }
+  }
+
+  @keyframes slidedown {
+    from {
+      top: -25px;
+    }
+    to {
+      top: 0;
     }
   }
 

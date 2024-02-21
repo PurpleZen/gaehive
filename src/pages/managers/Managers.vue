@@ -113,6 +113,12 @@ export default {
 
   mounted() {
     getManagers()    
+
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode == 27) {
+        this.popup = null;
+      }
+    });
   },
   
   data() {
