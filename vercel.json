@@ -3,11 +3,5 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "index.html" }
-  ],
-  "redirects": [
-    {
-      "source": "/hivezine/:path*",
-      "destination": "https://gaehive-legacy.vercel.app/hivezine/:path*"
-    }
   ]
 }
