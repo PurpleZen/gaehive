@@ -34,7 +34,7 @@
 .centerpage {
   display: grid;
   align-content: center;
-  height: calc(100vh - 20px);
+  height: calc(100vh - 50px);
   justify-items: center;
   width: 100%;
 }

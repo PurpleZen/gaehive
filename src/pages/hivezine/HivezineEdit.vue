@@ -5,7 +5,7 @@
   <div v-if="newpost == 'writing'" class="post">
   <div class="title">
     <div class="username">
-      <router-link class="promptButton" :to="'/hivezine/post/' + this.$route.params.id"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">Cancel Edit</span></router-link>
+      <router-link class="promptButton" :to="'/gaezette/post/' + this.$route.params.id"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">Cancel Edit</span></router-link>
       <div class="space"></div>
       <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + this.id + '_500x500.png'">
       <span><a :href="'https://scratch.mit.edu/users/' + this.username">{{ this.username }}</a><br></span>

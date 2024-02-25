@@ -1,8 +1,8 @@
   <template>
-    <h1 class="greeting">The Hivezine</h1>
+    <h1 class="greeting">The Gaezette</h1>
  
     <div class="headerButtons">
-      <router-link class="button" to="/hivezine/writers">Writers</router-link>
+      <router-link class="button" to="/gaezette/writers">Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
     </div>
     
@@ -98,7 +98,7 @@
 
     <div class="pagesearch">
       <div class="pages">
-        <router-link @click=this.getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+        <router-link @click=this.getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/gaezette/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
       </div>
       <div class="space"></div>
       <div v-if="pages" style="display:flex">
@@ -134,7 +134,7 @@
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
            </div>
-        <router-link class="titlename" :to="'/hivezine/post/' + item.id" v-html=item.title></router-link>
+        <router-link class="titlename" :to="'/gaezette/post/' + item.id" v-html=item.title></router-link>
       </div>
       <div class='content' v-html=item.post>
       </div>
@@ -251,7 +251,7 @@
     </div>
     
     <div class="pages">
-      <router-link @click=getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/hivezine/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
+      <router-link @click=getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/gaezette/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
     </div>
 </template>
 
@@ -297,7 +297,7 @@
     },
     created() {
       useMeta({
-       title: 'Gaehive • Hivezine • Page 1'
+       title: 'Gaehive • Gaezette • Page 1'
       })
       if (localStorage['user']) {
         this.manager = JSON.parse(localStorage['user']).manager

@@ -28,22 +28,22 @@ export const routes = [
   },
 
   {
-    path: '/hivezine/:pg*',
+    path: '/gaezette/:pg*',
     component: HivezineHome,
   },
 
   {
-    path: '/hivezine/post/:id',
+    path: '/gaezette/post/:id',
     component: HivezinePost,
   },
 
   {
-  path: '/hivezine/edit/:id',
+  path: '/gaezette/edit/:id',
   component: HivezineEdit,
   },
 
   {
-    path: '/hivezine/writers',
+    path: '/gaezette/writers',
     component: HivezineWriters,
   },
 

@@ -23,7 +23,7 @@ async function getPages() {
 }
 
 async function getPosts(page) {
-  document.title = 'Gaehive • Hivezine • Page ' + page
+  document.title = 'Gaehive • Gaezette • Page ' + page
   loading.value = true
     const { data: hivezine, error } = await supabase
     .from('hivezine')
@@ -67,7 +67,7 @@ async function getPosts(page) {
 }
 
 async function searchPosts(query, type) {
-  document.title = 'Gaehive • Hivezine • Search results for "' + query + '"'
+  document.title = 'Gaehive • Gaezette • Search results for "' + query + '"'
   loading.value = true
     const { data: hivezine, error } = await supabase
     .from('hivezine')
@@ -143,7 +143,7 @@ async function getPost(id) {
       post.value[i].post = post.value[i].post.replace(regex, filter[is])
         }
       })
-  document.title = "Gaehive • Hivezine • " + post.value[0].title
+  document.title = "Gaehive • Gaezette • " + post.value[0].title
   reacting.value = false
   document.body.style.cursor = ''
 }

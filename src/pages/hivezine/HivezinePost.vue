@@ -20,7 +20,7 @@
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">
         <div class='username'>
-          <router-link class="promptButton" to="/hivezine"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">View More</span></router-link>
+          <router-link class="promptButton" to="/gaezette"><div class="material-symbols-rounded">arrow_circle_left</div><span class="tooltiptextleft">View More</span></router-link>
           <div class="space"></div>
           <img :src="'https://uploads.scratch.mit.edu/get_image/user/' + item.uid + '_500x500.png'">
           <span><a :href="'https://scratch.mit.edu/users/' + item.user">{{ item.user }}</a><br>{{ item.date }} <span v-if="item.edited" class="edited">(edited {{ item.edited }})</span></span>
@@ -140,7 +140,7 @@
       <div class="postoptions">
       <a :href="'https://scratch.mit.edu/studios/33586934/comments#comments-' + item.pid" class="promptButton" target="_blank"><div class="material-symbols-rounded">forum</div><span class="tooltiptext">View Source</span></a>
           
-          <router-link :to="'/hivezine/edit/' + item.id" v-if="item.user == username" class="promptButton"><div class="material-symbols-rounded">edit</div><span class="tooltiptext">Edit Post</span></router-link>
+          <router-link :to="'/gaezette/edit/' + item.id" v-if="item.user == username" class="promptButton"><div class="material-symbols-rounded">edit</div><span class="tooltiptext">Edit Post</span></router-link>
           
           <span v-if="writer" @click="this.popup = 'delete'" id="important" class="promptButton"><div class="material-symbols-rounded">delete</div><span class="tooltiptext">Delete Post</span></span>
       </div>

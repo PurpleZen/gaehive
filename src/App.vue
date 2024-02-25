@@ -20,8 +20,8 @@
       <router-link v-if="location !== '' || active" class='sidebutton' to="/">About</router-link>
       <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">About</router-link>
 
-      <router-link v-if="location !== 'hivezine' || active" class='sidebutton' to="/hivezine">Hivezine</router-link>
-      <router-link v-if="location == 'hivezine' && !active" class='sidebuttonactive' to="/hivezine">Hivezine</router-link>
+      <router-link v-if="location !== 'gaezette' || active" class='sidebutton' to="/gaezette">Gaezette</router-link>
+      <router-link v-if="location == 'gaezette' && !active" class='sidebuttonactive' to="/gaezette">Gaezette</router-link>
 
       <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
       <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
