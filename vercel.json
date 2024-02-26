@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "index.html" },
-    { "src": "/api/img/(.*)", "dest": "/api/img/index.js" }
+  "rewrites": [
+    {
+      "source": "/api/img/:id*",
+      "destination": "https://uploads.scratch.mit.edu/get_image/project/:id*_300x300.png"
+    },
+    {
+      "source": "/(.*)", 
+      "destination": "index.html"
+    }
   ]
 }
