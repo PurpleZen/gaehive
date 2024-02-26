@@ -2,7 +2,7 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/api/img/:id*",
+      "source": "/img/:id*",
       "destination": "https://uploads.scratch.mit.edu/get_image/project/:id*_300x300.png"
     },
     {
