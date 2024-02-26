@@ -3,6 +3,6 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "index.html" },
-    { "src": "/api/img/(.*)", "dest": "/api/img" }
+    { "src": "/api/img/(.*)", "dest": "/api/img/index.js" }
   ]
 }
