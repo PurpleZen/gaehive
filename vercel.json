@@ -6,8 +6,8 @@
       "has": [
         {
           "type": "header",
-          "key": "referrer",
-          "value": "https://gaehive2.vercel.app"
+          "key": "Referer",
+          "value": "https://gaehive2.vercel.app/*"
         }
       ],
       "destination": "https://uploads.scratch.mit.edu/get_image/project/:id*_300x300.png"
