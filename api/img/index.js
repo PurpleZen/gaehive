@@ -2,8 +2,9 @@ const app = require('express')();
 const fetch = require('cross-fetch');
 
 app.get('/api/img/:id', async (req, res) => {
+  const { id } = req.params;
   fetch(
-    `https://uploads.scratch.mit.edu/get_image/project/` + req.params.id + `_300x300.png`,
+    `https://uploads.scratch.mit.edu/get_image/project/${id}_300x300.png`,
     {
       headers: {
         "User-Agent": "Mozilla/5.0 Gaehive",
