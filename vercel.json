@@ -2,7 +2,7 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/img/:id*",
+      "source": "/get_id/:username*",
       "has": [
         {
           "type": "header",
@@ -10,7 +10,7 @@
           "value": "https://gaehive2.vercel.app/"
         }
       ],
-      "destination": "https://uploads.scratch.mit.edu/get_image/project/:id*_300x300.png"
+      "destination": "https://api.scratch.mit.edu/users/:username*"
     },
     {
       "source": "/(.*)", 

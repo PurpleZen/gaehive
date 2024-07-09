@@ -11,10 +11,15 @@
         </div>
         <h5><i><router-link to="/docs/us-and-scratch-guidelines">Learn how this website follows Scratch Community Guidelines</router-link>.</i></h5>
     Powered by 
-    <div>
-      <a href="https://vuejs.org/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=vue"></a>
-      <a href="https://vercel.com/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=vercel"></a>
-      <a href="https://supabase.com/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=supabase"></a>
+    <div class="poweredby">
+      <div>
+        <img src="https://skillicons.dev/icons?i=vue">
+        <img src="https://skillicons.dev/icons?i=vercel">
+        <img src="https://skillicons.dev/icons?i=supabase">
+      </div>
+      <div>
+        VueJS, Vercel, & Supabase
+      </div>
     </div>
   </div>
 </template>

@@ -20,8 +20,8 @@
       <router-link v-if="location !== '' || active" class='sidebutton' to="/">About</router-link>
       <router-link v-if="location == '' && !active" class='sidebuttonactive' to="/">About</router-link>
 
-      <router-link v-if="location !== 'gaezette' || active" class='sidebutton' to="/gaezette">Gaezette</router-link>
-      <router-link v-if="location == 'gaezette' && !active" class='sidebuttonactive' to="/gaezette">Gaezette</router-link>
+      <router-link v-if="location !== 'gaezette' || active" class='sidebutton' to="/gaezette">News & Updates</router-link>
+      <router-link v-if="location == 'gaezette' && !active" class='sidebuttonactive' to="/gaezette">News & Updates</router-link>
 
       <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
       <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
@@ -75,23 +75,6 @@
       </div>
         <div class="popupbuttons">
           <button @click="this.popup = null" class="button">Close</button>
-      </div>
-    </div>
-  </div>
-    
-  <!--scratchdb offline-->
-  <div v-if="popup == 'scratchdb'" class="popup">
-    <div class="title">ScratchDB is offline!</div>
-    <div class="popupbody">
-      The following website features are currently unavailable:
-      <ul>
-        <li>Website Sign in</li>
-        <li>Adding new Managers</li>
-        <li>Adding new Writers</li>
-        <li>Adding new Birthdays</li>
-      </ul>
-      <div class="popupbuttons">
-        <button @click="this.popup = null" class="button">OK</button>
       </div>
     </div>
   </div>
@@ -182,20 +165,12 @@
         }
       }
       
-      if (this.username == "melody-sy") {
+      if (this.username.slice(-3) == "-sy") {
         this.mellie = "sy"
       }
 
       if (localStorage["animation"] == 0) {
         this.animation = 0
-      }
-      
-      try {
-        const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/LegoManiac04', {
-          signal: AbortSignal.timeout(5000)
-        });
-      } catch(error) {
-        this.popup = "scratchdb"
       }
 
       document.addEventListener("keydown", (e) => {
@@ -448,7 +423,13 @@
     margin-top: 30px;
   }
 
-  .poweredby {
+  .poweredby{
+    display: grid;
+    font-size: xx-small;
+    justify-items: center;
+  }
+  
+  .poweredby img {
     margin: 2px;
     width: 35px;
     height: 35px;

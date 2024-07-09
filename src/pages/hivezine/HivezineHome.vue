@@ -1,8 +1,7 @@
   <template>
-    <h1 class="greeting">The Gaezette</h1>
+    <h1 class="greeting">News & Updates</h1>
  
     <div class="headerButtons">
-      <router-link class="button" to="/gaezette/writers">Writers</router-link>
       <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
     </div>
     

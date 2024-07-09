@@ -34,7 +34,7 @@ app.get('/api/login', async (req, res) => {
   const json = await result.json();
 
   try {
-    const userinfo = await fetch('https://scratchdb.lefty.one/v3/user/info/' + json.username, {
+    const userinfo = await fetch('/get_id/:username*' + json.username, {
       signal: AbortSignal.timeout(5000)
     });
     const userdata = await userinfo.json();
