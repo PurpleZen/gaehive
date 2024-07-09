@@ -70,6 +70,7 @@ app.get('/api/login', async (req, res) => {
       return res.json({ token: "invalid" })
     }
     } catch(error) {
+    alert(error)
     return res.sendFile(path.join(__dirname, 'error.html'));
     }
 });
