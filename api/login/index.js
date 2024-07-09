@@ -33,7 +33,6 @@ app.get('/api/login', async (req, res) => {
   const result = await fetch('https://auth.itinerary.eu.org/api/auth/verifyToken?privateCode=' + req.query.privateCode);
   const json = await result.json();
 
-  try {
     const userinfo = await fetch('https://gaehive2.vercel.app/get_id/' + json.username)
     const userdata = await userinfo.json();
     const id = userdata.id
@@ -68,7 +67,6 @@ app.get('/api/login', async (req, res) => {
       res.redirect(req.query.return + "?user=" + btoa(JSON.stringify({'username': json.username, 'id': id, 'manager': manager, 'writer': writer})));
     } else {
       return res.json({ token: "invalid" })
-    }
     }
 });
 
