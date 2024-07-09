@@ -34,9 +34,7 @@ app.get('/api/login', async (req, res) => {
   const json = await result.json();
 
   try {
-    const userinfo = await fetch('/get_id/' + json.username, {
-      signal: AbortSignal.timeout(5000)
-    });
+    const userinfo = await fetch('https://gaehive2.vercel.app/get_id/' + json.username)
     const userdata = await userinfo.json();
     const id = userdata.id
 
