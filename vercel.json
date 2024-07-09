@@ -3,13 +3,6 @@
   "rewrites": [
     {
       "source": "/get_id/:username*",
-      "has": [
-        {
-          "type": "header",
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://gaehive2.vercel.app/"
-        }
-      ],
       "destination": "https://api.scratch.mit.edu/users/:username*"
     },
     {
