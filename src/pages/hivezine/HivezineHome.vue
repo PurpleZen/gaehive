@@ -95,7 +95,8 @@
       </div>
     </div>
 
-    <div class="pagesearch">
+    <Transition name="bar">
+    <div v-if="this.posts && this.pages" class="pagesearch">
       <div class="pages">
         <router-link @click=this.getPosts(item) v-for="(item, index) in this.pages" :key="item" :to="'/gaezette/' + (item)" :class="{currentpage: this.page == item, nextpage: this.page !== item}">{{ item }}</router-link>
       </div>
@@ -120,12 +121,13 @@
         <button class="clearbutton" @click="clearSearch()">Clear</button>
       </div>
     </div>
+    </Transition>
 
     <div class="posts">
     <TransitionGroup name="hz">
-        <div v-if="posts == ''" class="noposts">
-          <template v-if="this.$route.query.q !== undefined">No results 😿</template>
-          <template v-else>Posts Loading<div class=loader></div></template>
+        <div v-if="posts == ''">
+          <div class="post" v-if="this.$route.query.q !== undefined"><div class="reactions" style="border-top:none;">No results 😿</div></div>
+          <div class="post" v-if="!this.pages"><div class="reactions" style="border-top:none;">Posts Loading...<div class=loader></div></div></div>
 </div>
     <div class="post" v-for="(item, index) in posts" :key="item.id">
       <div class="title">

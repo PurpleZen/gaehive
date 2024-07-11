@@ -6,7 +6,7 @@
   </div>
   
   <div class="managers">
-    <template v-if="this.managers == ''">Posts Loading<div class=loader></div></template>
+    <div class="users" v-if="this.managers == ''"><div class="userinfo"><a class="name">Managers Loading...</a></div><div class=loader></div></div>
     <TransitionGroup name="mng">
       <div v-for="(user, index) in managers" :key="user.id">
         <div class="users">

@@ -90,6 +90,17 @@
       </div>
     </div>
   </div>
+
+  <div v-if="popup == 'loginerror'" class="popup">
+    <div class="title">Login Error</div>
+    <div class="popupbody">
+      We were unable to log you in.<br>Please try again later and contact <a style="color:inherit" href="https://scratch.mit.edu/users/LegoManiac04/" target="_blank">LegoManiac04</a> if the issue persists.
+      <div class="popupbuttons">
+        <button @click="this.popup = null; this.$router.push({ query: null })" class="button">OK</button>
+      </div>
+    </div>
+  </div>
+    
   </TransitionGroup>
   <!--popups-->
   <router-view />
@@ -178,7 +189,10 @@
           this.popup = null;
         }
       });
-      
+
+      if (window.location.search.slice(1,6) == "error") {
+        this.popup = "loginerror"
+      }
     },
     
     data() {
@@ -206,11 +220,13 @@
   /* Themes */
   
   :root {
-    --bg: #f6b93c;
-    --sb: #ffe098;
-    --acc: #e58c3f;
-    --acc2: #483248;
-    --acclt: #d18d6a66;
+    --bg: #f6ad3c;
+    --bg2: #ffe098;
+    --sb: #52832f;
+    --acc: #375c2d;
+    --acc2: #52832f;
+    --acc3: #ffb425;
+    --acclt: #25571d66;
     --brk: #0006;
     --txt: #473241;
     --txtstr: #000;
@@ -285,7 +301,7 @@
   
   .hz-move,
   .hz-enter-active {
-    transition: all 0.5s ease;
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   }
   .hz-leave-active {
     transition: all 0.1s ease;
@@ -293,6 +309,17 @@
   .hz-enter-from,
   .hz-leave-to {
     opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .bar-enter-active,
+  .bar-leave-active {
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+  .bar-enter-from,
+  .bar-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
   }
 
   .mng-move,
@@ -358,7 +385,7 @@
     margin-top: 0;
     color: var(--txt);
     font-family: 'Manrope';
-    background-color: var(--sb);
+    background-color: var(--bg2);
   }
 
   .centerpage {
@@ -436,7 +463,7 @@
   }
 
   input {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--plnk);
     margin: 2px;
     padding: 5px;
@@ -592,7 +619,7 @@
     display: grid;
     width: 100%;
     justify-items: center;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -638,7 +665,7 @@
 
   .hello h5 {
     margin: 0;
-    color: var(--acc2);
+    color: var(--acc3);
     font-family: agbalumo;
     text-align: center;
     line-height: 20px;
@@ -656,7 +683,7 @@
 
   .status {
     margin-bottom: -15px;
-    color: var(--acc2);
+    color: var(--acc3);
     font-weight: bold;
   }
 
@@ -667,7 +694,7 @@
   .sidebutton {
     display: inline-block;
     background-color: transparent;
-    color: var(--txt);
+    color: var(--btxt);
     text-decoration: none;
     border: none;
     border-radius: 10px 0 0 10px;
@@ -704,7 +731,7 @@
     padding-left: 20px;
     padding-right: 45px;
     background-color: var(--acclt);
-    color: var(--txtstr);
+    color: var(--acc3);
   }
 
   .sidebuttonactive::before,
@@ -768,7 +795,7 @@
     font-weight: bold;
     text-align: center;
     position: absolute;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     padding: 5px 15px;
     border-radius: 0 0 10px 10px;
     animation: slidedown ease 0.5s;
@@ -801,7 +828,7 @@
   .popup {
     position: fixed;
     background-color: var(--txt);
-    color: var(--sb);
+    color: var(--bg2);
     box-shadow: #0005 0 0 50px;
     padding: 10px;
     margin: 10px;
@@ -812,7 +839,7 @@
   }
 
   .popup .title {
-    color: var(--sb);
+    color: var(--bg2);
     font-weight: bold;
   }
 
@@ -871,14 +898,14 @@
     scrollbar-width: none;
     color: var(--txt);
     font-family: 'Manrope';
-    background-color: var(--sb);
+    background-color: var(--bg2);
   }
 
   .post::before {
     position: absolute;
     left: -10px;
     border-radius: 3px 0 0 100%;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     width: 17px;
     height: 20px;
     content: "";
@@ -991,34 +1018,22 @@
     display: flex;
   }
 
-  .noposts {
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--sb);
-    border: 2px solid var(--acc);
-    padding: 5px 40px;
-    margin: 20px;
-    border-radius: 10px;
-  }
-
   .pages {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     display: flex;
     height: fit-content;
     border-radius: 10px;
   }
 
   #type, #type summary {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--txt);
     margin: 0;
     border-radius: 0 10px 10px 0;
   }
 
   .searchButton {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--txt) !important;
     padding: 5px;
     font-size: large;
@@ -1032,7 +1047,7 @@
   }
 
   .clearbutton {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--acc2) !important;
     outline: none;
     font-size: small;
@@ -1152,7 +1167,7 @@
   }
 
   .toolsselect {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     width: 100%;
     border: none;
     color: var(--txt) !important;
@@ -1169,7 +1184,7 @@
   }
 
   ul .tools:hover {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--txt);
   }
 
@@ -1198,7 +1213,7 @@
   }
 
   .nextpage {
-    background-color: var(--sb);
+    background-color: var(--bg2);
     color: var(--txt);
   }
 
@@ -1261,7 +1276,7 @@
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     margin: 10px;
     border-radius: 10px;
     overflow: clip;
@@ -1322,12 +1337,12 @@
 
   .remove:hover {
     background-color: var(--imp);
-    color: var(--sb);
+    color: var(--bg2);
   }
 
   .promote:hover {
     background-color: var(--acc);
-    color: var(--sb);
+    color: var(--bg2);
   }
 
   
@@ -1336,7 +1351,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     text-align: center;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
@@ -1381,7 +1396,7 @@
     justify-content: center;
     text-align: center;
     display: grid;
-    background-color: var(--sb);
+    background-color: var(--bg2);
     padding: 5px;
     border-radius: 10px;
   }
