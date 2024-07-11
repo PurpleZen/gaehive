@@ -3,9 +3,7 @@
     <template v-slot:title="{ content }"></template>
   </metainfo>
   <div class="sidebar" id="sidebar">
-    
     <span class="mobilemenu">Menu</span>
-        
     <div class="hello">
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
       <img v-if="!username" src="/favicon.ico">
@@ -174,10 +172,9 @@
         } else {
           this.status = "User"
         }
-      }
-      
-      if (this.username.slice(-3) == "-sy") {
-        this.mellie = "sy"
+        if (this.username.slice(-3) == "-sy") {
+          this.mellie = "sy"
+        }
       }
 
       if (localStorage["animation"] == 0) {
@@ -438,7 +435,7 @@
     display: inline-block;
     width: 40%;
     height: 2px;
-    background-color: var(--acc);
+    background-color: var(--acclt);
     border-radius: 5px;
     margin: 15px
   }
