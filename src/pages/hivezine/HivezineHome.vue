@@ -1,9 +1,5 @@
   <template>
     <h1 class="greeting">News & Updates</h1>
- 
-    <div class="headerButtons">
-      <a href="https://scratch.mit.edu/studios/33685506/comments" target="_blank" class="button">Studio</a>
-    </div>
     
     <div v-if="username && writer" class="posts">
       <div v-if="newpost == 'writing'" class="post">

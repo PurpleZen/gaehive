@@ -11,6 +11,9 @@ let today = months[date.getMonth()] + date.getDate()
 async function getBirthdays() {
   const { data } = await supabase.from('birthdays').select('users->' + today)
   users.value = data[0][today]
+  if (users.value) {
+    return true
+  }
 }
 
 async function getBirthdayList() {

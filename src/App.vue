@@ -8,7 +8,7 @@
       <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
       <img v-if="!username" src="/favicon.ico">
       <h5 v-if="username">Hello{{ mellie }},<br>{{ username }}</h5>
-      <h5 v-if="!username">Hello! 🐝</h5>
+      <h5 v-if="!username">Welcome!</h5>
       <sub class="status">{{ this.status }}</sub>
     </div>
 
@@ -23,9 +23,6 @@
 
       <router-link v-if="location !== 'managers' || active" class='sidebutton' to="/managers">Managers</router-link>
       <router-link v-if="location == 'managers' && !active" class='sidebuttonactive' to="/managers">Managers</router-link>
-
-      <router-link  v-if="location !== 'bandwagon' || active" class='sidebutton' to="/bandwagon">Daily Bandwagon</router-link>
-      <router-link v-if="location == 'bandwagon' && !active" class='sidebuttonactive' to="/bandwagon">Daily Bandwagon</router-link>
 
       <router-link  v-if="location !== 'euphoria' || active" class='sidebutton' to="/euphoria">Euphoria Machine</router-link>
       <router-link v-if="location == 'euphoria' && !active" class='sidebuttonactive' to="/euphoria">Euphoria Machine</router-link>
@@ -50,7 +47,7 @@
   </div>
   <div class="page">
 
-    <div v-if="users" class="birthday">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item.name" target="_blank">{{ item.name }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div>
+    <div v-if="users" class="birthday"><div class="birthday-inner">🎂 Happy Birthday <span v-for="(item, index) in users" :key="item"><a :href="'https://scratch.mit.edu/users/' + item.name" target="_blank">{{ item.name }}</a><span v-if="users.length > 2 && index !== users.length - 1">, </span><span v-if="users.length > 1 && index == users.length - 2"> & </span></span>!</div></div>
 
   <!--popups-->
   <TransitionGroup name="popup">
@@ -154,8 +151,6 @@
       if (localStorage["blur"] == 0) {
         this.blur = "blur(0)"
       }
-      
-      getBirthdays()
     },
     
     async mounted() {
@@ -190,6 +185,16 @@
       if (window.location.search.slice(1,6) == "error") {
         this.popup = "loginerror"
       }
+
+      if (await getBirthdays() == true) {
+        this.$confetti.start({
+          defaultSize: 5
+
+        });
+        setTimeout(()=>{
+           this.$confetti.stop()
+        },2500);
+      }
     },
     
     data() {
@@ -220,7 +225,7 @@
     --bg: #f6ad3c;
     --bg2: #ffe098;
     --sb: #52832f;
-    --acc: #375c2d;
+    --acc: #365a35;
     --acc2: #52832f;
     --acc3: #ffb425;
     --acclt: #25571d66;
@@ -234,15 +239,17 @@
   }
 
   [data-theme="dark"] {
-    --bg: #231b25;
-    --sb: #0a0e0c;
-    --acc: #e7a933;
+    --bg: #1a0c1e;
+    --bg2: #000;
+    --sb: #0e0a0d;
+    --acc: #40233f;
     --acc2: #fff;
+    --acc3: #ffb425;
     --acclt: #55433966;
     --brk: #ffb30094;
     --txt: #da981a;
     --txtstr: #fff;
-    --btxt: #483332;
+    --btxt: #ff861a;
     --plnk: #FF9900;
     --plnkh: #fcfcfc;
     --imp: #d22727;
@@ -250,14 +257,16 @@
 
   [data-theme="high-contrast"] {
     --bg: #fff;
-    --sb: #ffba00;
-    --acc: #000;
+    --bg2: #25ff8f;
+    --sb: #ffb425;
+    --acc: #cbff7f;
     --acc2: #000;
+    --acc3: #000;
     --acclt: #fff6;
     --brk: #000;
     --txt: #000;
     --txtstr: #000;
-    --btxt: #fff;
+    --btxt: #000;
     --plnk: #0010ff;
     --plnkh: #f00;
     --imp: #f00;
@@ -279,9 +288,11 @@
 
   [data-theme="2000s-blog"] {
     --bg: #1a009d;
+    --bg2: #07002a;
     --sb: #07002a;
     --acc: magenta;
     --acc2: yellow;
+    --acc3: lime;
     --acclt: darkcyan;
     --brk: magenta;
     --txt: lime;
@@ -633,7 +644,6 @@
   .sidebar {
     background-color: var(--sb);
     padding: 50px;
-    border-radius: 0 20px 20px 0;
     display: grid;
     justify-content: center;
     align-content: space-around;
@@ -792,10 +802,17 @@
     font-weight: bold;
     text-align: center;
     position: absolute;
+    padding: 0 3px 3px 3px;
+    border-radius: 0 0 13px 13px;
+    background: linear-gradient(-45deg, #ef5350, #ffb74d, #fdd835, #9ccc65, #4fc3f7, #ba68c8);
+    background-size: 400% 400%;
+    animation: slidedown ease 0.5s, gradient ease 5s, fade ease 0.5s 5s forwards;
+  }
+
+  .birthday-inner {
     background-color: var(--bg2);
-    padding: 5px 15px;
+    padding: 10px 20px;
     border-radius: 0 0 10px 10px;
-    animation: slidedown ease 0.5s;
   }
 
   .birthday a {
@@ -920,7 +937,7 @@
   .posts {
     display: grid;
     align-content: center;
-    width: 100%;
+    width: calc(100% - 17px);
   }
 
   .title {
@@ -1068,6 +1085,7 @@
   .pagesearch {
     display: flex;
     height: fit-content;
+    margin: 10px;
   }
 
   .toolbar {
@@ -1241,7 +1259,7 @@
   /* Managers */
 
   .managers {
-    min-width: 70%;
+    width: 70%;
   }
 
   .userinfo {
@@ -1274,7 +1292,7 @@
     justify-content: space-between;
     cursor: pointer;
     background-color: var(--bg2);
-    margin: 10px;
+    margin: 10px 0 10px 0;
     border-radius: 10px;
     overflow: clip;
     transition: scale ease 0.2s;
@@ -1296,7 +1314,7 @@
   }
 
   .users span {
-    white-space: nowrap;
+    white-space: break-spaces;
   }
 
   .usersimg {
@@ -1469,6 +1487,27 @@
     }
   }
 
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes fade {
+    0% {
+      padding: 0 3px 3px 3px;
+    }
+    100% {
+      padding: 0;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     .page {
       overflow: initial;
@@ -1504,6 +1543,7 @@
       margin: 0;
       border-radius: 10px;
       padding: 5px 15px;
+      font-weight: normal;
     }
     .sidebuttonactive::before, .sidebuttonactive::after {
       border: none;
@@ -1521,8 +1561,9 @@
       box-shadow: #0005 0 0 20px;
     }
     .birthday {
-      padding: 10px;
-      height: 50px;
+      margin-left: 30px;
+      padding: 5px 10px;
+      max-width: 70%;
     }
     .hello {
       display: block;
@@ -1534,6 +1575,7 @@
       margin-left: 0;
     }
     .mobilemenu {
+      color: var(--btxt);
       display: block;
       visibility: visible;
       position: absolute;
@@ -1542,9 +1584,15 @@
       left: -5px;
     }
     .popup {
-      margin: 40px;
+      margin: 0;
       position: fixed;
       z-index: 2;
+      left: 0;
+      width: 60%;
+      height: 100%;
+      align-content: center;
+      display: grid;
+      border-radius: 0;
     }
     .promptButton {
       padding: 5px 10px;
@@ -1587,6 +1635,9 @@
     .search {
       width: 100%;
       padding: 15px;
+    }
+    .managers {
+      width: 100%;
     }
     .users span {
       white-space: break-spaces;
