@@ -5,7 +5,7 @@
     <img v-if="username" :src="'https://uploads.scratch.mit.edu/get_image/user/' + id + '_500x500.png'">
     <img v-if="!username" src="/favicon.ico">
     <h5 v-if="username">Hello{{ mellie }},<br>{{ username }}</h5>
-    <h5 v-if="!username">Hello! 🐝</h5>
+    <h5 v-if="!username">Welcome!</h5>
     <sub class="status">{{ this.status }}</sub>
   </div>
 
@@ -27,15 +27,20 @@
           <h1 class="greeting">The Gaehive Website</h1>
 
           <h3>Built for the Gaehive, a Scratch Studio and community supporting LGBTQ+ individuals.</h3>
-      <h2>Version 2 Coming Early 2024!</h2><sub style="margin-top:-25px">hopefully lol</sub>
-
+      <b>Version 2 coming sometime in 2024! Here's a sneak peak...</b>
+      <img class="sneakpeek" src="/sneakpeek.png">
+      
       <h3><a class="button" href="https://scratch.mit.edu/users/LegoManiac04/" target="_blank">Made with &lt;3 by LegoManiac04</a></h3>
-
       Powered by 
-      <div>
-        <a href="https://vuejs.org/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=vue"></a>
-        <a href="https://vercel.com/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=vercel"></a>
-        <a href="https://supabase.com/" target="_blank"><img class="poweredby" src="https://skillicons.dev/icons?i=supabase"></a>
+      <div class="poweredby">
+        <div>
+          <img src="https://skillicons.dev/icons?i=vue">
+          <img src="https://skillicons.dev/icons?i=vercel">
+          <img src="https://skillicons.dev/icons?i=supabase">
+        </div>
+        <div>
+          VueJS, Vercel, & Supabase
+        </div>
       </div>
     </div>
   </div>
@@ -46,10 +51,12 @@
 
   :root {
     --bg: #f6b93c;
-    --sb: #ffe098;
-    --acc: #e58c3f;
-    --acc2: #483248;
-    --acclt: #d18d6a66;
+    --bg2: #ffe098;
+    --sb: #52832f;
+    --acc: #365a35;
+    --acc2: #52832f;
+    --acc3: #ffb425;
+    --acclt: #25571d66;
     --brk: #0006;
     --txt: #473241;
     --txtstr: #000;
@@ -59,6 +66,7 @@
     --imp: #d22727;
   }
 
+  /* Page */
   html, body {
     color: var(--txt);
     background-color: var(--bg);
@@ -74,18 +82,37 @@
     font-size: xxx-large;
   }
 
+  textarea {
+    resize: none;
+    outline: none;
+    overflow: auto;
+    border: none;
+    border-radius: inherit;
+    margin-top: 0;
+    color: var(--txt);
+    font-family: 'Manrope';
+    background-color: var(--bg2);
+  }
+
   .centerpage {
-    align-content: center;
     display: grid;
-    align-items: center;
-    height: calc(100vh - 20px);
+    align-content: center;
+    height: calc(100vh - 50px);
     justify-items: center;
     width: 100%;
   }
 
+  .sneakpeek {
+    width:50%; 
+    border: solid var(--acc) 2px;
+    outline: solid var(--acclt) 3px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
   .page {
     width: 100%;
-    padding: 0 20px 20px 20px;
+    padding: 0 50px 50px 50px;
     display: grid;
     overflow: scroll;
     justify-items: center;
@@ -106,7 +133,7 @@
   }
 
   .greeting {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 5px;
     font-family: 'Agbalumo';
     color: var(--acc2);
@@ -125,7 +152,7 @@
     display: inline-block;
     width: 40%;
     height: 2px;
-    background-color: var(--acc);
+    background-color: var(--acclt);
     border-radius: 5px;
     margin: 15px
   }
@@ -137,10 +164,35 @@
     margin-top: 30px;
   }
 
-  .poweredby {
+  .poweredby{
+    display: grid;
+    font-size: xx-small;
+    justify-items: center;
+  }
+
+  .poweredby img {
     margin: 2px;
     width: 35px;
     height: 35px;
+  }
+
+  input {
+    background-color: var(--bg2);
+    color: var(--plnk);
+    margin: 2px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    font-family: inherit;
+    text-align: center;
+  }
+
+  .headerButtons {
+    margin-bottom: 5px;
+  }
+
+  .buttonarea {
+    display: flex;
   }
 
   .button, button {
@@ -160,10 +212,144 @@
     border-radius: 10px;
   }
 
+  button .material-symbols-rounded {
+    font-size: inherit !important;
+  }
+
+  .button:hover, .button:focus, button:hover, .clearbutton:hover, button:focus {
+    outline: var(--acclt) solid 2px;
+  }
+
+  .promptButton {
+    display: flex;
+    position: relative;
+    width: 24px;
+    text-decoration: none !important;
+    cursor: pointer;
+    padding: 5px 8px;
+    margin: 2px;
+    border-radius: 10px;
+  }
+
+  .promptButton#important:hover {
+    background-color: var(--imp);
+  }
+
+  .promptButton#important:hover .material-symbols-rounded {
+    color: var(--btxt);
+  }
+
+  .promptButton .material-symbols-rounded {
+    color: var(--txt);
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 48
+  }
+
+  .promptButton:hover .material-symbols-rounded {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 48
+  }
+
+  .promptButton .tooltiptext {
+    width: max-content;
+    visibility: hidden;
+    background-color: var(--acc);
+    color: var(--btxt);
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 115%;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .promptButton .tooltiptextleft {
+    width: max-content;
+    visibility: hidden;
+    background-color: var(--acc);
+    color: var(--btxt);
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    align-self: center;
+    z-index: 1;
+    left: 115%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .reactbutton .tooltiptexttop, .reactbuttonactive .tooltiptexttop {
+    font-size: small;
+    font-weight: normal;
+    text-shadow: none;
+    cursor: initial;
+    width: max-content;
+    visibility: hidden;
+    background-color: var(--acc);
+    color: var(--btxt);
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    bottom: 115%;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltiptexttop p {
+    margin: 0;
+  }
+
+  .promptButton:hover .tooltiptext, .promptButton:hover .tooltiptextleft, .reactbutton:hover .tooltiptexttop, .reactbuttonactive:hover .tooltiptexttop {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .loader {
+    height: 20px;
+    border: var(--acclt) solid 3px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border-bottom: transparent solid 3px;
+    animation: rotate 1s infinite;
+    margin: 6px;
+    align-self: center;
+    display: inline-flex;
+  }
+
+  .box {
+    display: grid;
+    width: 100%;
+    justify-items: center;
+    background-color: var(--bg2);
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .box input {
+    background-color: var(--bg);
+    color: var(--txt);
+  }
+
+
+  /* Sidebar */
+
   .sidebar {
     background-color: var(--sb);
     padding: 50px;
-    border-radius: 0 20px 20px 0;
     display: grid;
     justify-content: center;
     align-content: space-around;
@@ -192,7 +378,7 @@
 
   .hello h5 {
     margin: 0;
-    color: var(--acc2);
+    color: var(--acc3);
     font-family: agbalumo;
     text-align: center;
     line-height: 20px;
@@ -210,7 +396,7 @@
 
   .status {
     margin-bottom: -15px;
-    color: var(--acc2);
+    color: var(--acc3);
     font-weight: bold;
   }
 
@@ -221,7 +407,7 @@
   .sidebutton {
     display: inline-block;
     background-color: transparent;
-    color: var(--txt);
+    color: var(--btxt);
     text-decoration: none;
     border: none;
     border-radius: 10px 0 0 10px;
@@ -258,7 +444,7 @@
     padding-left: 20px;
     padding-right: 45px;
     background-color: var(--acclt);
-    color: var(--txtstr);
+    color: var(--acc3);
   }
 
   .sidebuttonactive::before,
@@ -315,6 +501,33 @@
 
   .login:hover {
     outline: var(--bg) solid 2px;
+  }
+
+  .birthday {
+    font-size: x-small;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    padding: 0 3px 3px 3px;
+    border-radius: 0 0 13px 13px;
+    background: linear-gradient(-45deg, #ef5350, #ffb74d, #fdd835, #9ccc65, #4fc3f7, #ba68c8);
+    background-size: 400% 400%;
+    animation: slidedown ease 0.5s, gradient ease 5s, fade ease 0.5s 5s forwards;
+  }
+
+  .birthday-inner {
+    background-color: var(--bg2);
+    padding: 10px 20px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .birthday a {
+    color: var(--plnk);
+    text-decoration: none;
+  }
+
+  .birthday a:hover {
+    text-decoration: underline;
   }
 
 </style>
