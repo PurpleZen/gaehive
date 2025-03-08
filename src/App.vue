@@ -27,8 +27,12 @@
           <h1 class="greeting">The Gaehive Website</h1>
 
           <h3>Built for the Gaehive, a Scratch Studio and community supporting LGBTQ+ individuals.</h3>
-      <b>Version 2 coming sometime in 2024! Here's a sneak peak...</b>
-      <img class="sneakpeek" src="/sneakpeek.png">
+      <span><b>Version 2, as previously shared, is no longer in development, and will not see a release.</b><br>
+      The Hivezine for Version 2 was really great, and it was so fun to develop, and I was excited to share the new Supabase implementation,
+      but in the end I didn't feel there was enough interest (or time) to continue.<br><br>I'd love to come back to this project 
+      someday and rebuild this site from the ground up as a <b>Version 3</b>, just  more resouces and tools with in mind, rather 
+      than gimmicks like the Hivezine. Development of this may happen Summer of 2025, or maybe another year, or maybe never...
+      Time will tell.<br><br>- Izzy (LegoManiac04) &lt;3 </span>
       
       <h3><a class="button" href="https://scratch.mit.edu/users/LegoManiac04/" target="_blank">Made with &lt;3 by LegoManiac04</a></h3>
       Powered by 
@@ -36,10 +40,9 @@
         <div>
           <img src="https://skillicons.dev/icons?i=vue">
           <img src="https://skillicons.dev/icons?i=vercel">
-          <img src="https://skillicons.dev/icons?i=supabase">
         </div>
         <div>
-          VueJS, Vercel, & Supabase
+          VueJS & Vercel
         </div>
       </div>
     </div>
